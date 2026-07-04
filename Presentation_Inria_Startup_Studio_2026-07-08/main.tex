@@ -1,0 +1,321 @@
+% !TEX program = lualatex
+\documentclass[A4,svgnames,9pt,aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta, calc}
+
+\hypersetup{
+   allcolors=rouge_inria,
+   pdfauthor   = {Louis Hauseux, Alban Hauseux},
+   pdftitle    = {Percolia - Candidature Inria Startup Studio},
+   pdfsubject  = {Présentation Inria Startup Studio},
+   pdfkeywords = {Louis Hauseux, Alban Hauseux, Percolia, clustering, Delaunay, percolation, LiDAR, logs}
+}
+
+\title[Percolia - ISS]{\huge \textbf{PERCOLIA}}
+\subtitle{\large Structuration et classification de données industrielles massives\\ \normalsize Projet de création de startup -- Candidature Inria Startup Studio}
+\date[8 Juillet 2026]{Mercredi 8 Juillet 2026}
+\author[L. \& A. Hauseux]{%
+   \textbf{Louis \textsc{Hauseux}} (Porteur scientifique) \& \textbf{Alban \textsc{Hauseux}} (Porteur business) \\[4pt]
+   \footnotesize Centre Inria d'Université Côte d'Azur, équipes \textsc{Neo} \& \textsc{Ayana} \\[2pt]
+   \scriptsize Conseillés par Josiane \textsc{Zerubia} (\textsc{Ayana}) \& Konstantin \textsc{Avrachenkov} (\textsc{Neo})
+}
+\institute{Inria Startup Studio}
+
+\usetheme{inria}
+\setbeamertemplate{bibliography item}[text]
+
+\setbeamertemplate{footnote}{%
+  \hspace*{0.6cm}%
+  \raisebox{8pt}{%
+    \usebeamerfont{footnote}\usebeamercolor[fg]{footnote}%
+    \insertfootnotemark~\insertfootnotetext%
+  }%
+}
+
+\colorlet{inria-bleu}{inria-2024-bleu-azur}
+
+\newcounter{tocsectioncounter}
+\renewcommand{\contentsname}{Plan de la présentation}
+\setbeamertemplate{section in toc}{%
+    \vspace*{2ex}%
+    \setcounter{tocsectioncounter}{\inserttocsectionnumber}%
+    \textcolor{inria-noir}{\textbf{\Roman{tocsectioncounter})~\inserttocsection}}%
+}
+
+\begin{document}
+
+% Slide 1: Page de titre
+\frame{\titlepage}
+
+% Slide 2: Pitch & Projet
+\begin{frame}{Pitch \& Projet Percolia}
+    \begin{block}{\large Percolia en une phrase}
+        \textbf{Percolia} transforme automatiquement des données massives et désordonnées en structures exploitables grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
+    \end{block}
+    
+    \vspace{0.3cm}
+    
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Axe 1 : Nuages de points 3D (LiDAR)}
+            \begin{itemize}
+                \item Segmentation fine d'objets pour jumeaux numériques industriels.
+                \item Automatisation de la reconstruction d'infrastructures.
+                \item Intégration matérielle (LiDAR mobiles, YellowScan).
+            end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{Axe 2 : Logs informatiques (Cyber / Fraude)}
+            \begin{itemize}
+                \item Regroupement intelligent d'événements complexes.
+                \item Réduction drastique du bruit et du volume d'alertes.
+                \item Détection comportementale pour cybersécurité.
+            end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.4cm}
+    \begin{center}
+        \textcolor{inria-rouge}{\textbf{Notre force :}} Une technologie \textbf{sans apprentissage} (\emph{training-free}), hautement précise et résistante au bruit.
+    \end{center}
+\end{frame}
+
+% Slide 3: Problème adressé (Concrete and Segmented)
+\begin{frame}{Problème adressé : Segments industriels \& Limites actuelles}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu 1. Segment LiDAR \& Jumeaux Numériques}
+            \begin{itemize}
+                \item \textbf{Cibles :} \textbf{Greehill} (monitoring vert), \textbf{Exwayz} (logiciels 3D), \textbf{YellowScan} (matériel).
+                \item \textbf{Problème :} Les algorithmes classiques (DBSCAN, HDBSCAN) souffrent de \emph{l'effet de chaînage}. Le bruit relie à tort des objets séparés, obligeant à des corrections manuelles coûteuses.
+                \item \textbf{Exemple (Montage bateau - Marie) :} Actuellement, le logiciel classe mal les pièces («~présentes~» vs «~absentes~», «~bien~» vs «~mal placées~»), ce qui bloque le montage.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu 2. Segment Logs \& Cybersécurité}
+            \begin{itemize}
+                \item \textbf{Cibles :} SOC (Security Operation Centers), analystes fraude, \textbf{Datadog} (échanges Vivatech).
+                \item \textbf{Problème :} Des millions de logs bruts non structurés. Les outils actuels ratent les corrélations fines et génèrent trop de faux positifs.
+                \item \textbf{Exemple (Le Louvre - Abdelhadi) :} Comme des caméras mal positionnées qui créent des angles morts, le manque de regroupement des logs laisse des failles de sécurité invisibles pour l'analyste.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 4: Solution Percolia
+\begin{frame}{Solution Percolia : L'apport de l'ordre supérieur}
+    \begin{center}
+        \large Comment Percolia répond à ces limites ?
+    \end{center}
+    
+    \vspace{0.2cm}
+    
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Une rupture conceptuelle :}
+            \begin{itemize}
+                \item \textbf{Graphes binaires (actuel) :} Connectent les points par de simples paires d'arêtes. Très sensibles au bruit.
+                \item \textbf{Interactions d'ordre supérieur (Percolia) :} Regroupent les points à l'aide d'interactions multipoints (hypergraphes géométriques).
+                \item \textbf{Blocage de la percolation :} Les hypergraphes empêchent le bruit local de se propager et de fusionner à tort des amas distincts.
+            end{itemize}
+        \end{column}
+        
+        \begin{column}{0.46\textwidth}
+            \textbf{Impacts métiers concrets :}
+            \begin{itemize}
+                \item \textbf{Pour Marie (Bateaux) :} Les pièces sont segmentées de façon nette. Le diagnostic «~bien~» vs «~mal placé~» devient instantané et fiable.
+                \item \textbf{Pour Abdelhadi (Sécurité/Louvre) :} Plus d'angles morts. Les logs de sessions, IPs et comptes sont corrélés en groupes cohérents, priorisant l'alerte sur l'anomalie réelle.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 5: Technologie sous-jacente : HGP-Clusterer
+\begin{frame}{Technologie sous-jacente : HGP-Clusterer}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Origine académique :}
+            \begin{itemize}
+                \item Technologie brevetable issue des travaux de thèse de \textbf{Louis Hauseux} à l'Inria Sophia Antipolis (équipes \textsc{Neo} et \textsc{Ayana}).
+                \item Fondements théoriques sur les \textbf{complexes simpliciaux} et la \textbf{théorie de la percolation}.
+            \end{itemize}
+            
+            \vspace{0.3cm}
+            \textbf{Algorithme HGP-Clusterer :}
+            \begin{itemize}
+                \item Remplace les graphes par des complexes de \v{C}ech et les composantes par des \textbf{$K$-polyèdres}.
+                \item Identifie exactement les amas de forte densité pour tout $K \ge 2$.
+                \item Exploite la mosaïque de Delaunay d'ordre supérieur et les simplexes de Gabriel pour des calculs ultra-rapides.
+            end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textbf{\orange Avantages compétitifs clés}
+            \end{center}
+            \begin{description}
+                \item[Training-Free] Pas besoin d'entraînement ou de labels coûteux.
+                \item[Ultra-précis] Résistance inégalée au bruit de fond (pas de chaînage).
+                \item[Priors géométriques] Injection facile d'a priori métiers (ex: contraintes de volume).
+            \end{description}
+            
+            \vspace{0.4cm}
+            \begin{block}{Publication de référence}
+                L. Hauseux, K. Avrachenkov, J. Zerubia, \emph{Generalization of single-linkage with higher-order interactions}, \textbf{Applied Network Science}, 2026.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 6: L'Équipe
+\begin{frame}{Une équipe complémentaire : Science \& Business}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Louis Hauseux -- Porteur Scientifique}
+            \begin{itemize}
+                \item Doctorat en informatique (Inria Sophia Antipolis).
+                \item Normalien (ENS Paris-Saclay), double M2 en Mathématiques Fondamentales et Appliquées.
+                \item Spécialiste mondial de la percolation et du clustering géométrique.
+                \item \textbf{Rôle :} Directeur R\&D, conception et implémentation des algorithmes.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Alban Hauseux -- Porteur Business}
+            \begin{itemize}
+                \item Ingénieur Télécom (IMT Atlantique), Master Ingénierie Financière (Paris-Dauphine).
+                \item Expériences professionnelles solides : quantitative audit, modélisation et développement quantitatif (Banque de France, HSBC, Société Générale).
+                \item \textbf{Rôle :} Développement commercial, relation clients, audits et intégration logicielle.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \vspace{0.3cm}
+    \begin{block}{\large Conseil Scientifique \& Collaborations}
+        \begin{itemize}
+            \item \textbf{Josiane Zerubia} (Directrice de Recherche Inria, équipe \textsc{Ayana}) \& \textbf{Konstantin Avrachenkov} (DR Inria, équipe \textsc{Neo}).
+            \item Collaborations actives : \textbf{Cerema} pour la poursuite de travaux de transfert (monitoring environnemental).
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 7: Marché & Concurrents
+\begin{frame}{Analyse de Marché \& Positionnement concurrentiel}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{Taille et dynamique du marché :}
+            \begin{itemize}
+                \item \textbf{Marché LiDAR global :} Évalué à 5,3 Md\$ en 2025, estimé à plus de 40 Md\$ en 2035 (source: Global Market Insights).
+                \item \textbf{Jumeaux numériques industriels :} 19 Md\$ en 2024.
+                \item \textbf{SAM Percolia :} Segment logiciel d'extraction de structures et segmentation 3D/4D (environ 10--15\% de ce marché).
+            end{itemize}
+        \end{column}
+        
+        \begin{column}{0.46\textwidth}
+            \textbf{Positionnement concurrentiel :}
+            \begin{itemize}
+                \item \textbf{Concurrents :} DBSCAN, HDBSCAN (librairies open-source standards) et heuristiques propriétaires \emph{ad hoc} développées en interne par les industriels.
+                \item \textbf{Pourquoi choisir Percolia ?}
+                \begin{itemize}
+                    \item \textbf{Robustesse au bruit :} 0\% de faux raccordements.
+                    \item \textbf{Intégrabilité :} Se branche directement sur les logiciels de nos clients sans phase d'apprentissage machine complexe.
+                \end{itemize}
+            end{itemize}
+        \end{column}
+    \end{columns}
+end{frame}
+
+% Slide 8: Modèle Économique & Plan d'Action
+\begin{frame}{Modèle Économique \& Feuille de route à 12 mois}
+    \begin{block}{\large Modèle économique en deux temps}
+        \begin{description}
+            \item[Étape 1 : Audits payants (Court terme)] Audits comparatifs sur les données des clients industriels pour démontrer le gain de performance et acquérir des cas d'usage terrain.
+            \item[Étape 2 : API / Licences récurrentes (Moyen terme)] API cloud ou licence logicielle locale sécurisée (ex: intégration dans le hardware YellowScan pour traitement offline).
+        \end{description}
+    \end{block}
+    
+    \vspace{0.2cm}
+    \textbf{Plan d'action Inria Startup Studio (12 mois) :}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\green Objectifs à 6 mois :}
+            \begin{itemize}
+                \item Finaliser la solution logicielle 3D-LiDAR (API + PI).
+                \item Démarcher Greehill, Exwayz, Valeo.
+                \item Développer les algorithmes d'embedding pour les logs cyber.
+            end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{\green Objectifs à 12 mois :}
+            \begin{itemize}
+                \item Finaliser la solution logicielle logs cyber.
+                \item Démarcher les banques et SOC pour audits complets de logs.
+                \item Structurer l'entreprise pour une levée de fonds pré-seed.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 9: Pourquoi Inria Startup Studio ?
+\begin{frame}{Pourquoi Inria Startup Studio ?}
+    \begin{columns}[T]
+        \begin{column}{0.6\textwidth}
+            \textbf{Le cadre idéal pour Percolia :}
+            \begin{itemize}
+                \item \textbf{Transfert technologique :} Processus de transfert naturel de la PI issue de la thèse de Louis.
+                \item \textbf{Écosystème technologique :} Utilisation et enrichissement de bibliothèques Inria phares (CGAL, Geogram).
+                \item \textbf{Accompagnement :} Coaching personnalisé via le CPPI pour le business model et la protection intellectuelle.
+                \item \textbf{Crédibilité :} L'adossement scientifique Inria est un gage de confiance crucial pour démarcher les grands comptes industriels et bancaires.
+            end{itemize}
+        \end{column}
+        
+        \begin{column}{0.36\textwidth}
+            \vspace{0.5cm}
+            \begin{center}
+                \includegraphics[width=0.9\textwidth]{theme/imgs/Inria-logo-rouge.png}
+                
+                \vspace{0.5cm}
+                \textbf{\textcolor{inria-rouge}{\large Créer la rupture technologique dans le clustering industriel.}}
+            \end{center>
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 10: Merci !
+\begin{frame}[standout]
+    \Huge Merci de votre attention !
+    
+    \vspace{1cm}
+    \Large Des questions ?
+\end{frame}
+
+% --- ANNEXES (TECHNICAL BACKUP) ---
+\begin{frame}{Annexe 1 : Mosaïque de Delaunay d'ordre $K$ \& Simplexes de Gabriel}
+    \begin{itemize}
+        \item \textbf{Mosaïque de Delaunay d'ordre $K$ :} Généralisation de la triangulation classique. Elle contient tous les simplexes nécessaires pour calculer la hiérarchie $K$-NN.
+        \item \textbf{Simplexes de Gabriel :} Un simplexe $\sigma$ est de Gabriel si sa boule circonscrite ne contient aucun point intrus dans $\mathcal{X} \setminus \sigma$.
+        \item \textbf{Théorème :} Les simplexes à l'origine de fusions de clusters dans la hiérarchie HGP sont nécessairement des simplexes de Gabriel.
+        \item \textbf{Impact algorithmique :} Cela réduit drastiquement l'espace de recherche et rend l'algorithme HGP-Clusterer extrêmement rapide sur de grandes dimensions.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Annexe 2 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
+    \begin{itemize}
+        \item Suivi temporel d'instances sur des nuages de points 3D séquentiels.
+        \item Combinaison de \textbf{HGP-Clusterer} avec du \textbf{Transport Optimal Déséquilibré} (\emph{Unbalanced Optimal Transport}).
+        \item Solution complètement \textbf{sans apprentissage} (comparée à Geo-4D ou Alpine).
+        \item Élimination totale du besoin de réentraînement lors des changements de domaine de capteurs.
+    \end{itemize}
+\end{frame}
+
+\end{document}
