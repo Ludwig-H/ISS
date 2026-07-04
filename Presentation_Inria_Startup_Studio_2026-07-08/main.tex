@@ -17,11 +17,11 @@
    pdfauthor   = {Louis Hauseux, Alban Hauseux},
    pdftitle    = {Percolia - Candidature Inria Startup Studio},
    pdfsubject  = {Présentation Inria Startup Studio},
-   pdfkeywords = {Louis Hauseux, Alban Hauseux, Percolia, clustering, Delaunay, percolation, LiDAR, logs}
+   pdfkeywords = {Louis Hauseux, Alban Hauseux, Percolia, clustering, Delaunay, percolation, LiDAR}
 }
 
 \title[Percolia - ISS]{\huge \textbf{PERCOLIA}}
-\subtitle{\large Structuration et classification de données industrielles massives\\ \normalsize Projet de création de startup -- Candidature Inria Startup Studio}
+\subtitle{\large Structuration et segmentation fine de nuages de points 3D LiDAR\\ \normalsize Projet de création de startup -- Candidature Inria Startup Studio}
 \date[8 Juillet 2026]{Mercredi 8 Juillet 2026}
 \author[L. \& A. Hauseux]{%
    \textbf{Louis \textsc{Hauseux}} (Porteur scientifique) \& \textbf{Alban \textsc{Hauseux}} (Porteur business) \\[4pt]
@@ -59,82 +59,73 @@
 % Slide 2: Pitch & Projet
 \begin{frame}{Pitch \& Projet Percolia}
     \begin{block}{\large Percolia en une phrase}
-        \textbf{Percolia} transforme automatiquement des données massives et désordonnées en structures exploitables grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
+        \textbf{Percolia} transforme automatiquement des nuages de points 3D LiDAR bruts et bruités en jumeaux numériques précis grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
     \end{block}
     
-    \vspace{0.3cm}
+    \vspace{0.4cm}
     
-    \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \textbf{Axe 1 : Nuages de points 3D (LiDAR)}
-            \begin{itemize}
-                \item Segmentation fine d'objets pour jumeaux numériques industriels.
-                \item Automatisation de la reconstruction d'infrastructures.
-                \item Intégration matérielle (LiDAR mobiles, YellowScan).
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.48\textwidth}
-            \textbf{Axe 2 : Logs informatiques (Cyber / Fraude)}
-            \begin{itemize}
-                \item Regroupement intelligent d'événements complexes.
-                \item Réduction drastique du bruit et du volume d'alertes.
-                \item Détection comportementale pour cybersécurité.
-            \end{itemize}
-        \end{column}
-    \end{columns}
+    \textbf{Pourquoi le LiDAR 3D ?}
+    \begin{itemize}
+        \item \textbf{Explosion des données :} Capteurs LiDAR embarqués partout (drones, robots, véhicules autonomes, infrastructures).
+        \item \textbf{Besoins métiers :} Segmenter finement les objets (arbres, poteaux, bâtiments, pièces) pour l'inspection et la simulation.
+        \item \textbf{Le goulot d'étranglement :} Le nettoyage et la structuration manuels des données coûtent cher et prennent du temps.
+    \end{itemize}
     
     \vspace{0.4cm}
     \begin{center}
         \textcolor{inria-rouge}{\textbf{Notre force :}} Une technologie \textbf{sans apprentissage} (\emph{training-free}), hautement précise et résistante au bruit.
+        \\[3pt]
+        \scriptsize \textit{Note : La technologie est également généralisable à d'autres structures complexes comme les logs cyber (voir Backup).}
     \end{center}
 \end{frame}
 
-% Slide 3: Problème adressé (Concrete and Segmented)
-\begin{frame}{Problème adressé : Segments industriels \& Limites actuelles}
+% Slide 3: Problème adressé (Focus on LiDAR & Marie)
+\begin{frame}{Problème adressé : Limites du clustering 3D actuel}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{\bleu 1. Segment LiDAR \& Jumeaux Numériques}
+            \textbf{\bleu Le verrou technologique : L'effet de chaînage}
             \begin{itemize}
-                \item \textbf{Cibles :} \textbf{Greehill} (monitoring vert), \textbf{Exwayz} (logiciels 3D), \textbf{YellowScan} (matériel).
-                \item \textbf{Problème :} Les algorithmes classiques (DBSCAN, HDBSCAN) souffrent de \emph{l'effet de chaînage}. Le bruit relie à tort des objets séparés, obligeant à des corrections manuelles coûteuses.
-                \item \textbf{Exemple (Montage bateau - Marie) :} Actuellement, le logiciel classe mal les pièces («~présentes~» vs «~absentes~», «~bien~» vs «~mal placées~»), ce qui bloque le montage.
+                \item Les algorithmes de l'état de l'art (\textbf{DBSCAN, HDBSCAN}) et les heuristiques métiers reposent sur des \textbf{relations binaires} (graphes simples).
+                \item En présence de bruit de fond ou de poussières de mesure, ces graphes créent des «~ponts~» parasites.
+                \item Conséquence : Différents objets distincts fusionnent à tort en un seul bloc, nécessitant une correction manuelle systématique.
             \end{itemize}
         \end{column}
         
         \begin{column}{0.48\textwidth}
-            \textbf{\bleu 2. Segment Logs \& Cybersécurité}
+            \textbf{\bleu Exemple d'application : Montage industriel (Marie)}
             \begin{itemize}
-                \item \textbf{Cibles :} SOC (Security Operation Centers), analystes fraude, \textbf{Datadog} (échanges Vivatech).
-                \item \textbf{Problème :} Des millions de logs bruts non structurés. Les outils actuels ratent les corrélations fines et génèrent trop de faux positifs.
-                \item \textbf{Exemple (Le Louvre - Abdelhadi) :} Comme des caméras mal positionnées qui créent des angles morts, le manque de regroupement des logs laisse des failles de sécurité invisibles pour l'analyste.
+                \item \textbf{Contexte :} Suivi géométrique d'assemblage (ex: pièces d'un bateau).
+                \item \textbf{Actuellement :} Le bruit de mesure fusionne les pièces avec les structures de support ou les pièces adjacentes.
+                \item \textbf{Impact :} Le logiciel d'inspection échoue à valider si la pièce est «~présente~» vs «~absente~» et «~bien placée~» vs «~mal placée~». Les erreurs de détection bloquent la chaîne de montage.
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
 % Slide 4: Solution Percolia
-\begin{frame}{Solution Percolia : L'apport de l'ordre supérieur}
+\begin{frame}{Solution Percolia : Rupture par l'ordre supérieur}
     \begin{center}
-        \large Comment Percolia répond à ces limites ?
+        \large Comment Percolia résout le problème de segmentation 3D ?
     \end{center}
     
-    \vspace{0.2cm}
+    \vspace{0.3cm}
     
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Une rupture conceptuelle :}
+            \textbf{Le concept de connectivité d'ordre supérieur :}
             \begin{itemize}
-                \item \textbf{Graphes binaires (actuel) :} Connectent les points par de simples paires d'arêtes. Très sensibles au bruit.
-                \item \textbf{Interactions d'ordre supérieur (Percolia) :} Regroupent les points à l'aide d'interactions multipoints (hypergraphes géométriques).
-                \item \textbf{Blocage de la percolation :} Les hypergraphes empêchent le bruit local de se propager et de fusionner à tort des amas distincts.
+                \item \textbf{Graphes (actuel) :} Deux points sont connectés s'ils sont proches. Le bruit de mesure relie facilement deux amas disjoints.
+                \item \textbf{Hypergraphes (Percolia) :} On n'étudie plus les liaisons par paires, mais les intersections multiples de boules (complexes géométriques).
+                \item \textbf{Retard de percolation :} L'obligation d'avoir des connexions multipoints bloque la propagation du bruit et isole naturellement les vrais amas.
             \end{itemize}
         \end{column}
         
         \begin{column}{0.46\textwidth}
-            \textbf{Impacts métiers concrets :}
+            \textbf{Impacts concrets pour nos utilisateurs (ex: Marie) :}
             \begin{itemize}
-                \item \textbf{Pour Marie (Bateaux) :} Les pièces sont segmentées de façon nette. Le diagnostic «~bien~» vs «~mal placé~» devient instantané et fiable.
-                \item \textbf{Pour Abdelhadi (Sécurité/Louvre) :} Plus d'angles morts. Les logs de sessions, IPs et comptes sont corrélés en groupes cohérents, priorisant l'alerte sur l'anomalie réelle.
+                \item \textbf{Détourage parfait :} Les structures métalliques du bateau et les pièces d'assemblage sont séparées de façon nette, sans bavure due au bruit.
+                \item \textbf{Diagnostic automatique :} L'analyse de conformité géométrique devient fiable à 100\% (pièce bien placée vs mal placée).
+                \item \textbf{Gain de temps :} Suppression des étapes manuelles de nettoyage de nuages de points.
             \end{itemize}
         \end{column}
     \end{columns}
@@ -146,16 +137,15 @@
         \begin{column}{0.48\textwidth}
             \textbf{Origine académique :}
             \begin{itemize}
-                \item Technologie brevetable issue des travaux de thèse de \textbf{Louis Hauseux} à l'Inria Sophia Antipolis (équipes \textsc{Neo} et \textsc{Ayana}).
-                \item Fondements théoriques sur les \textbf{complexes simpliciaux} et la \textbf{théorie de la percolation}.
+                \item Brevet et technologie issus des travaux de thèse de \textbf{Louis Hauseux} à l'Inria Sophia Antipolis (équipes \textsc{Neo} et \textsc{Ayana}).
+                \item Fondements théoriques rigoureux alliant la \textbf{géométrie algorithmique} et la \textbf{théorie de la percolation}.
             \end{itemize}
             
             \vspace{0.3cm}
             \textbf{Algorithme HGP-Clusterer :}
             \begin{itemize}
-                \item Remplace les graphes par des complexes de \v{C}ech et les composantes par des \textbf{$K$-polyèdres}.
-                \item Identifie exactement les amas de forte densité pour tout $K \ge 2$.
-                \item Exploite la mosaïque de Delaunay d'ordre supérieur et les simplexes de Gabriel pour des calculs ultra-rapides.
+                \item Substitution des graphes par des complexes de \v{C}ech et des composantes connexes par des \textbf{$K$-polyèdres}.
+                \item Extraction rapide des fusions clés (simplexes de Gabriel d'ordre supérieur) via la mosaïque de Delaunay d'ordre $K$.
             \end{itemize}
         \end{column}
         
@@ -164,13 +154,13 @@
                 \textbf{\orange Avantages compétitifs clés}
             \end{center}
             \begin{description}
-                \item[Training-Free] Pas besoin d'entraînement ou de labels coûteux.
-                \item[Ultra-précis] Résistance inégalée au bruit de fond (pas de chaînage).
-                \item[Priors géométriques] Injection facile d'a priori métiers (ex: contraintes de volume).
+                \item[Training-Free] Aucun besoin de données étiquetées pour l'entraînement.
+                \item[Précision intrinsèque] Robustesse mathématiquement prouvée face au bruit.
+                \item[Priors géométriques] Flexibilité pour injecter des contraintes physiques (ex: volume attendu de l'objet).
             \end{description}
             
             \vspace{0.4cm}
-            \begin{block}{Publication de référence}
+            \begin{block}{Publication clé}
                 L. Hauseux, K. Avrachenkov, J. Zerubia, \emph{Generalization of single-linkage with higher-order interactions}, \textbf{Applied Network Science}, 2026.
             \end{block}
         \end{column}
@@ -185,8 +175,8 @@
             \begin{itemize}
                 \item Doctorat en informatique (Inria Sophia Antipolis).
                 \item Normalien (ENS Paris-Saclay), double M2 en Mathématiques Fondamentales et Appliquées.
-                \item Spécialiste mondial de la percolation et du clustering géométrique.
-                \item \textbf{Rôle :} Directeur R\&D, conception et implémentation des algorithmes.
+                \item Expert en percolation géométrique et structures d'ordre supérieur.
+                \item \textbf{Rôle :} R\&D, conception et implémentation du noyau algorithmique.
             \end{itemize}
         \end{column}
         
@@ -194,7 +184,7 @@
             \textbf{\bleu Alban Hauseux -- Porteur Business}
             \begin{itemize}
                 \item Ingénieur Télécom (IMT Atlantique), Master Ingénierie Financière (Paris-Dauphine).
-                \item Expériences professionnelles solides : quantitative audit, modélisation et développement quantitatif (Banque de France, HSBC, Société Générale).
+                \item Parcours en finance quantitative, audit et contrôle de modèles quantitatifs (Banque de France, HSBC, Société Générale).
                 \item \textbf{Rôle :} Développement commercial, relation clients, audits et intégration logicielle.
             \end{itemize}
         \end{column}
@@ -204,31 +194,36 @@
     \begin{block}{\large Conseil Scientifique \& Collaborations}
         \begin{itemize}
             \item \textbf{Josiane Zerubia} (Directrice de Recherche Inria, équipe \textsc{Ayana}) \& \textbf{Konstantin Avrachenkov} (DR Inria, équipe \textsc{Neo}).
-            \item Collaborations actives : \textbf{Cerema} pour la poursuite de travaux de transfert (monitoring environnemental).
+            \item Collaborations actives : \textbf{Cerema} pour la poursuite de travaux de transfert (suivi géométrique et monitoring du territoire).
         \end{itemize}
     \end{block}
 \end{frame}
 
 % Slide 7: Marché & Concurrents
-\begin{frame}{Analyse de Marché \& Positionnement concurrentiel}
+\begin{frame}{Analyse de Marché \& Segment LiDAR}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Taille et dynamique du marché :}
             \begin{itemize}
-                \item \textbf{Marché LiDAR global :} Évalué à 5,3 Md\$ en 2025, estimé à plus de 40 Md\$ en 2035 (source: Global Market Insights).
+                \item \textbf{Marché de la cartographie LiDAR :} Évalué à 5,3 Md\$ en 2025, estimé à plus de 40 Md\$ en 2035 (source: Global Market Insights).
                 \item \textbf{Jumeaux numériques industriels :} 19 Md\$ en 2024.
-                \item \textbf{SAM Percolia :} Segment logiciel d'extraction de structures et segmentation 3D/4D (environ 10--15\% de ce marché).
+                \item \textbf{Cibles de segment :}
+                \begin{itemize}
+                    \item \textbf{Greehill} (monitoring d'infrastructures vertes urbaines).
+                    \item \textbf{Exwayz} (logiciels de traitement 3D temps réel).
+                    \item \textbf{YellowScan} (systèmes LiDAR embarqués sur drone).
+                \end{itemize}
             \end{itemize}
         \end{column}
         
         \begin{column}{0.46\textwidth}
             \textbf{Positionnement concurrentiel :}
             \begin{itemize}
-                \item \textbf{Concurrents :} DBSCAN, HDBSCAN (librairies open-source standards) et heuristiques propriétaires \emph{ad hoc} développées en interne par les industriels.
-                \item \textbf{Pourquoi choisir Percolia ?}
+                \item \textbf{Concurrents :} DBSCAN, HDBSCAN (librairies open-source standards) et scripts propriétaires \emph{ad hoc} développés par les industriels.
+                \item \textbf{L'avantage Percolia :}
                 \begin{itemize}
-                    \item \textbf{Robustesse au bruit :} 0\% de faux raccordements.
-                    \item \textbf{Intégrabilité :} Se branche directement sur les logiciels de nos clients sans phase d'apprentissage machine complexe.
+                    \item \textbf{Haute précision :} Aucune erreur de fusion due aux bruits de poussière.
+                    \item \textbf{Intégrable :} Se greffe sur les pipelines existants sans nécessiter de coûteuses stations de calcul IA (léger et efficace).
                 \end{itemize}
             \end{itemize}
         \end{column}
@@ -237,14 +232,14 @@
 
 % Slide 8: Modèle Économique & Plan d'Action
 \begin{frame}{Modèle Économique \& Feuille de route à 12 mois}
-    \begin{block}{\large Modèle économique en deux temps}
+    \begin{block}{\large Modèle économique axé sur la valeur}
         \begin{description}
-            \item[Étape 1 : Audits payants (Court terme)] Audits comparatifs sur les données des clients industriels pour démontrer le gain de performance et acquérir des cas d'usage terrain.
-            \item[Étape 2 : API / Licences récurrentes (Moyen terme)] API cloud ou licence logicielle locale sécurisée (ex: intégration dans le hardware YellowScan pour traitement offline).
+            \item[Étape 1 : Audits payants (Court terme)] Vente d'audits comparatifs sur les données de nuages de points de nos clients pour prouver le gain de précision et acquérir des cas d'usage réels.
+            \item[Étape 2 : API / Licences récurrentes (Moyen terme)] API SaaS pour les traitements cloud ou licence logicielle embarquée en local (ex: intégration offline au cœur du software YellowScan).
         \end{description}
     \end{block}
     
-    \vspace{0.2cm}
+    \vspace{0.25cm}
     \textbf{Plan d'action Inria Startup Studio (12 mois) :}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -252,15 +247,15 @@
             \begin{itemize}
                 \item Finaliser la solution logicielle 3D-LiDAR (API + PI).
                 \item Démarcher Greehill, Exwayz, Valeo.
-                \item Développer les algorithmes d'embedding pour les logs cyber.
+                \item Produire des démos visuelles de segmentation 3D/4D.
             \end{itemize}
         \end{column}
         \begin{column}{0.48\textwidth}
             \textbf{\green Objectifs à 12 mois :}
             \begin{itemize}
-                \item Finaliser la solution logicielle logs cyber.
-                \item Démarcher les banques et SOC pour audits complets de logs.
-                \item Structurer l'entreprise pour une levée de fonds pré-seed.
+                \item Signer les premiers contrats de licences logicielles récurrentes.
+                \item Étendre le logiciel aux LiDARs mobiles de navigation (robotique).
+                \item Lancer la structuration pour la première levée de fonds (pre-seed).
             \end{itemize}
         \end{column}
     \end{columns}
@@ -273,9 +268,9 @@
             \textbf{Le cadre idéal pour Percolia :}
             \begin{itemize}
                 \item \textbf{Transfert technologique :} Processus de transfert naturel de la PI issue de la thèse de Louis.
-                \item \textbf{Écosystème technologique :} Utilisation et enrichissement de bibliothèques Inria phares (CGAL, Geogram).
-                \item \textbf{Accompagnement :} Coaching personnalisé via le CPPI pour le business model et la protection intellectuelle.
-                \item \textbf{Crédibilité :} L'adossement scientifique Inria est un gage de confiance crucial pour démarcher les grands comptes industriels et bancaires.
+                \item \textbf{Écosystème technologique :} Utilisation de bibliothèques géométriques Inria phares (\textbf{CGAL, Geogram}) que notre algorithme complète.
+                \item \textbf{Accompagnement :} Mentorat personnalisé via le CPPI pour le business model et la protection intellectuelle.
+                \item \textbf{Crédibilité :} L'adossement scientifique Inria est un gage de confiance crucial pour signer avec de grands industriels.
             \end{itemize}
         \end{column}
         
@@ -285,12 +280,13 @@
                 \includegraphics[width=0.9\textwidth]{theme/imgs/Inria-logo-rouge.png}
                 
                 \vspace{0.5cm}
-                \textbf{\textcolor{inria-rouge}{\large Créer la rupture technologique dans le clustering industriel.}}
+                \textbf{\textcolor{inria-rouge}{\large Créer la rupture technologique dans le traitement LiDAR.}}
             \end{center}
         \end{column}
     \end{columns}
 \end{frame}
 
+% Slide 10: Merci !
 \begin{frame}[plain]
     \begin{center}
         \Huge \textcolor{inria-rouge}{\textbf{Merci de votre attention !}}
@@ -301,16 +297,37 @@
 \end{frame}
 
 % --- ANNEXES (TECHNICAL BACKUP) ---
-\begin{frame}{Annexe 1 : Mosaïque de Delaunay d'ordre $K$ \& Simplexes de Gabriel}
+\begin{frame}{Backup 1 : Généralisation à l'axe Logs Cyber}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Le problème : Les angles morts de sécurité}
+            \begin{itemize}
+                \item \textbf{Exemple (Le Louvre - Abdelhadi) :} Des caméras de sécurité mal placées créent des angles morts facilitant l'intrusion.
+                \item \textbf{En cybersécurité/fraude :} Le flux de logs est massif. Sans corrélation intelligente, des alertes isolées masquent des attaques complexes (angles morts).
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu L'approche Percolia :}
+            \begin{itemize}
+                \item Transformation des logs informatiques en \textbf{embeddings} adaptés.
+                \item Application de HGP-Clusterer pour regrouper les événements autour de sessions, IPs et comptes.
+                \item Regroupement des logs liés pour réduire la masse d'alertes à analyser et faire émerger les comportements atypiques.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Backup 2 : Mosaïque de Delaunay d'ordre $K$ \& Simplexes de Gabriel}
     \begin{itemize}
         \item \textbf{Mosaïque de Delaunay d'ordre $K$ :} Généralisation de la triangulation classique. Elle contient tous les simplexes nécessaires pour calculer la hiérarchie $K$-NN.
         \item \textbf{Simplexes de Gabriel :} Un simplexe $\sigma$ est de Gabriel si sa boule circonscrite ne contient aucun point intrus dans $\mathcal{X} \setminus \sigma$.
-        \item \textbf{Théorème :} Les simplexes à l'origine de fusions de clusters dans la hiérarchie HGP sont nécessairement des simplexes de Gabriel.
+        \item \textbf{Théorème :} Les fusions dans la hiérarchie HGP s'effectuent nécessairement le long de simplexes de Gabriel.
         \item \textbf{Impact algorithmique :} Cela réduit drastiquement l'espace de recherche et rend l'algorithme HGP-Clusterer extrêmement rapide sur de grandes dimensions.
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Annexe 2 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
+\begin{frame}{Backup 3 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
     \begin{itemize}
         \item Suivi temporel d'instances sur des nuages de points 3D séquentiels.
         \item Combinaison de \textbf{HGP-Clusterer} avec du \textbf{Transport Optimal Déséquilibré} (\emph{Unbalanced Optimal Transport}).
