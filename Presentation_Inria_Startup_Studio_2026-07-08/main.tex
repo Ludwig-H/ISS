@@ -71,23 +71,23 @@
 % Slide 2.1: Constat (problème à résoudre) - Exemple 1
 \begin{frame}{Exemple 1 : Détection d'anomalies (Chantier Naval)}
     \begin{columns}[T]
-        \begin{column}{0.55\textwidth}
-            \textbf{\bleu Contexte (Naval Group \& Marie)}
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Projet ISS de Marie \textsc{Aspro} \& Naval Group}
             \begin{itemize}
-                \item Suivi géométrique d'assemblage (ex: pièces d'un bateau).
-                \item Le bruit de mesure fusionne les pièces avec les structures de support.
+                \item \textbf{Objectif :} Détection automatique d'anomalies sur chantiers navals.
+                \item \textbf{Données :} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR réelles} (chantier réel).
+                \item \textbf{Collaboration Percolia :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex : casques de chantier, tuteurs, bâches).
             \end{itemize}
             \vspace{0.2cm}
             \textbf{\bleu Le verrou : L'effet de chaînage}
             \begin{itemize}
-                \item Les algorithmes classiques (\textbf{DBSCAN, HDBSCAN}) reposent sur des relations binaires et créent des «~ponts~» parasites.
-                \item Conséquence : Les pièces distinctes fusionnent, empêchant le logiciel d'inspection de valider la conformité (pièce absente/présente, bien/mal placée).
+                \item Le bruit fusionne à tort ces anomalies avec la structure métallique du navire (DBSCAN).
             \end{itemize}
         \end{column}
-        \begin{column}{0.4\textwidth}
+        \begin{column}{0.48\textwidth}
             \centering
             \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
-            \tiny \textcolor{inria-2024-gris-bleu}{Effet de chaînage sur le benchmark Marie.}
+            \tiny \textcolor{inria-2024-gris-bleu}{Effet de chaînage (fusion parasite) sur le benchmark Marie.}
         \end{column}
     \end{columns}
 \end{frame}
