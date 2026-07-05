@@ -50,6 +50,13 @@
     \textcolor{inria-noir}{\textbf{\Roman{tocsectioncounter})~\inserttocsection}}%
 }
 
+\AtBeginSection[]{
+  \begin{frame}[plain,c]
+    \centering
+    \Huge \textbf{\textcolor{inria-rouge}{\Roman{section})~\insertsection}}
+  \end{frame}
+}
+
 \begin{document}
 
 % Slide 1: Page de titre
@@ -60,9 +67,9 @@
     \tableofcontents
 \end{frame}
 
-\section{Constat (problématique ciblée)}
-% Slide 2: Constat (problématique ciblée)
-\begin{frame}{Constat (problématique ciblée)}
+\section{Constat (problème à résoudre)}
+% Slide 2: Constat (problème à résoudre)
+\begin{frame}{Constat (problème à résoudre)}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
             \textbf{\bleu Le verrou technologique : L'effet de chaînage}
