@@ -684,6 +684,759 @@
     \end{columns}
 \end{frame}
 
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: Estimation}
+    \vspace{1.0cm}
+    \begin{center}
+        \begin{tikzpicture}[xscale=1.2, yscale=1.2]
+            \useasboundingbox (-1,-3) rectangle (8,2);
+            
+            \node (unknown) at (0, 0) [align=center] {\huge $f$ unknown};
+            
+            % Thick gray arrow
+            \draw[-{Latex[length=8pt, width=8pt]}, line width=4.5pt, color=gray!30] (1.8, 0) -- (3.6, 0);
+            
+            \node (estimation) at (5.8, 0) [align=center] {\huge \textbf{Estimation} $\widehat{f}$};
+            
+            \node (expensive) at (5.8, -0.85) [align=center] {
+                \normalsize Expensive naive methods\\
+                \small (discretization of $\mathbb{R}^d$)
+            };
+            
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: Density Estimator}
+    \begin{center}
+        \Large $\widehat{f} \leftarrow \widehat{f}_{K-\text{NN}}$ \\[4pt]
+        \normalsize \textbf{Estimator}: $K$-Nearest Neighbors ($K$-NN)
+    \end{center}
+    
+    \vspace{0.4cm}
+    
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \begin{center}
+                \vspace{0.2cm}
+                {\Large\mathversion{bold} $\forall x \in \mathbb{R}^d, \quad \widehat{f}_{K-\text{NN}}(x) = \frac{K}{n \, \omega_d \, r_K(x)^d}$}
+                
+                \vspace{1.0cm}
+                
+                {\large\mathversion{bold} $r_K(x) = \min \left\{ r \ge 0 \;\middle|\; |B(x,r) \cap \mathcal{X}| \ge K \right\}$}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.42\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{8pt}
+                \item \textbf{$n$}: number of points in $\mathcal{X}$
+                \item \textbf{$\omega_d$}: volume of the unit ball in $\mathbb{R}^d$
+                \item \textbf{$r_K(x)$}: distance to the $K$-th nearest neighbor of $x$
+                \item \textbf{$\omega_d r_K(x)^d$}: volume of the ball containing the $K$ neighbors
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: The Case $K=1$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[xscale=0.55, yscale=0.55]
+                    \useasboundingbox (-0.5, -0.5) rectangle (10.5, 6.5);
+                    
+                    \tikzset{dot/.style={circle, fill=inria-2024-bleu-canard, inner sep=1.4pt, outer sep=0pt}}
+                    \tikzset{edge/.style={line width=0.8pt, inria-rouge, opacity=0.7}}
+                    \tikzset{pruned/.style={line width=0.6pt, gray!40, dotted}}
+                    
+                    \only<2-3>{
+                        \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                            \fill[inria-bleu, opacity=0.22] (\x, \y) circle (0.55);
+                        }
+                    }
+                    
+                    \only<2-5>{
+                        \draw[line width=1.5pt, inria-rouge] (5.2, 5.9) -- (5.75, 5.9);
+                        \node[above] at (5.475, 5.9) {\small $r_0$};
+                    }
+                    
+                    \only<3-4>{
+                        \draw[edge] (5.16,0.57)--(4.33,0.85) (6.02,4.14)--(5.94,3.29) (7.04,3.24)--(6.51,2.31) (7.04,3.24)--(7.71,2.56) (7.04,3.24)--(7.16,3.92) (7.04,3.24)--(7.91,3.8) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(8.85,3.91) (8.31,3.24)--(7.91,3.8) (8.31,3.24)--(9.13,2.85) (3.02,4.45)--(2.56,3.8) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(3.27,5.47) (6.51,2.31)--(5.71,1.83) (6.51,2.31)--(6.55,1.27) (2.89,1.18)--(3.66,1.24) (2.89,1.18)--(3.51,0.51) (7.71,2.56)--(8.39,1.89) (4.33,0.85)--(4.4,1.59) (4.33,0.85)--(3.66,1.24) (4.33,0.85)--(3.51,0.51) (3.58,2.45)--(4.37,2.77) (3.58,2.45)--(3.65,3.45) (3.58,2.45)--(2.86,2.72) (6.66,5.36)--(7.27,4.75) (8.24,1.21)--(8.39,1.89) (8.24,1.21)--(7.39,0.91) (2.15,2.64)--(1.69,1.9) (2.15,2.64)--(1.47,2.64) (2.15,2.64)--(2.86,2.72) (1.65,4.56)--(2.41,4.96) (1.65,4.56)--(1.01,5.13) (1.65,4.56)--(1.73,5.45) (8.16,5.38)--(7.27,4.75) (8.16,5.38)--(8.85,4.99) (1.69,1.9)--(1.47,2.64) (1.69,1.9)--(1.04,1.76) (8.85,3.91)--(7.91,3.8) (8.85,3.91)--(9.13,2.85) (8.85,3.91)--(8.85,4.99) (4.7,4.94)--(4.09,5.44) (5.71,1.83)--(6.55,1.27) (8.39,1.89)--(9.39,2.11) (7.16,3.92)--(7.91,3.8) (7.16,3.92)--(7.27,4.75) (1.47,2.64)--(1.04,1.76) (5.23,3.21)--(4.37,2.77) (5.23,3.21)--(4.64,3.77) (5.23,3.21)--(5.94,3.29) (1.16,0.84)--(1.04,1.76) (7.39,0.91)--(6.55,1.27) (2.41,4.96)--(3.27,5.47) (2.41,4.96)--(1.73,5.45) (4.37,2.77)--(3.65,3.45) (4.37,2.77)--(4.64,3.77) (3.65,3.45)--(2.86,2.72) (3.65,3.45)--(4.64,3.77) (4.4,1.59)--(3.66,1.24) (3.27,5.47)--(4.09,5.44) (9.39,2.11)--(9.13,2.85) (3.66,1.24)--(3.51,0.51) (1.01,5.13)--(1.73,5.45);
+                    }
+                    
+                    \only<5>{
+                        \draw[pruned] (5.16,0.57)--(4.33,0.85) (6.02,4.14)--(5.94,3.29) (7.04,3.24)--(6.51,2.31) (7.04,3.24)--(7.71,2.56) (7.04,3.24)--(7.16,3.92) (7.04,3.24)--(7.91,3.8) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(8.85,3.91) (8.31,3.24)--(7.91,3.8) (8.31,3.24)--(9.13,2.85) (3.02,4.45)--(2.56,3.8) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(3.27,5.47) (6.51,2.31)--(5.71,1.83) (6.51,2.31)--(6.55,1.27) (2.89,1.18)--(3.66,1.24) (2.89,1.18)--(3.51,0.51) (7.71,2.56)--(8.39,1.89) (4.33,0.85)--(4.4,1.59) (4.33,0.85)--(3.66,1.24) (4.33,0.85)--(3.51,0.51) (3.58,2.45)--(4.37,2.77) (3.58,2.45)--(3.65,3.45) (3.58,2.45)--(2.86,2.72) (6.66,5.36)--(7.27,4.75) (8.24,1.21)--(8.39,1.89) (8.24,1.21)--(7.39,0.91) (2.15,2.64)--(1.69,1.9) (2.15,2.64)--(1.47,2.64) (2.15,2.64)--(2.86,2.72) (1.65,4.56)--(2.41,4.96) (1.65,4.56)--(1.01,5.13) (1.65,4.56)--(1.73,5.45) (8.16,5.38)--(7.27,4.75) (8.16,5.38)--(8.85,4.99) (1.69,1.9)--(1.47,2.64) (1.69,1.9)--(1.04,1.76) (8.85,3.91)--(7.91,3.8) (8.85,3.91)--(9.13,2.85) (8.85,3.91)--(8.85,4.99) (4.7,4.94)--(4.09,5.44) (5.71,1.83)--(6.55,1.27) (8.39,1.89)--(9.39,2.11) (7.16,3.92)--(7.91,3.8) (7.16,3.92)--(7.27,4.75) (1.47,2.64)--(1.04,1.76) (5.23,3.21)--(4.37,2.77) (5.23,3.21)--(4.64,3.77) (5.23,3.21)--(5.94,3.29) (1.16,0.84)--(1.04,1.76) (7.39,0.91)--(6.55,1.27) (2.41,4.96)--(3.27,5.47) (2.41,4.96)--(1.73,5.45) (4.37,2.77)--(3.65,3.45) (4.37,2.77)--(4.64,3.77) (3.65,3.45)--(2.86,2.72) (3.65,3.45)--(4.64,3.77) (4.4,1.59)--(3.66,1.24) (3.27,5.47)--(4.09,5.44) (9.39,2.11)--(9.13,2.85) (3.66,1.24)--(3.51,0.51) (1.01,5.13)--(1.73,5.45);
+                        \draw[edge] (1.69,1.9)--(1.04,1.76) (2.15,2.64)--(1.47,2.64) (8.31,3.24)--(7.91,3.8) (7.04,3.24)--(7.16,3.92) (8.24,1.21)--(8.39,1.89) (2.15,2.64)--(2.86,2.72) (5.23,3.21)--(5.94,3.29) (4.33,0.85)--(4.4,1.59) (3.66,1.24)--(3.51,0.51) (7.16,3.92)--(7.91,3.8) (3.58,2.45)--(2.86,2.72) (1.69,1.9)--(1.47,2.64) (2.89,1.18)--(3.66,1.24) (4.33,0.85)--(3.66,1.24) (9.39,2.11)--(9.13,2.85) (1.01,5.13)--(1.73,5.45) (4.7,4.94)--(4.09,5.44) (8.16,5.38)--(8.85,4.99) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(2.56,3.8) (5.23,3.21)--(4.64,3.77) (3.27,5.47)--(4.09,5.44) (7.16,3.92)--(7.27,4.75) (2.41,4.96)--(1.73,5.45) (3.58,2.45)--(4.37,2.77) (6.02,4.14)--(5.94,3.29) (1.65,4.56)--(1.01,5.13) (8.31,3.24)--(8.85,3.91) (6.66,5.36)--(7.27,4.75) (5.16,0.57)--(4.33,0.85) (8.24,1.21)--(7.39,0.91) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(9.13,2.85) (7.39,0.91)--(6.55,1.27) (1.16,0.84)--(1.04,1.76) (6.51,2.31)--(5.71,1.83) (7.71,2.56)--(8.39,1.89) (5.23,3.21)--(4.37,2.77) (4.37,2.77)--(3.65,3.45) (2.41,4.96)--(3.27,5.47) (5.71,1.83)--(6.55,1.27) (8.85,3.91)--(8.85,4.99);
+                    }
+                    
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \node[dot] at (\x, \y) {};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.40\textwidth}
+            \only<1>{
+                \begin{center}
+                    \vspace{1.5cm}
+                    {\large Poisson point cloud $\mathcal{X} \subset \mathbb{R}^2$}
+                \end{center}
+            }
+            \only<2>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(x) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(x) \le r_0$}
+                    
+                    \vspace{0.8cm}
+                    
+                    High-density level sets \\
+                    = \textbf{Boolean model}
+                \end{center}
+            }
+            \only<3>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(x) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(x) \le r_0$}
+                    
+                    \vspace{0.8cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $G(\mathcal{X}, r_0)$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Geometric graph} \cite{penrose2003}
+                \end{center}
+            }
+            \only<4>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(x) \le r_0$}
+                    
+                    \vspace{1.0cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $G(\mathcal{X}, r_0)$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Geometric graph} \cite{penrose2003}
+                \end{center}
+            }
+            \only<5>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(x) \le r_0$}
+                    
+                    \vspace{1.0cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $\text{MST}_{r_0}(\mathcal{X})$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Pruned Minimum Spanning Tree}
+                \end{center}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Robust SL / (H)DBSCAN ($K=2$)}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Point cloud and balls of radius $r$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % Circles of radius r (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, inria-bleu, thick] (\P) circle (\r);
+                    }
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.75, >=latex, font=\scriptsize]
+                    % Dendrogram branches for A, B, C, D, E, F (all very thick, black)
+                    \draw[very thick, black] (0.5, 0.3) -- (0.5, 2.0);
+                    \draw[very thick, black] (1.5, 0.3) -- (1.5, 2.0);
+                    \draw[very thick, black] (2.5, 0.3) -- (2.5, 2.0);
+                    \draw[very thick, black] (3.5, 0.3) -- (3.5, 2.0);
+                    \draw[very thick, black] (4.5, 0.3) -- (4.5, 2.0);
+                    \draw[very thick, black] (5.5, 0.3) -- (5.5, 2.0);
+                    
+                    % Horizontal bar at y=2.0 (resolution 2r)
+                    \draw[very thick, black] (0.5, 2.0) -- (5.5, 2.0);
+                    \draw[very thick, black] (3.0, 2.0) -- (3.0, 2.8);
+                    
+                    % Leaf nodes
+                    \node[below] at (0.5, 0.3) {$A$};
+                    \node[below] at (1.5, 0.3) {$B$};
+                    \node[below] at (2.5, 0.3) {$C$};
+                    \node[below] at (3.5, 0.3) {$D$};
+                    \node[below] at (4.5, 0.3) {$E$};
+                    \node[below] at (5.5, 0.3) {$F$};
+                    
+                    % Height axis
+                    \draw[->, thick] (0, 0.2) -- (0, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, black] (-0.1, 2.0) -- (0.5, 2.0);
+                    \node[left, black] at (-0.1, 2.0) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Point cloud and balls at level $r$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \def\rprime{1.25}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rprime);
+                                \fill[inria-bleu, opacity=0.3] (\q) circle (\rprime);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % Circles of radius r (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rprime);
+                    }
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rprime) node[midway, sloped, above] {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Dashed trunks going up
+                        \draw[very thick, inria-rouge, dashed] (M\i) -- (\x+0.25, \hr+1.2);
+                    }
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.5) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 1}: The 7 segments merge at threshold $r$.
+    \end{center}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r'$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Triangles and $3$-intersections at $r'$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \pgfmathsetmacro{\rprime}{\r * 2 / sqrt(3)}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rprime);
+                                \fill[inria-bleu, opacity=0.3] (\q) circle (\rprime);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % Circles of radius r' (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rprime);
+                    }
+                    
+                    % 3-intersection circumcenters marked in red
+                    \fill[inria-rouge] (barycentric cs:A=1,B=1,C=1) circle (3.5pt);
+                    \fill[inria-rouge] (barycentric cs:D=1,E=1,F=1) circle (3.5pt);
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rprime) node[midway, sloped, above] {$r'$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge, dashed] (1.35, \hrprime) -- (1.35, \hrprime+0.8);
+                    
+                    % Trunk 4 (CD) at 3.55 continues straight up as dashed
+                    \draw[very thick, inria-rouge, dashed] (3.55, \hrprime) -- (3.55, \hrprime+0.8);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge, dashed] (5.75, \hrprime) -- (5.75, \hrprime+0.8);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.5) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 2}: Merging of triangles at $r'$ via $3$-intersections. $CD$ remains isolated.
+    \end{center}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r''$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Global connectivity at $r''$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \pgfmathsetmacro{\rsecond}{\r * sqrt(2 + sqrt(3))}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rsecond);
+                                \fill[inria-bleu, opacity=0.15] (\q) circle (\rsecond);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % 3-intersections fill (color overlay in red)
+                    \begin{scope}
+                        \clip (A) circle (\rsecond);
+                        \clip (B) circle (\rsecond);
+                        \clip (C) circle (\rsecond);
+                        \fill[inria-rouge, opacity=0.25] (-10,-10) rectangle (10,10);
+                    \end{scope}
+                    \begin{scope}
+                        \clip (D) circle (\rsecond);
+                        \clip (E) circle (\rsecond);
+                        \clip (F) circle (\rsecond);
+                        \fill[inria-rouge, opacity=0.25] (-10,-10) rectangle (10,10);
+                    \end{scope}
+ 
+                    % Circles of radius r'' (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rsecond);
+                    }
+                    
+                    % 4 points of tangency marked in red
+                    \fill[inria-rouge] ($ (A)!0.5!(D) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (C)!0.5!(E) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (B)!0.5!(D) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (C)!0.5!(F) $) circle (3.5pt);
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rsecond) node[midway, sloped, above] {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    \def\hrsecond{2.3}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge] (1.35, \hrprime) -- (1.35, \hrsecond);
+                    
+                    % Trunk 4 (CD) at 3.55 goes straight up to hrsecond
+                    \draw[very thick, inria-rouge] (3.55, \hrprime) -- (3.55, \hrsecond);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge] (5.75, \hrprime) -- (5.75, \hrsecond);
+                    
+                    % Horizontal bar at hrsecond (resolution r'')
+                    \draw[very thick, inria-rouge] (1.35, \hrsecond) -- (5.75, \hrsecond);
+                    \draw[very thick, inria-rouge] (3.55, \hrsecond) -- (3.55, \hrsecond+0.4);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.9) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrsecond) -- (1.35, \hrsecond);
+                    \node[left, inria-rouge] at (-0.6, \hrsecond) {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 3}: Global connectivity at $r''$ through tangency points.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Robust SL vs. True $2$-NN Hierarchy: Comparison}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Robust SL Hierarchy ($K=2$)}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.7, >=latex, font=\scriptsize]
+                    % Dendrogram branches for A, B, C, D, E, F (very thick, black)
+                    \draw[very thick, black] (0.5, 0.3) -- (0.5, 2.0);
+                    \draw[very thick, black] (1.5, 0.3) -- (1.5, 2.0);
+                    \draw[very thick, black] (2.5, 0.3) -- (2.5, 2.0);
+                    \draw[very thick, black] (3.5, 0.3) -- (3.5, 2.0);
+                    \draw[very thick, black] (4.5, 0.3) -- (4.5, 2.0);
+                    \draw[very thick, black] (5.5, 0.3) -- (5.5, 2.0);
+                    
+                    % Horizontal bar at y=2.0 (resolution 2r)
+                    \draw[very thick, black] (0.5, 2.0) -- (5.5, 2.0);
+                    \draw[very thick, black] (3.0, 2.0) -- (3.0, 2.8);
+                    
+                    % Leaf nodes
+                    \node[below] at (0.5, 0.3) {$A$};
+                    \node[below] at (1.5, 0.3) {$B$};
+                    \node[below] at (2.5, 0.3) {$C$};
+                    \node[below] at (3.5, 0.3) {$D$};
+                    \node[below] at (4.5, 0.3) {$E$};
+                    \node[below] at (5.5, 0.3) {$F$};
+                    
+                    % Height axis
+                    \draw[->, thick] (0, 0.2) -- (0, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, black] (-0.1, 2.0) -- (0.5, 2.0);
+                    \node[left, black] at (-0.1, 2.0) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{True $2$-NN Hierarchy}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.7, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    \def\hrsecond{2.3}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge] (1.35, \hrprime) -- (1.35, \hrsecond);
+                    
+                    % Trunk 4 (CD) at 3.55 goes straight up to hrsecond
+                    \draw[very thick, inria-rouge] (3.55, \hrprime) -- (3.55, \hrsecond);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge] (5.75, \hrprime) -- (5.75, \hrsecond);
+                    
+                    % Horizontal bar at hrsecond (resolution r'')
+                    \draw[very thick, inria-rouge] (1.35, \hrsecond) -- (5.75, \hrsecond);
+                    \draw[very thick, inria-rouge] (3.55, \hrsecond) -- (3.55, \hrsecond+0.5);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrsecond) -- (1.35, \hrsecond);
+                    \node[left, inria-rouge] at (-0.6, \hrsecond) {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Summary}: The true $2$-NN hierarchy isolates the connection bridge $C\text{-}D$, unlike Robust SL.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: High-Density Clusters ($K \ge 2$)}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.60\textwidth}
+            \begin{center}
+                \begin{itemize}
+                    \setlength{\itemsep}{12pt}
+                    \item If \textbf{$\widehat{f} = \widehat{f}_{K-\text{NN}}$} ($K \ge 2$): density estimator by $K$-nearest neighbors.
+                    \item Transition to \textbf{hypergraphs} (geometric complexes):
+                    \begin{itemize}
+                        \setlength{\itemsep}{6pt}
+                        \item Edges and triangles appear at the intersections of balls of radius $r$.
+                    \end{itemize}
+                    \item Higher-order clustering algorithms:
+                    \begin{itemize}
+                        \setlength{\itemsep}{6pt}
+                        \item Connected components are replaced by \textbf{$K$-polyhedra}.
+                        \item For $K \ge 2$, clusters (polyhedra) can overlap.
+                    \end{itemize}
+                \end{itemize}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.38\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[xscale=0.42, yscale=0.42]
+                    \useasboundingbox (-0.5, -0.5) rectangle (10.5, 6.5);
+                    
+                    \tikzset{dot/.style={circle, fill=inria-2024-bleu-canard, inner sep=1.1pt, outer sep=0pt}}
+                    \tikzset{cech_edge/.style={line width=0.4pt, gray!80}}
+                    
+                    % 1. Disks
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \fill[inria-bleu, opacity=0.18] (\x, \y) circle (0.55);
+                    }
+                    
+                    % 2. Cech Triangles
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (7.04,3.24)--(7.16,3.92)--(7.91,3.8)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (8.31,3.24)--(8.85,3.91)--(7.91,3.8)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (2.89,1.18)--(3.66,1.24)--(3.51,0.51)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (4.33,0.85)--(4.4,1.59)--(3.66,1.24)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (4.33,0.85)--(3.66,1.24)--(3.51,0.51)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (2.15,2.64)--(1.69,1.9)--(1.47,2.64)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.65,4.56)--(2.41,4.96)--(1.73,5.45)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.65,4.56)--(1.01,5.13)--(1.73,5.45)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.69,1.9)--(1.47,2.64)--(1.04,1.76)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (5.23,3.21)--(4.37,2.77)--(4.64,3.77)--cycle;
+                    
+                    % 3. Cech Edges
+                    \draw[cech_edge] (5.16,0.57)--(4.33,0.85);
+                    \draw[cech_edge] (6.02,4.14)--(5.94,3.29);
+                    \draw[cech_edge] (7.04,3.24)--(6.51,2.31);
+                    \draw[cech_edge] (7.04,3.24)--(7.71,2.56);
+                    \draw[cech_edge] (7.04,3.24)--(7.16,3.92);
+                    \draw[cech_edge] (7.04,3.24)--(7.91,3.8);
+                    \draw[cech_edge] (8.31,3.24)--(7.71,2.56);
+                    \draw[cech_edge] (8.31,3.24)--(8.85,3.91);
+                    \draw[cech_edge] (8.31,3.24)--(7.91,3.8);
+                    \draw[cech_edge] (8.31,3.24)--(9.13,2.85);
+                    \draw[cech_edge] (3.02,4.45)--(2.56,3.8);
+                    \draw[cech_edge] (3.02,4.45)--(2.41,4.96);
+                    \draw[cech_edge] (3.02,4.45)--(3.27,5.47);
+                    \draw[cech_edge] (6.51,2.31)--(5.71,1.83);
+                    \draw[cech_edge] (6.51,2.31)--(6.55,1.27);
+                    \draw[cech_edge] (2.89,1.18)--(3.66,1.24);
+                    \draw[cech_edge] (2.89,1.18)--(3.51,0.51);
+                    \draw[cech_edge] (7.71,2.56)--(8.39,1.89);
+                    \draw[cech_edge] (4.33,0.85)--(4.4,1.59);
+                    \draw[cech_edge] (4.33,0.85)--(3.66,1.24);
+                    \draw[cech_edge] (4.33,0.85)--(3.51,0.51);
+                    \draw[cech_edge] (3.58,2.45)--(4.37,2.77);
+                    \draw[cech_edge] (3.58,2.45)--(3.65,3.45);
+                    \draw[cech_edge] (3.58,2.45)--(2.86,2.72);
+                    \draw[cech_edge] (6.66,5.36)--(7.27,4.75);
+                    \draw[cech_edge] (8.24,1.21)--(8.39,1.89);
+                    \draw[cech_edge] (8.24,1.21)--(7.39,0.91);
+                    \draw[cech_edge] (2.15,2.64)--(1.69,1.9);
+                    \draw[cech_edge] (2.15,2.64)--(1.47,2.64);
+                    \draw[cech_edge] (2.15,2.64)--(2.86,2.72);
+                    \draw[cech_edge] (1.65,4.56)--(2.41,4.96);
+                    \draw[cech_edge] (1.65,4.56)--(1.01,5.13);
+                    \draw[cech_edge] (1.65,4.56)--(1.73,5.45);
+                    \draw[cech_edge] (8.16,5.38)--(7.27,4.75);
+                    \draw[cech_edge] (8.16,5.38)--(8.85,4.99);
+                    \draw[cech_edge] (1.69,1.9)--(1.47,2.64);
+                    \draw[cech_edge] (1.69,1.9)--(1.04,1.76);
+                    \draw[cech_edge] (8.85,3.91)--(7.91,3.8);
+                    \draw[cech_edge] (8.85,3.91)--(9.13,2.85);
+                    \draw[cech_edge] (8.85,3.91)--(8.85,4.99);
+                    \draw[cech_edge] (4.7,4.94)--(4.09,5.44);
+                    \draw[cech_edge] (5.71,1.83)--(6.55,1.27);
+                    \draw[cech_edge] (8.39,1.89)--(9.39,2.11);
+                    \draw[cech_edge] (7.16,3.92)--(7.91,3.8);
+                    \draw[cech_edge] (7.16,3.92)--(7.27,4.75);
+                    \draw[cech_edge] (1.47,2.64)--(1.04,1.76);
+                    \draw[cech_edge] (5.23,3.21)--(4.37,2.77);
+                    \draw[cech_edge] (5.23,3.21)--(4.64,3.77);
+                    \draw[cech_edge] (5.23,3.21)--(5.94,3.29);
+                    \draw[cech_edge] (1.16,0.84)--(1.04,1.76);
+                    \draw[cech_edge] (7.39,0.91)--(6.55,1.27);
+                    \draw[cech_edge] (2.41,4.96)--(3.27,5.47);
+                    \draw[cech_edge] (2.41,4.96)--(1.73,5.45);
+                    \draw[cech_edge] (4.37,2.77)--(3.65,3.45);
+                    \draw[cech_edge] (4.37,2.77)--(4.64,3.77);
+                    \draw[cech_edge] (3.65,3.45)--(2.86,2.72);
+                    \draw[cech_edge] (3.65,3.45)--(4.64,3.77);
+                    \draw[cech_edge] (4.4,1.59)--(3.66,1.24);
+                    \draw[cech_edge] (3.27,5.47)--(4.09,5.44);
+                    \draw[cech_edge] (9.39,2.11)--(9.13,2.85);
+                    \draw[cech_edge] (3.66,1.24)--(3.51,0.51);
+                    \draw[cech_edge] (1.01,5.13)--(1.73,5.45);
+                    
+                    % 5. Redraw Points
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \node[dot] at (\x, \y) {};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \begin{frame}{The Case $K=1$: The \textsc{Gabriel} Graph}
     \begin{columns}[c, onlytextwidth]
         \begin{column}{0.54\textwidth}
