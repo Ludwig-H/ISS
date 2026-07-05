@@ -168,52 +168,43 @@
 \end{frame}
 
 \section{Projet \& Solution}
-% Slide 3: Pitch & Projet
-\begin{frame}{Pitch \& Projet Percolia}
+% Slide 3: Pitch & Validation terrain
+\begin{frame}{Pitch \& Validation de l'état de l'art}
     \begin{block}{\large Percolia en une phrase}
         \textbf{Percolia} transforme automatiquement des nuages de points 3D LiDAR bruts et bruités en jumeaux numériques précis grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
     \end{block}
     
-    \vspace{0.4cm}
+    \vspace{0.2cm}
     
-    \textbf{Pourquoi le LiDAR 3D ?}
+    \textbf{Un standard industriel commun : (H)DBSCAN}
     \begin{itemize}
-        \item \textbf{Explosion des données :} Capteurs LiDAR embarqués partout (drones, robots, véhicules autonomes, infrastructures).
-        \item \textbf{Besoins métiers :} Segmenter finement les objets (arbres, poteaux, bâtiments, pièces) pour l'inspection et la simulation.
-        \item \textbf{Le goulot d'étranglement :} Le nettoyage et la structuration manuels des données coûtent cher et prennent du temps.
+        \item Toutes les solutions actuelles (ou variantes) reposent sur \textbf{(H)DBSCAN} pour la structuration 3D, malgré leurs faiblesses face au bruit.
+        \item Constat validé lors d'échanges directs avec les équipes techniques des leaders du secteur :
+        \begin{itemize}
+            \item \textbf{Greehill} : Gyula \textsc{Fekete} (CTO) et \href{https://www.linkedin.com/in/benjamin-berta/?locale=hu}{Benjamin \textsc{Berta}} (Lead Machine Learning).
+            \item \textbf{Hydro-Québec} : \href{https://www.linkedin.com/in/philippemassicotte/}{Philippe \textsc{Massicotte}} (Chercheur).
+            \item \textbf{Exwayz} : \href{https://www.linkedin.com/in/hassan-bouchiba-434078202/}{Hassan \textsc{Bouchiba}} (Co-fondateur \& CTO).
+        \end{itemize}
     \end{itemize}
-    
-    \vspace{0.4cm}
-    \begin{center}
-        \textcolor{inria-rouge}{\textbf{Notre force :}} Une technologie \textbf{sans apprentissage} (\emph{training-free}), hautement précise et résistante au bruit.
-        \\[3pt]
-        \scriptsize \textit{Note : La technologie est également généralisable à d'autres structures complexes comme les logs cyber (voir Backup).}
-    \end{center}
 \end{frame}
 
 % Slide 4: Solution Percolia
 \begin{frame}{Solution Percolia : Rupture par l'ordre supérieur}
-    \begin{center}
-        \large Comment Percolia résout le problème de segmentation 3D ?
-    \end{center}
-    
-    \vspace{0.3cm}
-    
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
             \textbf{Le concept de connectivité d'ordre supérieur :}
             \begin{itemize}
-                \item \textbf{Graphes (actuel) :} Deux points sont connectés s'ils sont proches. Le bruit de mesure relie facilement deux amas disjoints.
-                \item \textbf{Hypergraphes (Percolia) :} On n'étudie plus les liaisons par paires, mais les intersections multiples de boules (complexes géométriques).
-                \item \textbf{Retard de percolation :} L'obligation d'avoir des connexions multipoints bloque la propagation du bruit et isole naturellement les vrais amas.
+                \item \textbf{Graphes (actuel) :} Liaisons binaires (par paires). Le bruit de mesure fusionne à tort des amas disjoints.
+                \item \textbf{Hypergraphes (Percolia) :} Étude des intersections multiples de boules (complexes géométriques).
+                \item \textbf{Retard de percolation :} Bloque la propagation du bruit de mesure et sépare naturellement les vrais amas d'intérêt.
             \end{itemize}
         \end{column}
         
-        \begin{column}{0.46\textwidth}
-            \textbf{Impacts concrets pour nos utilisateurs (ex: Marie \textsc{Aspro}) :}
+        \begin{column}{0.48\textwidth}
+            \textbf{Impacts concrets (ex: Marie \textsc{Aspro}) :}
             \begin{itemize}
-                \item \textbf{Détourage parfait :} Les structures métalliques du bateau et les pièces d'assemblage sont séparées de façon nette, sans bavure due au bruit.
-                \item \textbf{Diagnostic automatique :} L'analyse de conformité géométrique devient fiable à 100\% (pièce bien placée vs mal placée).
+                \item \textbf{Détourage parfait :} Les structures métalliques et les pièces d'assemblage sont séparées de façon nette, sans bavure.
+                \item \textbf{Diagnostic automatisé :} Identification fiable de la conformité (pièce \textbf{présente} vs \textbf{absente}, \textbf{bien placée} vs \textbf{mal placée}).
                 \item \textbf{Gain de temps :} Suppression des étapes manuelles de nettoyage de nuages de points.
             \end{itemize}
         \end{column}
