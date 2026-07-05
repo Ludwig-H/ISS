@@ -293,31 +293,30 @@
 
 \section{Marché \& Concurrents}
 % Slide 7: Marché & Concurrents
-\begin{frame}{Analyse de Marché \& Segment LiDAR}
+\begin{frame}{Marché et Positionnement Concurrentiel}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Taille et dynamique du marché :}
+            \textbf{Le marché du LiDAR \& Jumeaux numériques}
             \begin{itemize}
-                \item \textbf{Marché de la cartographie LiDAR :} Évalué à 5,3 Md\$ en 2025, estimé à plus de 40 Md\$ en 2035 (source: Global Market Insights).
-                \item \textbf{Jumeaux numériques industriels :} 19 Md\$ en 2024.
-                \item \textbf{Cibles de segment :}
-                \begin{itemize}
-                    \item \textbf{Greehill} (monitoring d'infrastructures vertes urbaines).
-                    \item \textbf{Exwayz} (logiciels de traitement 3D temps réel).
-                    \item \textbf{YellowScan} (systèmes LiDAR embarqués sur drone).
-                \end{itemize}
+                \item \textbf{Dynamique du marché :} Cartographie LiDAR ($5,3$ Md\$ en 2025, proj. $>40$ Md\$ en 2035) et jumeaux numériques ($19$ Md\$ en 2024).
+                \item \textbf{Cibles logicielles :} Industriels exploitant des nuages de points 3D LiDAR (monitoring urbain/forestier, inspection, réseaux).
+                \item \textbf{Exemples de cibles :} \emph{Greehill}, \emph{Exwayz}, \emph{YellowScan}.
             \end{itemize}
         \end{column}
         
-        \begin{column}{0.46\textwidth}
-            \textbf{Positionnement concurrentiel :}
+        \begin{column}{0.48\textwidth}
+            \textbf{L'alternative standard : (H)DBSCAN}
             \begin{itemize}
-                \item \textbf{Concurrents :} DBSCAN, HDBSCAN (librairies open-source standards) et scripts propriétaires \emph{ad hoc} développés par les industriels.
-                \item \textbf{L'avantage Percolia :}
-                \begin{itemize}
-                    \item \textbf{Haute précision :} Aucune erreur de fusion due aux bruits de poussière.
-                    \item \textbf{Intégrable :} Se greffe sur les pipelines existants sans nécessiter de coûteuses stations de calcul IA (léger et efficace).
-                \end{itemize}
+                \item \textbf{Atouts concurrentiels :} Entièrement libre d'utilisation, gratuit et open-source (Scikit-Learn).
+                \item \textbf{Limites techniques :} Sensibilité au bruit (effet de chaînage reliant à tort des amas) et manque de précision fine.
+            \end{itemize}
+            
+            \vspace{0.15cm}
+            \textbf{La valeur ajoutée de Percolia}
+            \begin{itemize}
+                \item \textbf{Segmentation robuste :} Insensibilité théorique et pratique au bruit de mesure.
+                \item \textbf{Flexibilité :} Possibilité d'injecter des \emph{a priori} physiques (volumes d'objets, modèle 3D).
+                \item \textbf{Efficacité :} Intégration sur des systèmes existants sans nécessiter de coûteuses stations de calcul IA (léger et efficace).
             \end{itemize}
         \end{column}
     \end{columns}
