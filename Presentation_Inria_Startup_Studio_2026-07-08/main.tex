@@ -92,51 +92,77 @@
     \end{columns}
 \end{frame}
 
-% Slide 2.2: Constat (problème à résoudre) - Exemple 2
-\begin{frame}{Exemple 2 : Jumeaux numériques urbains \& Réseaux électriques}
+% Slide 2.2: Constat (problème à résoudre) - Exemple 2 (Greehill)
+\begin{frame}{Exemple 2 : Jumeaux numériques urbains (Greehill)}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
-            \textbf{\bleu Inventaire d'arbres intelligents (Greehill)}
+            \textbf{\bleu Inventaire d'arbres intelligents (\href{https://www.greehill.com/}{Greehill})}
             \begin{itemize}
-                \item Création de jumeaux numériques 4D d'arbres urbains à partir de LiDAR mobiles.
-                \item Problème : Le feuillage se mêle aux câbles électriques, panneaux et façades, causant des erreurs de segmentation.
+                \item Création de jumeaux numériques 4D d'arbres urbains à partir de LiDAR mobiles (MLS/TLS).
+                \item Analyse de la vitalité, risques de rupture et hauteurs de clearance (lignes, corridors).
             \end{itemize}
             \vspace{0.2cm}
-            \textbf{\bleu Monitoring en forêt dense (Hydro-Québec)}
+            \textbf{\bleu Le verrou technologique}
             \begin{itemize}
-                \item Gestion de la végétation à proximité des conducteurs et géolocalisation des poteaux.
-                \item Le goulot d'étranglement : Le nettoyage manuel pour séparer les arbres des infrastructures coûte cher et prend du temps.
+                \item Le feuillage se mêle aux lignes électriques, panneaux de signalisation ou façades.
+                \item Les algorithmes classiques (DBSCAN) fusionnent les arbres avec ces infrastructures.
             \end{itemize}
         \end{column}
         \begin{column}{0.44\textwidth}
             \centering
-            \includegraphics[height=0.36\textheight]{imgs/Greehill_PowerlineClearance.png}\\[4pt]
-            \includegraphics[height=0.36\textheight]{imgs/HydroQuebec_Segmentation.png}\\
-            \tiny \textcolor{inria-2024-gris-bleu}{Haut : Clearance de lignes (Greehill). Bas : Segmentation (Hydro-Québec).}
+            \includegraphics[height=0.45\textheight]{imgs/Greehill_Semantic_Segmentation.png}\hfill
+            \includegraphics[height=0.45\textheight]{imgs/Greehill_Instance_Segmentation.png}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Extraction Greehill : Segmentation sémantique (bois/feuilles) et segmentation d'instances d'arbres.}
         \end{column}
     \end{columns}
 \end{frame}
 
-% Slide 2.3: Constat (problème à résoudre) - Exemple 3
-\begin{frame}{Exemple 3 : SLAM \& Traitement LiDAR temps réel}
+% Slide 2.3: Constat (problème à résoudre) - Exemple 3 (Hydro-Québec)
+\begin{frame}{Exemple 3 : Monitoring de réseaux électriques (Hydro-Québec)}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
-            \textbf{\bleu Navigation autonome (Exwayz)}
+            \textbf{\bleu Suivi de lignes en forêt (Hydro-Québec)}
             \begin{itemize}
-                \item Logiciels de positionnement (SLAM) et de perception 3D temps réel pour la robotique et les véhicules autonomes.
-                \item \textbf{Le besoin :} Détecter et suivre au vol les piétons, cyclistes et véhicules pour éviter les collisions.
+                \item Inventaire automatisé des poteaux et conducteurs de distribution électrique.
+                \item LiDAR terrestre mobile en milieu forestier dense.
             \end{itemize}
             \vspace{0.2cm}
-            \textbf{\bleu Les limites de DBSCAN en dynamique}
+            \textbf{\bleu Le verrou technologique}
             \begin{itemize}
-                \item Le bruit des capteurs relie les piétons à des objets statiques (murs, poteaux, voitures garées).
-                \item Les fausses connexions entraînent des pertes de suivi (*tracking*) ou des freinages brusques.
-                \item Contrainte stricte de temps de calcul pour le temps réel.
+                \item La proximité immédiate de la végétation crée du bruit de mesure.
+                \item DBSCAN fusionne à tort les branches avec les câbles et les poteaux, exigeant un nettoyage manuel très lourd.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/HydroQuebec_Figure1.png}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Figure 1 du papier GRETSI (Hydro-Québec) : Nuage LiDAR sans sol et classifié.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.4: Constat (problème à résoudre) - Exemple 4 (Exwayz)
+\begin{frame}{Exemple 4 : SLAM \& Traitement LiDAR temps réel (Exwayz)}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Navigation autonome}
+            \begin{itemize}
+                \item SLAM et perception 3D temps réel pour robots mobiles et véhicules autonomes.
+                \item Suivi des piétons, cyclistes et obstacles pour la prise de décision.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou technologique}
+            \begin{itemize}
+                \item Le bruit relie les piétons aux objets statiques (murs, poteaux), causant des pertes de tracking.
+                \item Contrainte stricte de temps réel excluant les post-traitements lourds.
             \end{itemize}
         \end{column}
         \begin{column}{0.44\textwidth}
             \centering
             \includegraphics[width=\textwidth]{imgs/Resultat3_HGP_SemanticKITTI.png}\\
+            \vspace{0.2cm}
             \tiny \textcolor{inria-2024-gris-bleu}{Tracking d'instances 3D/4D sur SemanticKITTI.}
         \end{column}
     \end{columns}
