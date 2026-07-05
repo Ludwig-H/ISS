@@ -32,3 +32,6 @@
 
 # Track the final PDF at the root
 !/Manuscrit_de_these.pdf
+
+# Temporary scratch files
+scratch/
