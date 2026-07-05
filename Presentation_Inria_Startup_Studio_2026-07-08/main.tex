@@ -146,16 +146,16 @@
 \begin{frame}{Exemple 4 : SLAM \& Traitement LiDAR temps réel (Exwayz)}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
-            \textbf{\bleu Navigation autonome}
+            \textbf{\bleu Qu'est-ce que le SLAM ?}
             \begin{itemize}
-                \item SLAM et perception 3D temps réel pour robots mobiles et véhicules autonomes.
-                \item Suivi des piétons, cyclistes et obstacles pour la prise de décision.
+                \item \textbf{Cartographie :} Construction d'une carte 3D de l'environnement.
+                \item \textbf{Localisation :} Positionnement en temps réel du robot dans cette carte.
             \end{itemize}
             \vspace{0.2cm}
             \textbf{\bleu Le verrou technologique}
             \begin{itemize}
-                \item Le bruit relie les piétons aux objets statiques (murs, poteaux), causant des pertes de tracking.
-                \item Contrainte stricte de temps réel excluant les post-traitements lourds.
+                \item Problème circulaire (la localisation dépend de la carte et réciproquement).
+                \item Le bruit relie à tort les objets dynamiques aux structures statiques (perte de tracking).
             \end{itemize}
         \end{column}
         \begin{column}{0.44\textwidth}
