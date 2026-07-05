@@ -236,27 +236,19 @@
 \begin{frame}{Rupture technologique : HGP-Clusterer}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Les deux piliers techniques de notre approche :}
+            \textbf{Les deux piliers scientifiques :}
             \begin{itemize}
-                \item \textbf{1. L'Ordre Supérieur (\v Cech \& $K$-polyèdres) :}
-                \begin{itemize}
-                    \item Remplacement des graphes binaires par des **complexes de \v Cech** (intersections de boules multiples).
-                    \item Extraction de **$K$-polyèdres** qui correspondent exactement aux amas de forte densité de l'estimateur des $K$ plus proches voisins ($\widehat f_{K\text{-NN}}$).
-                \end{itemize}
-                \item \textbf{2. La Percolation (Seuil critique différé) :}
-                \begin{itemize}
-                    \item Modélisation mathématique rigoureuse de la propagation de la connectivité.
-                    \item Exiger une connectivité multipoints **décale le seuil critique de percolation** : le bruit (faible densité) ne peut pas se propager, tandis que les vrais amas denses sont isolés sans chaînage.
-                \end{itemize}
+                \item \textbf{L'ordre supérieur (\v Cech \& $K$-polyèdres) :} complexes de \v Cech (intersections de boules multiples) modélisant exactement l'estimateur de densité $\widehat f_{K\text{-NN}}$.
+                \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
             \end{itemize}
         \end{column}
         
         \begin{column}{0.46\textwidth}
             \textbf{\orange Avantages \& Optimisation}
             \begin{itemize}
-                \item \textbf{Précision anti-bruit :} Garantie mathématique d'insensibilité à la poussière de mesure.
-                \item \textbf{Training-Free :} Solution sans apprentissage, robuste aux changements de domaine de capteurs.
-                \item \textbf{Calcul ultra-rapide :} Extraction des fusions via la **mosaïque de Delaunay d'ordre $K$**.
+                \item \textbf{Training-Free :} Aucun besoin de labellisation, robuste au changement de capteur.
+                \item \textbf{Anti-bruit :} Insensibilité prouvée face aux poussières et occlusions.
+                \item \textbf{Rapide :} Porté par la mosaïque de Delaunay d'ordre $K$.
             \end{itemize}
             
             \vspace{0.2cm}
