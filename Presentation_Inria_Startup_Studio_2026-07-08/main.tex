@@ -68,25 +68,76 @@
 \end{frame}
 
 \section{Constat (problème à résoudre)}
-% Slide 2: Constat (problème à résoudre)
-\begin{frame}{Constat (problème à résoudre)}
+% Slide 2.1: Constat (problème à résoudre) - Exemple 1
+\begin{frame}{Exemple 1 : Détection d'anomalies (Chantier Naval)}
     \begin{columns}[T]
-        \begin{column}{0.48\textwidth}
-            \textbf{\bleu Le verrou technologique : L'effet de chaînage}
+        \begin{column}{0.55\textwidth}
+            \textbf{\bleu Contexte (Naval Group \& Marie)}
             \begin{itemize}
-                \item Les algorithmes de l'état de l'art (\textbf{DBSCAN, HDBSCAN}) et les heuristiques métiers reposent sur des \textbf{relations binaires} (graphes simples).
-                \item En présence de bruit de fond ou de poussières de mesure, ces graphes créent des «~ponts~» parasites.
-                \item Conséquence : Différents objets distincts fusionnent à tort en un seul bloc, nécessitant une correction manuelle systématique.
+                \item Suivi géométrique d'assemblage (ex: pièces d'un bateau).
+                \item Le bruit de mesure fusionne les pièces avec les structures de support.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou : L'effet de chaînage}
+            \begin{itemize}
+                \item Les algorithmes classiques (\textbf{DBSCAN, HDBSCAN}) reposent sur des relations binaires et créent des «~ponts~» parasites.
+                \item Conséquence : Les pièces distinctes fusionnent, empêchant le logiciel d'inspection de valider la conformité (pièce absente/présente, bien/mal placée).
             \end{itemize}
         \end{column}
-        
-        \begin{column}{0.48\textwidth}
-            \textbf{\bleu Exemple d'application : Montage industriel (Marie)}
+        \begin{column}{0.4\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Effet de chaînage sur le benchmark Marie.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.2: Constat (problème à résoudre) - Exemple 2
+\begin{frame}{Exemple 2 : Jumeaux numériques urbains \& Réseaux électriques}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Inventaire d'arbres intelligents (Greehill)}
             \begin{itemize}
-                \item \textbf{Contexte :} Suivi géométrique d'assemblage (ex: pièces d'un bateau).
-                \item \textbf{Actuellement :} Le bruit de mesure fusionne les pièces avec les structures de support ou les pièces adjacentes.
-                \item \textbf{Impact :} Le logiciel d'inspection échoue à valider si la pièce est «~présente~» vs «~absente~» et «~bien placée~» vs «~mal placée~». Les erreurs de détection bloquent la chaîne de montage.
+                \item Création de jumeaux numériques 4D d'arbres urbains à partir de LiDAR mobiles.
+                \item Problème : Le feuillage se mêle aux câbles électriques, panneaux et façades, causant des erreurs de segmentation.
             \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Monitoring en forêt dense (Hydro-Québec)}
+            \begin{itemize}
+                \item Gestion de la végétation à proximité des conducteurs et géolocalisation des poteaux.
+                \item Le goulot d'étranglement : Le nettoyage manuel pour séparer les arbres des infrastructures coûte cher et prend du temps.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[height=0.36\textheight]{imgs/Greehill_PowerlineClearance.png}\\[4pt]
+            \includegraphics[height=0.36\textheight]{imgs/HydroQuebec_Segmentation.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Haut : Clearance de lignes (Greehill). Bas : Segmentation (Hydro-Québec).}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.3: Constat (problème à résoudre) - Exemple 3
+\begin{frame}{Exemple 3 : SLAM \& Traitement LiDAR temps réel}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Navigation autonome (Exwayz)}
+            \begin{itemize}
+                \item Logiciels de positionnement (SLAM) et de perception 3D temps réel pour la robotique et les véhicules autonomes.
+                \item \textbf{Le besoin :} Détecter et suivre au vol les piétons, cyclistes et véhicules pour éviter les collisions.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Les limites de DBSCAN en dynamique}
+            \begin{itemize}
+                \item Le bruit des capteurs relie les piétons à des objets statiques (murs, poteaux, voitures garées).
+                \item Les fausses connexions entraînent des pertes de suivi (*tracking*) ou des freinages brusques.
+                \item Contrainte stricte de temps de calcul pour le temps réel.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/Resultat3_HGP_SemanticKITTI.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Tracking d'instances 3D/4D sur SemanticKITTI.}
         \end{column}
     \end{columns}
 \end{frame}
