@@ -21,7 +21,7 @@
 }
 
 \title[Percolia - ISS]{\huge \textbf{PERCOLIA}}
-\subtitle{\large Structuration automatique \& fine de données. \\ \normalsize Application au LiDAR 3D}
+\subtitle{\large Structuration automatique \& fine de données \\ \normalsize Application au LiDAR 3D}
 \date[8 Juillet 2026]{Mercredi 8 Juillet 2026}
 \author[L. \& A. \textsc{Hauseux}]{%
    Louis \textsc{Hauseux} (porteur techno') \& Alban \textsc{Hauseux} (porteur business) \\[4pt]
@@ -55,30 +55,7 @@
 % Slide 1: Page de titre
 \frame{\titlepage}
 
-% Slide 2: Pitch & Projet
-\begin{frame}{Pitch \& Projet Percolia}
-    \begin{block}{\large Percolia en une phrase}
-        \textbf{Percolia} transforme automatiquement des nuages de points 3D LiDAR bruts et bruités en jumeaux numériques précis grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
-    \end{block}
-    
-    \vspace{0.4cm}
-    
-    \textbf{Pourquoi le LiDAR 3D ?}
-    \begin{itemize}
-        \item \textbf{Explosion des données :} Capteurs LiDAR embarqués partout (drones, robots, véhicules autonomes, infrastructures).
-        \item \textbf{Besoins métiers :} Segmenter finement les objets (arbres, poteaux, bâtiments, pièces) pour l'inspection et la simulation.
-        \item \textbf{Le goulot d'étranglement :} Le nettoyage et la structuration manuels des données coûtent cher et prennent du temps.
-    \end{itemize}
-    
-    \vspace{0.4cm}
-    \begin{center}
-        \textcolor{inria-rouge}{\textbf{Notre force :}} Une technologie \textbf{sans apprentissage} (\emph{training-free}), hautement précise et résistante au bruit.
-        \\[3pt]
-        \scriptsize \textit{Note : La technologie est également généralisable à d'autres structures complexes comme les logs cyber (voir Backup).}
-    \end{center}
-\end{frame}
-
-% Slide 3: Problème adressé (Focus on LiDAR & Marie)
+% Slide 2: Problème adressé (Focus on LiDAR & Marie)
 \begin{frame}{Problème adressé : Limites du clustering 3D actuel}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
@@ -99,6 +76,29 @@
             \end{itemize}
         \end{column}
     \end{columns}
+\end{frame}
+
+% Slide 3: Pitch & Projet
+\begin{frame}{Pitch \& Projet Percolia}
+    \begin{block}{\large Percolia en une phrase}
+        \textbf{Percolia} transforme automatiquement des nuages de points 3D LiDAR bruts et bruités en jumeaux numériques précis grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
+    \end{block}
+    
+    \vspace{0.4cm}
+    
+    \textbf{Pourquoi le LiDAR 3D ?}
+    \begin{itemize}
+        \item \textbf{Explosion des données :} Capteurs LiDAR embarqués partout (drones, robots, véhicules autonomes, infrastructures).
+        \item \textbf{Besoins métiers :} Segmenter finement les objets (arbres, poteaux, bâtiments, pièces) pour l'inspection et la simulation.
+        \item \textbf{Le goulot d'étranglement :} Le nettoyage et la structuration manuels des données coûtent cher et prennent du temps.
+    \end{itemize}
+    
+    \vspace{0.4cm}
+    \begin{center}
+        \textcolor{inria-rouge}{\textbf{Notre force :}} Une technologie \textbf{sans apprentissage} (\emph{training-free}), hautement précise et résistante au bruit.
+        \\[3pt]
+        \scriptsize \textit{Note : La technologie est également généralisable à d'autres structures complexes comme les logs cyber (voir Backup).}
+    \end{center}
 \end{frame}
 
 % Slide 4: Solution Percolia
