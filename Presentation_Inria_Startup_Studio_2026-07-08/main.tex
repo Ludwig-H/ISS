@@ -168,24 +168,67 @@
 \end{frame}
 
 \section{Projet \& Solution}
-% Slide 3: Pitch & Validation terrain
-\begin{frame}{Pitch \& Validation de l'état de l'art}
-    \begin{block}{\large Percolia en une phrase}
-        \textbf{Percolia} transforme automatiquement des nuages de points 3D LiDAR bruts et bruités en jumeaux numériques précis grâce à une nouvelle génération d'algorithmes de \textbf{clustering d'ordre supérieur}.
-    \end{block}
-    
-    \vspace{0.2cm}
-    
-    \textbf{Un standard industriel commun : (H)DBSCAN}
-    \begin{itemize}
-        \item Toutes les solutions actuelles (ou variantes) reposent sur \textbf{(H)DBSCAN} pour la structuration 3D, malgré leurs faiblesses face au bruit.
-        \item Constat validé lors d'échanges directs avec les équipes techniques des leaders du secteur :
-        \begin{itemize}
-            \item \textbf{Greehill} : Gyula \textsc{Fekete} (CTO) et \href{https://www.linkedin.com/in/benjamin-berta/?locale=hu}{Benjamin \textsc{Berta}} (Lead Machine Learning).
-            \item \textbf{Hydro-Québec} : \href{https://www.linkedin.com/in/philippemassicotte/}{Philippe \textsc{Massicotte}} (Chercheur).
-            \item \textbf{Exwayz} : \href{https://www.linkedin.com/in/hassan-bouchiba-434078202/}{Hassan \textsc{Bouchiba}} (Co-fondateur \& CTO).
-        \end{itemize}
-    \end{itemize}
+% Slide 3: Le standard de l'état de l'art
+\begin{frame}{Le standard de l'état de l'art : (H)DBSCAN}
+    \begin{columns}[T]
+        \begin{column}{0.54\textwidth}
+            \textbf{Le principe de (H)DBSCAN en quelques mots :}
+            \begin{itemize}
+                \item \textbf{Densité spatiale :} Regroupe les points proches dans des zones à forte densité (paramètres $\varepsilon$ et $MinPts$).
+                \item \textbf{Filtrage du bruit :} Isole le bruit de fond éloigné des amas denses.
+            \end{itemize}
+            
+            \vspace{0.3cm}
+            
+            \textbf{Validation terrain par des échanges directs :}
+            \begin{itemize}
+                \item Toutes les solutions phares de structuration 3D s'appuient sur (H)DBSCAN ou ses variantes :
+                \begin{itemize}
+                    \item \textbf{Greehill} : Gyula \textsc{Fekete} (CTO) et \href{https://www.linkedin.com/in/benjamin-berta/?locale=hu}{Benjamin \textsc{Berta}} (Lead Machine Learning).
+                    \item \textbf{Hydro-Québec} : \href{https://www.linkedin.com/in/philippemassicotte/}{Philippe \textsc{Massicotte}} (Chercheur).
+                    \item \textbf{Exwayz} : \href{https://www.linkedin.com/in/hassan-bouchiba-434078202/}{Hassan \textsc{Bouchiba}} (Co-fondateur \& CTO).
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.42\textwidth}
+            \centering
+            \textbf{\bleu Le principe et sa limite (chaînage)}
+            \\[8pt]
+            \begin{tikzpicture}[scale=0.9, every node/.style={circle, fill=inria-bleu, minimum size=5pt, inner sep=0pt}]
+                % Cluster 1
+                \node (a1) at (0.2,0.8) {};
+                \node (a2) at (0.8,0.3) {};
+                \node (a3) at (0.5,1.2) {};
+                \node (a4) at (1.1,0.9) {};
+                
+                % Cluster 2
+                \node (b1) at (3.1,0.7) {};
+                \node (b2) at (3.7,1.1) {};
+                \node (b3) at (3.4,0.3) {};
+                \node (b4) at (4.1,0.6) {};
+                
+                % Noise point in the middle
+                \node[fill=inria-rouge] (n) at (2.1,0.8) {};
+                
+                % Connections
+                \draw[dashed, inria-rouge, thick] (a4) -- (n);
+                \draw[dashed, inria-rouge, thick] (n) -- (b1);
+                \draw[thick] (a1) -- (a2) -- (a4) -- (a3) -- (a1);
+                \draw[thick] (b1) -- (b3) -- (b4) -- (b2) -- (b1);
+                
+                % Labels
+                \node[fill=none, font=\tiny\bfseries, text=inria-bleu] at (0.6, -0.2) {Amas 1};
+                \node[fill=none, font=\tiny\bfseries, text=inria-bleu] at (3.6, -0.2) {Amas 2};
+                \node[fill=none, font=\tiny\bfseries, text=inria-rouge] at (2.1, -0.2) {Bruit};
+            \end{tikzpicture}
+            \\[8pt]
+            \begin{block}{\small L'effet de chaînage}
+                \scriptsize
+                Une seule particule de bruit reliant deux amas à distance $\le \varepsilon$ provoque leur fusion erronée sous (H)DBSCAN.
+            \end{block}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 % Slide 4: Solution Percolia
