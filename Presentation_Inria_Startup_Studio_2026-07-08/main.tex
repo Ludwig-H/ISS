@@ -411,15 +411,106 @@
 \end{frame}
 
 \begin{frame}{Backup 2 : Mosaïque de Delaunay d'ordre $K$ \& Simplexes de Gabriel}
-    \begin{itemize}
-        \item \textbf{Mosaïque de Delaunay d'ordre $K$ :} Généralisation de la triangulation classique. Elle contient tous les simplexes nécessaires pour calculer la hiérarchie $K$-NN.
-        \item \textbf{Simplexes de Gabriel :} Un simplexe $\sigma$ est de Gabriel si sa boule circonscrite ne contient aucun point intrus dans $\mathcal{X} \setminus \sigma$.
-        \item \textbf{Théorème :} Les fusions dans la hiérarchie HGP s'effectuent nécessairement le long de simplexes de Gabriel.
-        \item \textbf{Impact algorithmique :} Cela réduit drastiquement l'espace de recherche et rend l'algorithme HGP-Clusterer extrêmement rapide sur de grandes dimensions.
-    \end{itemize}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \textbf{\bleu Réduction géométrique de la complexité :}
+            \begin{itemize}
+                \item \textbf{Mosaïque de Delaunay d'ordre $K$ :} Généralisation de la triangulation qui contient tous les simplexes nécessaires pour calculer la hiérarchie $K$-NN.
+                \item \textbf{Simplexes de Gabriel :} Un simplexe $\sigma$ est dit de \textsc{Gabriel} si sa boule circonscrite minimale ne contient aucun point intrus de $\mathcal{X} \setminus \sigma$.
+                \item \textbf{Théorème de HGP :} Les fusions dans la hiérarchie s'effectuent nécessairement le long de simplexes de Gabriel.
+                \item \textbf{Impact :} Réduit drastiquement l'espace de recherche et rend l'algorithme HGP-Clusterer extrêmement rapide sur de grandes dimensions.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, >=latex]
+                    % Top: Gabriel edge
+                    \begin{scope}[shift={(0,1.3)}]
+                        \coordinate (A) at (-1.0,0);
+                        \coordinate (B) at (1.0,0);
+                        \draw[fill=inria-bleu!10, draw=inria-bleu, thick] (0,0) circle (1.0);
+                        \draw[line width=1.5pt, inria-rouge] (A) -- (B);
+                        \fill[black] (A) circle (2pt) node[left] {$A$};
+                        \fill[black] (B) circle (2pt) node[right] {$B$};
+                        \node[below, font=\scriptsize] at (0,-1.1) {\textbf{Arête de \textsc{Gabriel}} (vide)};
+                    \end{scope}
+                    
+                    % Bottom: Non-Gabriel edge
+                    \begin{scope}[shift={(0,-1.7)}]
+                        \coordinate (A2) at (-1.0,0);
+                        \coordinate (B2) at (1.0,0);
+                        \coordinate (C2) at (0.3,0.35);
+                        \draw[fill=inria-rouge!10, draw=inria-rouge, thick, dashed] (0,0) circle (1.0);
+                        \draw[line width=1.5pt, gray!60, dashed] (A2) -- (B2);
+                        \fill[black] (A2) circle (2pt) node[left] {$A$};
+                        \fill[black] (B2) circle (2pt) node[right] {$B$};
+                        \fill[inria-rouge] (C2) circle (2.5pt) node[above] {$C$ (intrus)};
+                        \node[below, font=\scriptsize] at (0,-1.1) {\textbf{Non-\textsc{Gabriel}} (non-vide)};
+                    \end{scope}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
 \end{frame}
 
-\begin{frame}{Backup 3 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
+\begin{frame}{Backup 3 : HGP-Clusterer et $K$-polyèdres (pour $K \ge 2$)}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \textbf{\bleu Passage aux hypergraphes (complexes géométriques) :}
+            \begin{itemize}
+                \item \textbf{Transition d'ordre supérieur :} Pour $K \ge 2$, on utilise l'estimateur de densité $K$-NN.
+                \item \textbf{Saut de percolation :} Les composantes connexes classiques de DBSCAN (graphes simples) sont remplacées par des complexes de complexes.
+                \item \textbf{Complexes de Čech / Delaunay :} Les arêtes et triangles apparaissent aux intersections multiples de boules de rayon $r$.
+                \item \textbf{$K$-polyèdres :} Les clusters sont définis comme des polyèdres qui peuvent s'intersecter et se chevaucher, offrant une structure géométrique très riche.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, >=latex]
+                    \tikzset{cech_edge/.style={line width=0.4pt, gray!80}}
+                    \tikzset{cech_tri/.style={fill=inria-bleu!30, opacity=0.6}}
+                    
+                    % Points
+                    \coordinate (P1) at (0,0);
+                    \coordinate (P2) at (1.5,0.3);
+                    \coordinate (P3) at (0.8,1.2);
+                    \coordinate (P4) at (2.2,1.5);
+                    \coordinate (P5) at (1.7,2.3);
+                    
+                    % Balls
+                    \foreach \p in {P1, P2, P3, P4, P5} {
+                        \fill[inria-bleu, opacity=0.15] (\p) circle (0.85);
+                    }
+                    
+                    % Cech Triangles
+                    \fill[cech_tri] (P1) -- (P2) -- (P3) -- cycle;
+                    \fill[cech_tri] (P2) -- (P3) -- (P4) -- cycle;
+                    \fill[cech_tri] (P3) -- (P4) -- (P5) -- cycle;
+                    
+                    % Cech Edges
+                    \draw[cech_edge] (P1) -- (P2);
+                    \draw[cech_edge] (P1) -- (P3);
+                    \draw[cech_edge] (P2) -- (P3);
+                    \draw[cech_edge] (P2) -- (P4);
+                    \draw[cech_edge] (P3) -- (P4);
+                    \draw[cech_edge] (P3) -- (P5);
+                    \draw[cech_edge] (P4) -- (P5);
+                    
+                    % Draw points
+                    \foreach \p in {P1, P2, P3, P4, P5} {
+                        \fill[black] (\p) circle (2pt);
+                    }
+                    
+                    \node[below, font=\tiny] at (1.1,-0.9) {\textbf{Complexes de \textsc{Čech} d'ordre supérieur}};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Backup 4 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
     \begin{itemize}
         \item Suivi temporel d'instances sur des nuages de points 3D séquentiels.
         \item Combinaison de \textbf{HGP-Clusterer} avec du \textbf{Transport Optimal Déséquilibré} (\emph{Unbalanced Optimal Transport}).
