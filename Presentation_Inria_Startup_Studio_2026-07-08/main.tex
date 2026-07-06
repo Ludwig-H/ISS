@@ -373,88 +373,27 @@
 % Slide 5: Rupture technologique : HGP-Clusterer
 \begin{frame}{Rupture technologique : HGP-Clusterer}
     \begin{columns}[T]
-        \begin{column}{0.52\textwidth}
+        \begin{column}{0.5\textwidth}
             \textbf{Les deux piliers scientifiques :}
             \begin{itemize}
-                \item \textbf{L'ordre supérieur :} connectivité multipoints (intersections de boules multiples) modélisant l'estimateur de densité $\widehat f_{K\text{-NN}}$.
-                \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit.
+                \item \textbf{L'ordre supérieur :} connectivité multipoints (intersections de boules multiples) modélisant exactement l'estimateur de densité des $K$ plus proches voisins ($\widehat f_{K\text{-NN}}$).
+                \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
             \end{itemize}
         \end{column}
         
-        \begin{column}{0.44\textwidth}
+        \begin{column}{0.46\textwidth}
             \textbf{\orange Avantages \& Optimisation}
             \begin{itemize}
-                \item \textbf{Training-Free} (non supervisé, robuste).
-                \item \textbf{Priors géométriques} (ex: modèle 3D).
-                \item \textbf{Rapide} (mosaïque de Delaunay d'ordre $K$, complexité quasi-linéaire $O(N \log N)$).
+                \item \textbf{Training-Free :} Aucun besoin de labellisation, robuste au changement de capteur.
+                \item \textbf{Priors géométriques :} Possibilité d'injecter des \emph{a priori} géométriques (volumes, modèle 3D théorique).
+                \item \textbf{Rapide :} Porté par la mosaïque de Delaunay d'ordre $K$.
             \end{itemize}
-        \end{column}
-    \end{columns}
-
-    \vspace{0.2cm}
-    \hrule
-    \vspace{0.2cm}
-
-    \begin{columns}[c, onlytextwidth]
-        \begin{column}{0.48\textwidth}
-            \centering
-            \textbf{\bleu Standard (DBSCAN / Single-Linkage)} \\
-            \vspace{0.1cm}
-            \begin{tikzpicture}[scale=0.55]
-                \coordinate (A) at (0, 1);
-                \coordinate (B) at (0.5, 0);
-                \coordinate (C) at (1.2, 0.7);
-                \coordinate (Noise) at (2.4, 0.5);
-                \coordinate (D) at (3.6, 0.8);
-                \coordinate (E) at (4.3, 0.1);
-                \coordinate (F) at (4.8, 1.1);
-
-                \foreach \p in {A,B,C,Noise,D,E,F} {
-                    \draw[fill=inria-bleu, opacity=0.1] (\p) circle (0.8);
-                    \draw[dashed, inria-bleu, opacity=0.3] (\p) circle (0.8);
-                }
-
-                \draw[line width=1.2pt, black] (A) -- (B) -- (C) -- (Noise) -- (D) -- (E) -- (F) -- (D) -- (A) -- (C);
-                \draw[line width=1.2pt, black] (B) -- (A);
-                \draw[line width=1.2pt, black] (C) -- (A);
-
-                \foreach \p in {A,B,C,Noise,D,E,F} {
-                    \fill[black] (\p) circle (2.5pt);
-                }
-                \node[below, scale=0.7] at (Noise) {\textcolor{rouge_inria}{\textbf{Bruit (Pont)}}};
-                \node[above, scale=0.8, rouge_inria] at (2.4, 1.5) {\textbf{Effet de chaînage (1 seul cluster)}};
-            \end{tikzpicture}
-        \end{column}
-        
-        \begin{column}{0.48\textwidth}
-            \centering
-            \textbf{\bleu Percolia (HGP-Clusterer)} \\
-            \vspace{0.1cm}
-            \begin{tikzpicture}[scale=0.55]
-                \coordinate (A) at (0, 1);
-                \coordinate (B) at (0.5, 0);
-                \coordinate (C) at (1.2, 0.7);
-                \coordinate (Noise) at (2.4, 0.5);
-                \coordinate (D) at (3.6, 0.8);
-                \coordinate (E) at (4.3, 0.1);
-                \coordinate (F) at (4.8, 1.1);
-
-                \foreach \p in {A,B,C,Noise,D,E,F} {
-                    \draw[dashed, inria-bleu, opacity=0.2] (\p) circle (0.8);
-                }
-
-                \fill[inria-bleu, opacity=0.25] (A) -- (B) -- (C) -- cycle;
-                \fill[inria-bleu, opacity=0.25] (D) -- (E) -- (F) -- cycle;
-                
-                \draw[line width=1.2pt, inria-bleu] (A) -- (B) -- (C) -- cycle;
-                \draw[line width=1.2pt, inria-bleu] (D) -- (E) -- (F) -- cycle;
-
-                \foreach \p in {A,B,C,Noise,D,E,F} {
-                    \fill[black] (\p) circle (2.5pt);
-                }
-                \node[below, scale=0.7] at (Noise) {\textcolor{gray}{\textbf{Filtré}}};
-                \node[above, scale=0.8, inria-bleu] at (2.4, 1.5) {\textbf{2 clusters bien séparés}};
-            \end{tikzpicture}
+            
+            \vspace{0.25cm}
+            \begin{block}{Publication de référence}
+                \scriptsize
+                L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, \emph{Generalization of single-linkage with higher-order interactions}, \textbf{Applied Network Science}, 2026.
+            \end{block}
         \end{column}
     \end{columns}
 \end{frame}
