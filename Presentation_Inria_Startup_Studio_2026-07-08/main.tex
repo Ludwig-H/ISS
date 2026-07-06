@@ -15,12 +15,12 @@
 \hypersetup{
    allcolors=rouge_inria,
    pdfauthor   = {Louis Hauseux, Alban Hauseux},
-   pdftitle    = {Percolia - Candidature Inria Startup Studio},
+   pdftitle    = {P.E.R.C.O.L.I.A. - Candidature Inria Startup Studio},
    pdfsubject  = {Présentation Inria Startup Studio},
-   pdfkeywords = {Louis Hauseux, Alban Hauseux, Percolia, clustering, Delaunay, percolation, LiDAR}
+   pdfkeywords = {Louis Hauseux, Alban Hauseux, P.E.R.C.O.L.I.A., clustering, Delaunay, percolation, LiDAR}
 }
 
-\title[Percolia - ISS]{\huge \textbf{PERCOLIA}}
+\title[P.E.R.C.O.L.I.A. - ISS]{\huge \textbf{P.E.R.C.O.L.I.A.}}
 \subtitle{\large Structuration automatique \& fine de données \\ \normalsize Application au LiDAR 3D}
 \date[8 Juillet 2026]{Mercredi 8 Juillet 2026}
 \author[L. \& A. \textsc{Hauseux}]{%
@@ -205,6 +205,35 @@
 \end{frame}
 
 \section{Constat (problème à résoudre)}
+
+% Slide d'introduction de la proposition de valeur
+\begin{frame}{La proposition de valeur de P.E.R.C.O.L.I.A.}
+    \begin{block}{\large Notre Vision}
+        \textbf{Transformer le bruit des capteurs 3D en structures exploitables et jumeaux numériques.}
+    \end{block}
+    
+    \vspace{0.3cm}
+    
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Le Problème actuel}
+            \begin{itemize}
+                \item Les capteurs 3D capturent toutes les perturbations environnantes (bruit, poussière, feuilles).
+                \item Les outils classiques relient par erreur des objets différents en raison de ces perturbations.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu La Solution P.E.R.C.O.L.I.A.}
+            \begin{itemize}
+                \item Séparation automatique et très précise entre les structures utiles et le bruit.
+                \item Aucun besoin de réglage manuel ni d'apprentissage informatique complexe.
+                \item Gain de temps considérable sur le tri et le nettoyage des données 3D.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 % Slide 2.1: Constat (problème à résoudre) - Exemple 1
 \begin{frame}{Exemple 1 : Détection automatique d'anomalies pour des chantiers}
     \begin{columns}[T]
@@ -213,7 +242,7 @@
             \begin{itemize}
                 \item \textbf{Objectif :} Détection automatique d'anomalies sur chantiers navals.
                 \item \textbf{Données :} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR réelles} (chantier réel).
-                \item \textbf{Collaboration Percolia :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex : casques de chantier, tuteurs, bâches).
+                \item \textbf{Collaboration P.E.R.C.O.L.I.A. :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex : casques de chantier, tuteurs, bâches).
             \end{itemize}
             \vspace{0.25cm}
             \textbf{\bleu Le verrou}
@@ -236,7 +265,7 @@
             \textbf{\bleu Inventaire d'arbres intelligents (\href{https://www.greehill.com/}{Greehill})}
             \begin{itemize}
                 \item Création de jumeaux numériques d'arbres urbains à partir de LiDAR mobiles.
-                \item Analyse de la vitalité, risques de rupture et hauteurs de clearance (lignes, corridors).
+                \item Analyse de la santé des arbres, risques de chute de branches et détection des obstacles (lignes électriques, voies).
             \end{itemize}
             \vspace{0.2cm}
             \textbf{\bleu Le verrou technologique}
@@ -246,28 +275,28 @@
         \end{column}
         \begin{column}{0.44\textwidth}
             \centering
-            \includegraphics[height=0.26\textheight]{imgs/Greehill_Semantic_Segmentation.png}\hfill
-            \includegraphics[height=0.26\textheight]{imgs/Greehill_Wood_Leaf_After.png}\hfill
-            \includegraphics[height=0.26\textheight]{imgs/Greehill_Instance_Segmentation.png}\\
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Semantic_Segmentation.png}\hfill
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Instance_Segmentation.png}\hfill
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Wood_Leaf_After.png}\\
             \vspace{0.2cm}
-            \tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de Gyula Fekete, CTO de Greehill (segmentation sémantique, séparation bois/feuilles et segmentation d'instances).}
+            \tiny \textcolor{inria-2024-gris-bleu}{Légende : 1) segmentation sémantique \quad 2) segmentation d'instance \quad 3) résultat final}
         \end{column}
     \end{columns}
 \end{frame}
 
 % Slide 2.3: Constat (problème à résoudre) - Exemple 3 (Hydro-Québec)
-\begin{frame}{Exemple 3 : Monitoring de réseaux électriques (Hydro-Québec)}
+\begin{frame}{Exemple 3 : Suivi des réseaux électriques (Hydro-Québec)}
     \begin{columns}[T]
         \begin{column}{0.52\textwidth}
-            \textbf{\bleu Suivi de lignes en forêt (Hydro-Québec)}
+            \textbf{\bleu Cartographie en forêt dense}
             \begin{itemize}
-                \item Inventaire automatisé des poteaux et conducteurs de distribution électrique.
-                \item LiDAR terrestre mobile en milieu forestier dense.
+                \item Repérer automatiquement les lignes électriques et les poteaux au milieu des arbres.
+                \item Utilisation de capteurs laser (LiDAR) embarqués sur des véhicules.
             \end{itemize}
             \vspace{0.2cm}
             \textbf{\bleu Le verrou technologique}
             \begin{itemize}
-                \item L'occlusion et la proximité de la végétation dense compliquent la segmentation d'instance des poteaux et des conducteurs.
+                \item Les branches et les feuilles se confondent avec les câbles, ce qui perturbe la détection automatique et impose un tri manuel laborieux.
             \end{itemize}
         \end{column}
         \begin{column}{0.44\textwidth}
@@ -334,7 +363,7 @@
 \end{frame}
 
 % Slide 4: Solution Percolia
-\begin{frame}{La Solution Percolia (3D LiDAR)}
+\begin{frame}{La Solution P.E.R.C.O.L.I.A. (3D LiDAR)}
     \textbf{Une technologie issue de la recherche Inria}
     \begin{itemize}
         \item Notre logiciel de clustering non supervisé est né des travaux de thèse de Louis \textsc{Hauseux} au sein de l'Inria Sophia Antipolis.
@@ -355,7 +384,7 @@
 \begin{frame}{Au-delà du 3D LiDAR : Perspectives}
     \textbf{Une technologie algorithmique générique et transverse :}
     \begin{itemize}
-        \item Le noyau de clustering de Percolia s'applique à d'autres types de données complexes et bruitées.
+        \item Le noyau de clustering de P.E.R.C.O.L.I.A. s'applique à d'autres types de données complexes et bruitées.
     \end{itemize}
 
     \vspace{0.2cm}
@@ -372,27 +401,88 @@
 % Slide 5: Rupture technologique : HGP-Clusterer
 \begin{frame}{Rupture technologique : HGP-Clusterer}
     \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
+        \begin{column}{0.52\textwidth}
             \textbf{Les deux piliers scientifiques :}
             \begin{itemize}
-                \item \textbf{L'ordre supérieur :} connectivité multipoints (intersections de boules multiples) modélisant exactement l'estimateur de densité des $K$ plus proches voisins ($\widehat f_{K\text{-NN}}$).
-                \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
+                \item \textbf{L'ordre supérieur :} connectivité multipoints (intersections de boules multiples) modélisant l'estimateur de densité $\widehat f_{K\text{-NN}}$.
+                \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit.
             \end{itemize}
         \end{column}
         
-        \begin{column}{0.46\textwidth}
+        \begin{column}{0.44\textwidth}
             \textbf{\orange Avantages \& Optimisation}
             \begin{itemize}
-                \item \textbf{Training-Free :} Aucun besoin de labellisation, robuste au changement de capteur.
-                \item \textbf{Priors géométriques :} Possibilité d'injecter des \emph{a priori} géométriques (volumes, modèle 3D théorique).
-                \item \textbf{Rapide :} Porté par la mosaïque de Delaunay d'ordre $K$.
+                \item \textbf{Training-Free} (non supervisé, robuste).
+                \item \textbf{Priors géométriques} (ex: modèle 3D).
+                \item \textbf{Rapide} (mosaïque de Delaunay d'ordre $K$, complexité quasi-linéaire $O(N \log N)$).
             \end{itemize}
-            
-            \vspace{0.2cm}
-            \begin{block}{Publication de référence}
-                \scriptsize
-                L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, \emph{Generalization of single-linkage with higher-order interactions}, \textbf{Applied Network Science}, 2026.
-            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.2cm}
+    \hrule
+    \vspace{0.2cm}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \centering
+            \textbf{\bleu Standard (DBSCAN / Single-Linkage)} \\
+            \vspace{0.1cm}
+            \begin{tikzpicture}[scale=0.55]
+                \coordinate (A) at (0, 1);
+                \coordinate (B) at (0.5, 0);
+                \coordinate (C) at (1.2, 0.7);
+                \coordinate (Noise) at (2.4, 0.5);
+                \coordinate (D) at (3.6, 0.8);
+                \coordinate (E) at (4.3, 0.1);
+                \coordinate (F) at (4.8, 1.1);
+
+                \foreach \p in {A,B,C,Noise,D,E,F} {
+                    \draw[fill=inria-bleu, opacity=0.1] (\p) circle (0.8);
+                    \draw[dashed, inria-bleu, opacity=0.3] (\p) circle (0.8);
+                }
+
+                \draw[line width=1.2pt, black] (A) -- (B) -- (C) -- (Noise) -- (D) -- (E) -- (F) -- (D) -- (A) -- (C);
+                \draw[line width=1.2pt, black] (B) -- (A);
+                \draw[line width=1.2pt, black] (C) -- (A);
+
+                \foreach \p in {A,B,C,Noise,D,E,F} {
+                    \fill[black] (\p) circle (2.5pt);
+                }
+                \node[below, scale=0.7] at (Noise) {\textcolor{rouge_inria}{\textbf{Bruit (Pont)}}};
+                \node[above, scale=0.8, rouge_inria] at (2.4, 1.5) {\textbf{Effet de chaînage (1 seul cluster)}};
+            \end{tikzpicture}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \centering
+            \textbf{\bleu P.E.R.C.O.L.I.A. (HGP-Clusterer)} \\
+            \vspace{0.1cm}
+            \begin{tikzpicture}[scale=0.55]
+                \coordinate (A) at (0, 1);
+                \coordinate (B) at (0.5, 0);
+                \coordinate (C) at (1.2, 0.7);
+                \coordinate (Noise) at (2.4, 0.5);
+                \coordinate (D) at (3.6, 0.8);
+                \coordinate (E) at (4.3, 0.1);
+                \coordinate (F) at (4.8, 1.1);
+
+                \foreach \p in {A,B,C,Noise,D,E,F} {
+                    \draw[dashed, inria-bleu, opacity=0.2] (\p) circle (0.8);
+                }
+
+                \fill[inria-bleu, opacity=0.25] (A) -- (B) -- (C) -- cycle;
+                \fill[inria-bleu, opacity=0.25] (D) -- (E) -- (F) -- cycle;
+                
+                \draw[line width=1.2pt, inria-bleu] (A) -- (B) -- (C) -- cycle;
+                \draw[line width=1.2pt, inria-bleu] (D) -- (E) -- (F) -- cycle;
+
+                \foreach \p in {A,B,C,Noise,D,E,F} {
+                    \fill[black] (\p) circle (2.5pt);
+                }
+                \node[below, scale=0.7] at (Noise) {\textcolor{gray}{\textbf{Filtré}}};
+                \node[above, scale=0.8, inria-bleu] at (2.4, 1.5) {\textbf{2 clusters bien séparés}};
+            \end{tikzpicture}
         \end{column}
     \end{columns}
 \end{frame}
@@ -421,9 +511,10 @@
         \end{column}
     \end{columns}
     
-    \begin{block}{\large Conseil scientifique \& réseau}
+    \begin{block}{\large Complémentarité \& Conseil Scientifique}
         \begin{itemize}
-            \item \textbf{Josiane \textsc{Zerubia}} (Directrice de Recherche Inria, équipe \textsc{Ayana}).
+            \item \textbf{Synergie Science-Business} : Association d'un profil recherche de pointe (Louis) et d'un profil finance, audit de modèles et gestion des risques (Alban) garantissant la structure et la viabilité commerciale.
+            \item \textbf{Conseil scientifique} : Soutenu et encadré par \textbf{Josiane \textsc{Zerubia}} (Directrice de Recherche Inria, équipe \textsc{Ayana}).
         \end{itemize}
     \end{block}
 \end{frame}
@@ -449,11 +540,11 @@
             \end{itemize}
             
             \vspace{0.15cm}
-            \textbf{La valeur ajoutée de Percolia}
+            \textbf{La valeur ajoutée de P.E.R.C.O.L.I.A.}
             \begin{itemize}
-                \item \textbf{Segmentation robuste :} Insensibilité théorique et pratique au bruit de mesure.
-                \item \textbf{Flexibilité :} Possibilité d'injecter des \emph{a priori} physiques (volumes d'objets, modèle 3D).
-                \item \textbf{Efficacité :} Intégration sur des systèmes existants sans nécessiter de coûteuses stations de calcul IA (léger et efficace).
+                \item \textbf{Segmentation robuste} : Insensibilité théorique et pratique au bruit de mesure (sans effet de chaînage).
+                \item \textbf{Intégration facile} : API identique à Scikit-Learn (remplace directement `DBSCAN` dans les pipelines existants).
+                \item \textbf{Léger \& Temps réel} : Complexité quasi-linéaire ($O(N \log N)$ via la mosaïque de Delaunay d'ordre $K$), pas besoin de cartes GPU coûteuses.
             \end{itemize}
         \end{column}
     \end{columns}
@@ -537,7 +628,7 @@
         \end{column}
         
         \begin{column}{0.48\textwidth}
-            \textbf{\bleu L'approche Percolia :}
+            \textbf{\bleu L'approche P.E.R.C.O.L.I.A. :}
             \begin{itemize}
                 \item Transformation des logs informatiques en \textbf{embeddings} adaptés.
                 \item Application de HGP-Clusterer pour regrouper les événements autour de sessions, IPs et comptes.
