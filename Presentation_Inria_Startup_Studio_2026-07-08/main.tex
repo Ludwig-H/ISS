@@ -376,7 +376,7 @@
         \begin{column}{0.5\textwidth}
             \textbf{Les deux piliers scientifiques :}
             \begin{itemize}
-                \item \textbf{L'ordre supérieur :} connectivité multipoints (intersections de boules multiples) modélisant exactement l'estimateur de densité des $K$ plus proches voisins ($\widehat f_{K\text{-NN}}$).
+                \item \textbf{L'ordre supérieur :} la connectivité multi-points (graphes $\rightarrow$ hypergraphes) permet de mieux rendre compte de la densité locale.
                 \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
             \end{itemize}
         \end{column}
@@ -386,7 +386,7 @@
             \begin{itemize}
                 \item \textbf{Training-Free :} Aucun besoin de labellisation, robuste au changement de capteur.
                 \item \textbf{Priors géométriques :} Possibilité d'injecter des \emph{a priori} géométriques (volumes, modèle 3D théorique).
-                \item \textbf{Rapide :} Porté par la mosaïque de Delaunay d'ordre $K$.
+                \item \textbf{Rapide :} l'algorithme a été optimisé pour passer à l'échelle industrielle (ex. : 10~000~000 de points lors de la collaboration avec Marie \textsc{Aspro}).
             \end{itemize}
             
             \vspace{0.25cm}
