@@ -317,7 +317,7 @@
 \section{Projet \& Solution}
 % Slide 3: Le standard de l'état de l'art
 \begin{frame}{Le standard de l'état de l'art du clustering : (H)DBSCAN}
-    \textbf{L'algorithme de clustering incontournable pour tous nos cas d'usage :}
+    \textbf{\bleu L'algorithme de clustering incontournable pour tous nos cas d'usage :}
     \begin{itemize}
         \item C'est la brique de base utilisée par tous les leaders du secteur pour segmenter et structurer les nuages de points :
         \begin{itemize}
@@ -329,7 +329,7 @@
     
     \vspace{0.3cm}
     
-    \textbf{Pourquoi un tel succès ?}
+    \textbf{\bleu Pourquoi un tel succès ?}
     \begin{itemize}
         \item \textbf{Principe simple :} Un clustering fondé uniquement sur la densité locale des points.
         \item \textbf{Grande disponibilité :} Intégré par défaut dans toutes les bibliothèques logicielles standards, le rendant universel et immédiat à déployer.
@@ -337,7 +337,7 @@
     
     \vspace{0.3cm}
     
-    \textbf{La limite critique :}
+    \textbf{\bleu La limite critique :}
     \begin{itemize}
         \item Face au bruit de mesure (poussières, occlusion), l'analyse purement binaire par paires de points fusionne à tort des structures disjointes (effet de chaînage).
     \end{itemize}
@@ -345,7 +345,7 @@
 
 % Slide 4: Solution Percolia
 \begin{frame}{La Solution Percolia (3D LiDAR)}
-    \textbf{Une technologie issue de la recherche Inria}
+    \textbf{\bleu Une technologie issue de la recherche Inria}
     \begin{itemize}
         \item Notre logiciel de clustering non supervisé est né des travaux de thèse de Louis \textsc{Hauseux} au sein de l'Inria Sophia Antipolis.
         \item Nous proposons de le décliner sous trois formes, selon le besoin :
@@ -353,7 +353,7 @@
 
     \vspace{0.2cm}
     
-    \textbf{Trois modalités d'intégration de notre solution :}
+    \textbf{\bleu Trois modalités d'intégration de notre solution :}
     \begin{itemize}
         \item \textbf{API SaaS / Cloud :} Traitement et structuration à la demande des volumes massifs de données LiDAR 3D dans un cloud sécurisé.
         \item \textbf{Conseil et intégration d'une \emph{baseline} complète :} Analyse comparative sur les nuages de points réels de nos clients pour valider le gain de précision et de conformité.
@@ -363,14 +363,14 @@
 
 % Slide 4b: Au-delà du 3D LiDAR
 \begin{frame}{Au-delà du 3D LiDAR : Perspectives}
-    \textbf{Une technologie algorithmique générique et transverse :}
+    \textbf{\bleu Une technologie algorithmique générique et transverse :}
     \begin{itemize}
         \item Le noyau de clustering de Percolia s'applique à d'autres types de données complexes et bruitées.
     \end{itemize}
 
     \vspace{0.2cm}
 
-    \textbf{Trois perspectives de développement :}
+    \textbf{\bleu Trois perspectives de développement :}
     \begin{itemize}
         \item \textbf{Logs de cybersécurité \& finance :} Regroupement intelligent d'événements système (embeddings) pour la détection de fraudes.
         \item \textbf{Graphes signés \& bio-informatique :} Partitionnement de réseaux appliqué au séquençage d'ADN fin (inférence d'haplotypes).
@@ -383,7 +383,7 @@
 \begin{frame}{Rupture technologique : HGP-Clusterer}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Les deux piliers scientifiques :}
+            \textbf{\bleu Les deux piliers scientifiques :}
             \begin{itemize}
                 \item \textbf{L'ordre supérieur :} la connectivité multi-points (graphes $\rightarrow$ hypergraphes) permet de mieux rendre compte de la densité locale.
                 \item \textbf{La percolation (seuil critique différé) :} retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
@@ -442,7 +442,7 @@
 \begin{frame}{Marché et Positionnement Concurrentiel}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
-            \textbf{Le marché du LiDAR \& Jumeaux numériques}
+            \textbf{\bleu Le marché du LiDAR \& Jumeaux numériques}
             \begin{itemize}
                 \item \textbf{Dynamique du marché :} Cartographie LiDAR ($5,3$ Md\$ en 2025, proj. $>40$ Md\$ en 2035) et jumeaux numériques ($19$ Md\$ en 2024).
                 \item \textbf{Cibles logicielles :} Industriels exploitant des nuages de points 3D LiDAR (monitoring urbain/forestier, inspection, réseaux).
@@ -451,14 +451,14 @@
         \end{column}
         
         \begin{column}{0.48\textwidth}
-            \textbf{L'alternative standard : (H)DBSCAN}
+            \textbf{\bleu L'alternative standard : (H)DBSCAN}
             \begin{itemize}
                 \item \textbf{Atouts concurrentiels :} Entièrement libre d'utilisation, gratuit et open-source (Scikit-Learn).
                 \item \textbf{Limites techniques :} faiblesses théoriques (et constatées en pratique) ; manque de robustesse.
             \end{itemize}
             
             \vspace{0.15cm}
-            \textbf{La valeur ajoutée de Percolia}
+            \textbf{\bleu La valeur ajoutée de Percolia}
             \begin{itemize}
                 \item \textbf{Segmentation robuste :} meilleurs résultats en théorie \& en pratique.
                 \item \textbf{Flexibilité \& Efficacité :} Injection d'\emph{a priori} géométriques (modèle 3D) et intégration légère sur les systèmes existants.
@@ -473,7 +473,7 @@
 \begin{frame}{Modèle Économique et Plan d'Action}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{Modèle Économique :}
+            \textbf{\bleu Modèle Économique :}
             \begin{itemize}
                 \item \textbf{Audits :} diagnostics comparatifs sur données clients et intégration logicielle.
                 \item \textbf{API \& Licences :} vente d'abonnements et/ou à l'usage (API SaaS Cloud) ou de licences logicielles embarquées (local).
@@ -481,7 +481,7 @@
         \end{column}
         
         \begin{column}{0.48\textwidth}
-            \textbf{Plan d'action (Feuille de route ISS)}
+            \textbf{\bleu Plan d'action (Feuille de route ISS)}
             \begin{itemize}
                 \item \textbf{À 6 mois (LiDAR 3D) :}
                 \begin{itemize}
@@ -505,7 +505,7 @@
 \begin{frame}{Pourquoi Inria Startup Studio ?}
     \begin{columns}[T]
         \begin{column}{0.6\textwidth}
-            \textbf{Le partenaire stratégique et technologique :}
+            \textbf{\bleu Le partenaire stratégique et technologique :}
             \begin{itemize}
                 \item \textbf{Accompagnement :} Mentorat personnalisé pour structurer le business model et s'insérer dans le réseau industriel.
                 \item \textbf{OTT :} cadre naturel au transfert de technologies issues des travaux de thèse de Louis \textsc{Hauseux}.
