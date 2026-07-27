@@ -1,0 +1,1658 @@
+% !TEX program = lualatex
+\documentclass[A4,svgnames,9pt,aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{tikz}
+\usetikzlibrary{positioning, shapes, arrows.meta, calc, backgrounds}
+
+\hypersetup{
+   allcolors=rouge_inria,
+   pdfauthor   = {Louis Hauseux, Alban Hauseux},
+   pdftitle    = {Percolia - Candidature Inria Startup Studio},
+   pdfsubject  = {Présentation Inria Startup Studio},
+   pdfkeywords = {Louis Hauseux, Alban Hauseux, Percolia, clustering, Delaunay, percolation, LiDAR}
+}
+
+\title[Percolia - ISS]{\huge \textbf{PERCOLIA}}
+\subtitle{\large Structuration automatique de données. \\ \normalsize Application au LiDAR 3D.}
+\date[28 Juillet 2026]{Mardi 28 Juillet 2026}
+\author[L. \& A. \textsc{Hauseux}]{%
+   Louis \textsc{Hauseux} (porteur techno') \& Alban \textsc{Hauseux} (porteur business) \\[4pt]
+   \footnotesize Projet encadré par \href{https://www.linkedin.com/in/moralesstephanie/}{Stéphanie \textsc{Morales}} (Centre Inria d'Université Côte d'Azur)
+}
+\institute{Inria Startup Studio}
+
+\usetheme{inria}
+\setbeamertemplate{bibliography item}[text]
+
+\setbeamertemplate{footnote}{%
+  \hspace*{0.6cm}%
+  \raisebox{8pt}{%
+    \usebeamerfont{footnote}\usebeamercolor[fg]{footnote}%
+    \insertfootnotemark~\insertfootnotetext%
+  }%
+}
+
+\colorlet{inria-bleu}{inria-2024-bleu-azur}
+
+% Custom TikZ styles and macros for haplotype reconstruction (NEO seminar)
+\tikzset{
+  chapbox/.style={draw,rounded corners,very thick,align=center,fill=gray!8,inner sep=5pt,minimum height=1.05cm},
+  chapboxdark/.style={draw,rounded corners,very thick,align=center,fill=gray!18,inner sep=5pt,minimum height=1.05cm},
+  chaparr/.style={-{Latex[length=2.4mm]},very thick},
+  chapdash/.style={-{Latex[length=2.4mm]},very thick,dashed},
+  spin/.style={circle,draw,inner sep=0pt,minimum size=5mm,font=\scriptsize,fill=white},
+  tinynode/.style={circle,draw,inner sep=0pt,minimum size=3.8mm,font=\tiny,fill=white},
+  posedge/.style={line width=1pt},
+  negedge/.style={line width=1pt,dashed},
+  freeze/.style={line width=1.6pt},
+  faint/.style={line width=.45pt,gray!55},
+  triwhite/.style={draw,fill=gray!8,line width=.6pt},
+  trigray/.style={draw,fill=gray!22,line width=.6pt},
+  read/.style={line width=5pt, gray!45, line cap=round, preaction={draw, white, line width=7pt, line cap=round}},
+  readlink/.style={densely dotted, thick, gray!60},
+  errlabel/.style={font=\scriptsize\bfseries, text=red!80!black, fill=white, inner sep=1.5pt, rounded corners=2pt},
+  interedge/.style={negedge, draw=gray!60}
+}
+
+\newcommand{\drawHaplotypePresentation}[1]{%
+  \begin{tikzpicture}[scale=0.72, x=0.9cm, y=1.0cm, font=\footnotesize]
+    % 1. CHROMOSOME LINES (GROUND TRUTH)
+    \draw[faint, dashed] (-1.5, 3.5) -- (13.5, 3.5) node[right, text=black, align=left] {\textbf{Haplotype 1}\\(Vérité {\Large $\boldsymbol{\Sigma}$} $= +$)};
+    \draw[faint, dashed] (-1.5, 0) -- (13.5, 0) node[right, text=black, align=left] {\textbf{Haplotype 2}\\(Vérité {\Large $\boldsymbol{\Sigma}$} $= -$)};
+
+    % 2. BACKGROUND: READS AND SEGMENTS (step >= 2)
+    \ifnum#1>1\relax
+      \begin{scope}[on background layer]
+        % --- Reads (Segments) ---
+        \draw[readlink] (1, 3.5) -- (1, 4.0); \draw[read] (-1.2, 4.0) -- (3.2, 4.0); 
+        \draw[readlink] (3, 3.5) -- (3, 4.4); \draw[read] (0.8, 4.4) -- (5.2, 4.4); 
+        \draw[readlink] (5, 3.5) -- (5, 4.8); \draw[read] (2.8, 4.8) -- (7.2, 4.8); 
+        \draw[readlink] (7, 3.5) -- (7, 4.0); \draw[read] (4.8, 4.0) -- (9.2, 4.0); 
+        \draw[readlink] (9, 3.5) -- (9, 4.4); \draw[read] (6.8, 4.4) -- (11.2, 4.4); 
+        \draw[readlink] (11, 3.5) -- (11, 4.8); \draw[read] (8.8, 4.8) -- (13.2, 4.8); 
+
+        % Haplotype 2
+        \draw[readlink] (2, 0) -- (2, 0.5); \draw[read] (-0.2, 0.5) -- (4.2, 0.5); 
+        \draw[readlink] (4, 0) -- (4, 0.9); \draw[read] (1.8, 0.9) -- (6.2, 0.9); 
+        \draw[readlink] (6, 0) -- (6, 1.3); \draw[read] (3.8, 1.3) -- (8.2, 1.3); 
+        \draw[readlink] (8, 0) -- (8, 0.5); \draw[read] (5.8, 0.5) -- (10.2, 0.5); 
+        \draw[readlink] (10, 0) -- (10, 0.9); \draw[read] (7.8, 0.9) -- (12.2, 0.9); 
+        \draw[readlink] (12, 0) -- (12, 1.3); \draw[read] (9.8, 1.3) -- (14.2, 1.3); 
+      \end{scope}
+
+      % NODES (SPIN CENTERS) - Now visible starting from step 2!
+      \node[spin, fill=gray!8] (t1) at (1, 3.5) {$+$};
+      \node[spin, fill=gray!8] (t2) at (3, 3.5) {$+$};
+      \node[spin, fill=gray!8] (t3) at (5, 3.5) {$+$};
+      \node[spin, fill=gray!8] (t4) at (7, 3.5) {$+$};
+      \node[spin, fill=gray!8] (t5) at (9, 3.5) {$+$};
+      \node[spin, fill=gray!8] (t6) at (11, 3.5) {$+$};
+
+      \node[spin, fill=gray!20] (b1) at (2, 0) {$-$};
+      \node[spin, fill=gray!20] (b2) at (4, 0) {$-$};
+      \node[spin, fill=gray!20] (b3) at (6, 0) {$-$};
+      \node[spin, fill=gray!20] (b4) at (8, 0) {$-$};
+      \node[spin, fill=gray!20] (b5) at (10, 0) {$-$};
+      \node[spin, fill=gray!20] (b6) at (12, 0) {$-$};
+    \fi
+
+    % 3. SIGNED GRAPH EDGES ONLY (step >= 3)
+    \ifnum#1>2\relax
+      \begin{scope}[on background layer]
+        % --- Inter-Chromosome Edges (True Negatives) ---
+        \draw[interedge] (1, 3.5) -- (2, 0); 
+        \draw[interedge] (3, 3.5) -- (4, 0); 
+        \draw[interedge] (3, 3.5) -- (6, 0); 
+        \draw[interedge] (5, 3.5) -- (2, 0); 
+        \draw[interedge] (5, 3.5) -- (4, 0); 
+        \draw[interedge] (5, 3.5) -- (6, 0); 
+        \draw[interedge] (7, 3.5) -- (4, 0); 
+        \draw[interedge] (7, 3.5) -- (6, 0); 
+        \draw[interedge] (7, 3.5) -- (8, 0); 
+        \draw[interedge] (7, 3.5) -- (10, 0); 
+        \draw[interedge] (9, 3.5) -- (8, 0); 
+        \draw[interedge] (9, 3.5) -- (10, 0); 
+        \draw[interedge] (9, 3.5) -- (12, 0); 
+        \draw[interedge] (11, 3.5) -- (8, 0); 
+        \draw[interedge] (11, 3.5) -- (12, 0); 
+
+        % False Positives (FP) => 25% noise
+        \draw[posedge, draw=red!80!black] (1, 3.5) -- node[errlabel, pos=0.2] {FP} (4, 0); 
+        \draw[posedge, draw=red!80!black] (3, 3.5) -- node[errlabel, pos=0.8] {FP} (2, 0); 
+        \draw[posedge, draw=red!80!black] (5, 3.5) -- node[errlabel, pos=0.2] {FP} (8, 0); 
+        \draw[posedge, draw=red!80!black] (9, 3.5) -- node[errlabel, pos=0.8] {FP} (6, 0); 
+        \draw[posedge, draw=red!80!black] (11, 3.5) -- node[errlabel, pos=0.2] {FP} (10, 0); 
+      \end{scope}
+
+      % INTRA-EDGES
+      \draw[posedge] (t1) to[bend right=25] (t2);
+      \draw[negedge, draw=red!80!black] (t2) to[bend right=25] node[errlabel] {FN} (t3);
+      \draw[posedge] (t3) to[bend right=25] (t4);
+      \draw[posedge] (t4) to[bend right=25] (t5);
+      \draw[posedge] (t5) to[bend right=25] (t6);
+      
+      \draw[posedge] (t1) to[bend right=35] (t3);
+      \draw[posedge] (t2) to[bend right=35] (t4);
+      \draw[negedge, draw=red!80!black] (t3) to[bend right=35] node[errlabel] {FN} (t5);
+      \draw[posedge] (t4) to[bend right=35] (t6);
+
+      \draw[posedge] (b1) to[bend right=25] (b2);
+      \draw[posedge] (b2) to[bend right=25] (b3);
+      \draw[posedge] (b3) to[bend right=25] (b4);
+      \draw[negedge, draw=red!80!black] (b4) to[bend right=25] node[errlabel] {FN} (b5);
+      \draw[posedge] (b5) to[bend right=25] (b6);
+      
+      \draw[negedge, draw=red!80!black] (b1) to[bend right=35] node[errlabel] {FN} (b3);
+      \draw[negedge, draw=red!80!black] (b2) to[bend right=35] node[errlabel] {FN} (b4);
+      \draw[posedge] (b3) to[bend right=35] (b5);
+      \draw[posedge] (b4) to[bend right=35] (b6);
+    \fi
+
+    % 5. LEGEND
+    \ifnum#1=2\relax
+      \node[scale=0.65,chapbox, align=left, fill=white] at (0,1.75){
+        \begin{tabular}{ll}
+          \tikz[baseline=-0.5ex]{\draw[line width=5pt, gray!45, line cap=round] (0,0) -- (0.6,0);} & Read d'ADN (Segment) \\
+          \tikz[baseline=-0.5ex]{\node[spin, scale=0.6, fill=gray!8] at (0,0) {$+$};} & N\oe{}ud du graphe (affectation {\Large $\boldsymbol{\Sigma}$})
+        \end{tabular}
+      };
+    \fi
+    \ifnum#1>2\relax
+      \node[scale=0.65,chapbox, align=left, fill=white] at (0,1.75){
+        \begin{tabular}{ll}
+          \tikz[baseline=-0.5ex]{\draw[line width=5pt, gray!45, line cap=round] (0,0) -- (0.6,0);} & Read d'ADN (N\oe{}ud) \\
+          \tikz[baseline=-0.5ex]{\draw[posedge] (0,0) -- (0.6,0);} & Attraction (ligne pleine)  \\
+          \tikz[baseline=-0.5ex]{\draw[negedge] (0,0) -- (0.6,0);} & R\'epulsion (ligne pointill\'ee) \\
+          \textcolor{red!80!black}{\textbf{FP}} & Faux Positif (bruit)  \\
+          \textcolor{red!80!black}{\textbf{FN}} & Faux N\'egatif (bruit)
+        \end{tabular}
+      };
+    \fi
+  \end{tikzpicture}
+}
+
+\newcounter{tocsectioncounter}
+\renewcommand{\contentsname}{Plan de la présentation}
+\setbeamertemplate{section in toc}{%
+    \vspace*{2ex}%
+    \setcounter{tocsectioncounter}{\inserttocsectionnumber}%
+    \textcolor{inria-noir}{\textbf{\Roman{tocsectioncounter})~\inserttocsection}}%
+}
+
+\AtBeginSection[]{
+  \begin{frame}[plain,c]
+    \centering
+    \Huge \textbf{\textcolor{inria-noir}{\Roman{section})~\insertsection}}
+  \end{frame}
+}
+
+\begin{document}
+
+% Slide 1: Page de titre
+\frame{\titlepage}
+
+% Slide 2: Proposition de Valeur
+\begin{frame}[c]{Proposition de Valeur}
+    \centering
+    \Large
+    \textbf{\bleu Percolia} propose un \textbf{\orange clustering 3D de haute précision} destiné aux \textbf{acteurs du LiDAR} (jumeaux numériques, robotique, construction navale, conduite autonome) pour isoler les \textbf{structures d'intérêt}.
+\end{frame}
+
+% Slide 3: Plan de la présentation
+\begin{frame}{Plan de la présentation}
+    \tableofcontents
+\end{frame}
+
+
+
+\section{Constat (problème à résoudre)}
+
+% Slide 2.1: Constat (problème à résoudre) - Exemple 1
+\begin{frame}{Exemple 1 : Détection d'anomalies de chantier (AIDetech)}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Projet ISS de Marie \textsc{Aspro} avec Naval Group}
+            \begin{itemize}
+                \item \textbf{Objectif :} Détection automatique d'anomalies sur chantiers navals.
+                \item \textbf{Données :} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR réelles} (chantier réel).
+                \item \textbf{Collaboration Percolia :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex. : casques de chantier, tuteurs, bâches).
+            \end{itemize}
+            \vspace{0.25cm}
+            \textbf{\bleu Le verrou}
+            \begin{itemize}
+                \item Nécessite un clustering assez fin prenant en compte le modèle 3D pour isoler proprement les anomalies de chantier.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le benchmark de Marie \textsc{Aspro}.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.2: Constat (problème à résoudre) - Exemple 2 (Greehill)
+\begin{frame}{Exemple 2 : Jumeaux numériques urbains (Greehill)}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Inventaire d'arbres intelligents (\href{https://www.greehill.com/}{Greehill})}
+            \begin{itemize}
+                \item Création de jumeaux numériques d'arbres urbains à partir de LiDAR mobiles.
+                \item Analyse de la santé des arbres, risques de chute de branches et détection des obstacles (lignes électriques, voies).
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou technologique}
+            \begin{itemize}
+                \item Le feuillage se mêle aux lignes électriques, panneaux de signalisation ou façades.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Semantic_Segmentation.png}\hfill
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Instance_Segmentation.png}\hfill
+            \includegraphics[height=0.23\textheight]{imgs/Greehill_Wood_Leaf_After.png}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de Gyula \textsc{Fekete} (CTO de Greehill). 1) segmentation sémantique \quad 2) segmentation d'instance \quad 3) résultat final}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.3: Constat (problème à résoudre) - Exemple 3 (Hydro-Québec)
+\begin{frame}{Exemple 3 : Cartographie du réseau électrique (Hydro-Québec)}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Cartographie en forêt dense}
+            \begin{itemize}
+                \item Repérer automatiquement les lignes électriques et les poteaux au milieu des arbres.
+                \item Utilisation de LiDAR embarqués sur des véhicules.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou technologique}
+            \begin{itemize}
+                \item Les branches et les feuilles se confondent avec les câbles, ce qui perturbe la détection automatique et impose un tri manuel laborieux.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/HydroQuebec_Figure1.png}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Figure de \href{https://www.linkedin.com/in/philippemassicotte/}{Philippe \textsc{Massicotte}} (chercheur chez Hydro-Québec), présentation au Gretsi 2025.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 2.4: Constat (problème à résoudre) - Exemple 4 (Exwayz)
+\begin{frame}{Exemple 4 : SLAM \& Traitement LiDAR temps réel (Exwayz)}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Qu'est-ce que le SLAM ?}
+            \begin{itemize}
+                \item \textbf{Cartographie :} Construction d'une carte 3D de l'environnement.
+                \item \textbf{Localisation :} Positionnement en temps réel du robot dans cette carte.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou technologique}
+            \begin{itemize}
+                \item Problème circulaire (la localisation dépend de la carte et réciproquement).
+                \item Le bruit relie à tort les objets dynamiques aux structures statiques (perte de tracking).
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/exwayz_lidar_slam.jpg}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Logiciel de cartographie et localisation (SLAM) 3D temps réel (source : exwayz.fr).}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Projet \& Solution}
+% Slide 3: Le standard de l'état de l'art
+\begin{frame}{Le standard de l'état de l'art du clustering : (H)DBSCAN}
+    \textbf{\bleu L'algorithme de clustering incontournable pour tous nos cas d'usage :}
+    \begin{itemize}
+        \item C'est la brique de base utilisée par tous les leaders du secteur pour segmenter et structurer les nuages de points :
+        \begin{itemize}
+            \item \textbf{Greehill} : Gyula \textsc{Fekete} (CTO) et \href{https://www.linkedin.com/in/benjamin-berta/?locale=hu}{Benjamin \textsc{Berta}} (Lead Machine Learning).
+            \item \textbf{Hydro-Québec} : \href{https://www.linkedin.com/in/philippemassicotte/}{Philippe \textsc{Massicotte}} (Chercheur).
+            \item \textbf{Exwayz} : \href{https://www.linkedin.com/in/hassan-bouchiba-434078202/}{Hassan \textsc{Bouchiba}} (Co-fondateur \& CTO).
+        \end{itemize}
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \textbf{\bleu Pourquoi un tel succès ?}
+    \begin{itemize}
+        \item \textbf{Principe simple :} Un clustering fondé uniquement sur la densité locale des points.
+        \item \textbf{Grande disponibilité :} Intégré par défaut dans toutes les bibliothèques logicielles standards, le rendant universel et immédiat à déployer.
+    \end{itemize}
+    
+    \vspace{0.3cm}
+    
+    \textbf{\bleu La limite critique :}
+    \begin{itemize}
+        \item Face au bruit de mesure (poussières, occlusion), l'analyse purement binaire par paires de points fusionne à tort des structures disjointes (effet de chaînage).
+    \end{itemize}
+\end{frame}
+
+% Slide 4: Solution Percolia
+\begin{frame}{La Solution Percolia (3D LiDAR)}
+    \textbf{\bleu Une technologie issue de la recherche Inria}
+    \begin{itemize}
+        \item Notre logiciel de clustering non supervisé est né des travaux de thèse de Louis \textsc{Hauseux} au sein de l'Inria Sophia Antipolis.
+        \item Nous proposons de le décliner sous trois formes, selon le besoin :
+    \end{itemize}
+
+    \vspace{0.2cm}
+    
+    \textbf{\bleu Trois modalités d'intégration de notre solution :}
+    \begin{itemize}
+        \item \textbf{API SaaS / Cloud :} Traitement et structuration à la demande des volumes massifs de données LiDAR 3D dans un cloud sécurisé.
+        \item \textbf{Conseil et intégration d'une \emph{baseline} complète :} Analyse comparative sur les nuages de points réels de nos clients pour valider le gain de précision et de conformité.
+        \item \textbf{Licence logicielle embarquée (local) :} Pour les contraintes fortes de confidentialité ou une intégration directe dans les logiciels de capteurs (ex. : \href{https://www.yellowscan.com/}{YellowScan}).
+    \end{itemize}
+\end{frame}
+
+% Slide 4b: Au-delà du 3D LiDAR
+\begin{frame}{Au-delà du 3D LiDAR : Perspectives}
+    \textbf{\bleu Une technologie algorithmique générique et transverse :}
+    \begin{itemize}
+        \item Le noyau de clustering de Percolia s'applique à d'autres types de données complexes et bruitées.
+    \end{itemize}
+
+    \vspace{0.2cm}
+
+    \textbf{\bleu Trois perspectives de développement :}
+    \begin{itemize}
+        \item \textbf{Logs de cybersécurité \& finance :} Regroupement intelligent d'événements système (embeddings) pour la détection de fraudes.
+        \item \textbf{Graphes signés \& bio-informatique :} Partitionnement de réseaux appliqué au séquençage d'ADN fin (inférence d'haplotypes).
+        \item \textbf{Traitement d'images (collaboration avec le Cerema) :} Détection automatique de fissures sur images (visible/thermique) supervisée par Josiane \textsc{Zerubia}.
+    \end{itemize}
+\end{frame}
+
+\section{Technologie}
+% Slide 5: Rupture technologique : HGP-Clusterer
+\begin{frame}{Rupture technologique : HGP-Clusterer}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{\bleu Les deux piliers scientifiques :}
+            \begin{itemize}
+                \item \textbf{L'ordre supérieur :} La connectivité multi-points (graphes $\rightarrow$ hypergraphes) permet de mieux rendre compte de la densité locale.
+                \item \textbf{La percolation (seuil critique différé) :} Retardement théorique de la connectivité globale bloquant la propagation du bruit de mesure.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.46\textwidth}
+            \textbf{\orange Avantages \& Optimisation}
+            \begin{itemize}
+                \item \textbf{Training-Free :} Aucun besoin de labellisation, robuste au changement de capteur.
+                \item \textbf{Priors géométriques :} Possibilité d'injecter des \emph{a priori} géométriques (volumes, modèle 3D théorique).
+                \item \textbf{Rapide :} L'algorithme a été optimisé pour passer à l'échelle industrielle (ex. : 10~000~000 de points lors de la collaboration avec Marie \textsc{Aspro}).
+            \end{itemize}
+            
+            \vspace{0.25cm}
+            \begin{block}{Publication de référence}
+                \scriptsize
+                L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, «~Generalization of Single-Linkage with higher-order interactions~», \emph{Applied Network Science}, 2026.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Équipe}
+% Slide 6: L'Équipe
+\begin{frame}{Une équipe complémentaire : Science \& Business}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Louis \textsc{Hauseux} -- porteur techno'}
+            \begin{itemize}
+                \item Doctorat école STIC, option Informatique (Inria Sophia Antipolis).
+                \item Normalien (ENS Paris-Saclay), double M2 en Mathématiques Fondamentales et Appliquées.
+                \item \textbf{Rôle :} R\&D, conception et implémentation du noyau algorithmique.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Alban \textsc{Hauseux} -- porteur business}
+            \begin{itemize}
+                \item Ingénieur Télécom (IMT Atlantique), Master Ingénierie Financière (Paris-Dauphine).
+                \item Parcours en finance quantitative, audit et contrôle de modèles quantitatifs (Banque de France, HSBC, Société Générale).
+                \item \textbf{Rôle :} Développement techno' \& commercial, audits et intégration logicielle.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    
+    \begin{block}{\large Conseil scientifique \& réseau}
+        \begin{itemize}
+            \item \textbf{Josiane \textsc{Zerubia}} (Directrice de Recherche Inria, équipe \textsc{Ayana}).
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\section{Marché \& Concurrents}
+% Slide 7: Marché & Concurrents
+\begin{frame}{Marché et Positionnement Concurrentiel}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{\bleu Le marché du LiDAR \& Jumeaux numériques}
+            \begin{itemize}
+                \item \textbf{Dynamique du marché :} Cartographie LiDAR ($5,3$ Md\$ en 2025, proj. $>40$ Md\$ en 2035) et jumeaux numériques ($19$ Md\$ en 2024).
+                \item \textbf{Cibles logicielles :} Industriels exploitant des nuages de points 3D LiDAR (monitoring urbain/forestier, inspection, réseaux).
+                \item \textbf{Exemples de cibles :} \emph{Greehill}, \emph{Exwayz}, \emph{YellowScan}.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu L'alternative standard : (H)DBSCAN}
+            \begin{itemize}
+                \item \textbf{Atouts concurrentiels :} Entièrement libre d'utilisation, gratuit et open-source (Scikit-Learn).
+                \item \textbf{Limites techniques :} Faiblesses théoriques (et constatées en pratique) ; manque de robustesse.
+            \end{itemize}
+            
+            \vspace{0.15cm}
+            \textbf{\bleu La valeur ajoutée de Percolia}
+            \begin{itemize}
+                \item \textbf{Segmentation robuste :} Meilleurs résultats en théorie \& en pratique.
+                \item \textbf{Flexibilité \& Efficacité :} Injection d'\emph{a priori} géométriques (modèle 3D) et intégration légère sur les systèmes existants.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Plan d'action}
+% Slide 8: Modèle Économique \& Plan d'Action
+% Slide 8: Modèle Économique \& Plan d'Action
+\begin{frame}{Modèle Économique et Plan d'Action}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Modèle Économique :}
+            \begin{itemize}
+                \item \textbf{Audits :} Diagnostics comparatifs sur données clients et intégration logicielle.
+                \item \textbf{API \& Licences :} Vente d'abonnements et/ou à l'usage (API SaaS Cloud) ou de licences logicielles embarquées (local).
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Plan d'action (Feuille de route ISS)}
+            \begin{itemize}
+                \item \textbf{À 6 mois (LiDAR 3D) :}
+                \begin{itemize}
+                    \item Finaliser la solution logicielle (API \& PI).
+                    \item Créer les supports de démos et de communication.
+                    \item Démarcher les industriels du LiDAR.
+                \end{itemize}
+                \item \textbf{À 12 mois (Cyber / Fraude) :}
+                \begin{itemize}
+                    \item Finaliser la solution logicielle pour les logs informatiques.
+                    \item Démarcher les acteurs de la cybersécurité et de la banque.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\section{Pourquoi Inria}
+% Slide 9: Pourquoi Inria Startup Studio ?
+% Slide 9: Pourquoi Inria Startup Studio ?
+\begin{frame}{Pourquoi Inria Startup Studio ?}
+    \begin{columns}[T]
+        \begin{column}{0.6\textwidth}
+            \textbf{\bleu Le partenaire stratégique et technologique :}
+            \begin{itemize}
+                \item \textbf{Accompagnement :} Mentorat personnalisé pour structurer le business model et s'insérer dans le réseau industriel.
+                \item \textbf{OTT :} Cadre naturel au transfert de technologies issues des travaux de thèse de Louis \textsc{Hauseux}.
+                \item \textbf{Synergie technologique :} Complémentarité directe avec les bibliothèques géométriques Inria (\emph{CGAL}, \emph{Geogram}).
+                \item \textbf{Crédibilité scientifique :} Gage d'excellence scientifique auprès des clients et des investisseurs.
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.36\textwidth}
+            \vspace{0.4cm}
+            \begin{center}
+                \includegraphics[width=0.95\textwidth]{theme/imgs/Inria-logo-rouge.png}
+                
+                \vspace{0.6cm}
+                \textbf{\orange Une transition naturelle de la recherche académique à l'offre industrielle.}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 10: Fin
+\begin{frame}[plain]
+    \begin{center}
+        \Huge Fin.
+    \end{center}
+\end{frame}
+
+% --- ANNEXES (TECHNICAL BACKUP) ---
+\begin{frame}{Backup 1 : Généralisation à l'axe Logs Cyber}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Le problème : Les angles morts de sécurité}
+            \begin{itemize}
+                \item \textbf{Exemple (Le Louvre - \textsc{Abdelhadi}) :} Des caméras de sécurité mal placées créent des angles morts facilitant l'intrusion.
+                \item \textbf{En cybersécurité/fraude :} Le flux de logs est massif. Sans corrélation intelligente, des alertes isolées masquent des attaques complexes (angles morts).
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu L'approche Percolia :}
+            \begin{itemize}
+                \item Transformation des logs informatiques en \textbf{embeddings} adaptés.
+                \item Application de HGP-Clusterer pour regrouper les événements autour de sessions, IPs et comptes.
+                \item Regroupement des logs liés pour réduire la masse d'alertes à analyser et faire émerger les comportements atypiques.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Hartigan's Model: High-Density Cluster Hierarchy}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textbf{Level set} $\{f \ge \lambda\}$
+                
+                \vspace{0.3cm}
+                \begin{tikzpicture}[xscale=0.95, yscale=0.95]
+                    \useasboundingbox (-0.8, -0.4) rectangle (6.2, 4.2);
+                    \only<1>{\pgfmathsetmacro{\lambdaval}{2.6}}
+                    \only<2>{\pgfmathsetmacro{\lambdaval}{1.75}}
+                    \only<3>{\pgfmathsetmacro{\lambdaval}{1.1}}
+                    \only<4>{\pgfmathsetmacro{\lambdaval}{0.4}}
+                    
+                    % Axis
+                    \draw[->, >=stealth] (0,0) -- (0,4) node[left=5pt, midway, rotate=90] {$f$};
+                    
+                    % Shaded areas above \lambdaval
+                    \begin{scope}
+                        \clip (0,\lambdaval) rectangle (6,4);
+                        \fill[inria-bleu!20] (0.2,0) -- (0.2, 0.2) .. controls (0.7,0.2) and (0.9,2.0) .. (1.2,2.0)
+                            .. controls (1.5,2.0) and (1.6,0.9) .. (1.8,0.9)
+                            .. controls (2.0,0.9) and (2.2,1.5) .. (2.4,1.5)
+                            .. controls (2.5,1.5) and (2.6,1.3) .. (2.7,1.3)
+                            .. controls (2.9,1.3) and (3.1,3.2) .. (3.4,3.2)
+                            .. controls (3.7,3.2) and (3.9,0.6) .. (4.2,0.6)
+                            .. controls (4.4,0.6) and (4.6,1.3) .. (4.8,1.3)
+                            .. controls (5.0,1.3) and (5.4,0.2) .. (5.8,0) -- (5.8,0) -- cycle;
+                    \end{scope}
+                    
+                    % Density curve f(x)
+                    \draw[line width=1.5pt, color=inria-bleu] (0.2, 0.2) .. controls (0.7,0.2) and (0.9,2.0) .. (1.2,2.0)
+                        .. controls (1.5,2.0) and (1.6,0.9) .. (1.8,0.9)
+                        .. controls (2.0,0.9) and (2.2,1.5) .. (2.4,1.5)
+                        .. controls (2.5,1.5) and (2.6,1.3) .. (2.7,1.3)
+                        .. controls (2.9,1.3) and (3.1,3.2) .. (3.4,3.2)
+                        .. controls (3.7,3.2) and (3.9,0.6) .. (4.2,0.6)
+                        .. controls (4.4,0.6) and (4.6,1.3) .. (4.8,1.3)
+                        .. controls (5.0,1.3) and (5.4,0.2) .. (5.8,0);
+                        
+                    % Dashed level line \lambdaval
+                    \draw[dashed, line width=1pt] (0,\lambdaval) -- (6,\lambdaval);
+                    
+                    % Peaks and Valleys dots
+                    \fill[green!60!black] (1.2,2.0) circle (2.5pt);
+                    \fill[green!60!black] (2.4,1.5) circle (2.5pt);
+                    \fill[green!60!black] (3.4,3.2) circle (2.5pt);
+                    \fill[green!60!black] (4.8,1.3) circle (2.5pt);
+                    \fill[inria-rouge] (1.8,0.9) circle (2.5pt);
+                    \fill[inria-rouge] (2.7,1.3) circle (2.5pt);
+                    \fill[inria-rouge] (4.2,0.6) circle (2.5pt);
+                    
+                    % Legend
+                    \draw[line width=1.5pt, color=inria-bleu] (4.0, 3.7) -- (4.6, 3.7) node[right=3pt] {\small $f$};
+                    \draw[dashed, line width=1pt] (4.0, 3.3) -- (4.6, 3.3) node[right=3pt] {\small $\lambda$};
+                    
+                    % Blue bars at the bottom
+                    \only<1>{
+                        \draw[inria-bleu, line width=4pt] (3.1, -0.15) -- (3.7, -0.15);
+                    }
+                    \only<2>{
+                        \draw[inria-bleu, line width=4pt] (1.0, -0.15) -- (1.4, -0.15);
+                        \draw[inria-bleu, line width=4pt] (2.9, -0.15) -- (4.0, -0.15);
+                    }
+                    \only<3>{
+                        \draw[inria-bleu, line width=4pt] (0.7, -0.15) -- (1.6, -0.15);
+                        \draw[inria-bleu, line width=4pt] (1.9, -0.15) -- (4.1, -0.15);
+                        \draw[inria-bleu, line width=4pt] (4.5, -0.15) -- (5.1, -0.15);
+                    }
+                    \only<4>{
+                        \draw[inria-bleu, line width=4pt] (0.4, -0.15) -- (5.5, -0.15);
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.3cm}
+                \begin{tikzpicture}[xscale=0.95, yscale=0.95]
+                    \useasboundingbox (-0.8, -0.4) rectangle (6.2, 4.2);
+                    
+                    % Tree branches
+                    \only<1>{
+                        \draw[inria-rouge, line width=1.5pt] (3.4, 3.2) -- (3.4, 2.6);
+                        \node[above] at (3.4, 3.2) {\small $C_1$};
+                    }
+                    \only<2>{
+                        \draw[inria-rouge, line width=1.5pt] (3.4, 3.2) -- (3.4, 1.75);
+                        \node[above] at (3.4, 3.2) {\small $C_1$};
+                        \draw[inria-rouge, line width=1.5pt] (1.2, 2.0) -- (1.2, 1.75);
+                        \node[above] at (1.2, 2.0) {\small $C_2$};
+                    }
+                    \only<3>{
+                        \draw[inria-rouge, line width=1.5pt] (1.2, 2.0) -- (1.2, 1.1);
+                        \node[above] at (1.2, 2.0) {\small $C_2$};
+                        
+                        \draw[inria-rouge, line width=1.5pt] (4.8, 1.3) -- (4.8, 1.1);
+                        \node[above] at (4.8, 1.3) {\small $C_5$};
+                        
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (2.4, 1.5) -- (2.4, 1.3) -- (2.9, 1.3) -- (2.9, 1.1);
+                        \node[above] at (2.4, 1.5) {\small $C_3$};
+                        
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (3.4, 3.2) -- (3.4, 1.3) -- (2.9, 1.3) -- (2.9, 1.1);
+                        \node[above] at (3.4, 3.2) {\small $C_1$};
+                        
+                        \node[above=2pt] at (2.9, 1.3) {\small $C_4$};
+                    }
+                    \only<4>{
+                        % Branch C3 -> Trunk C4 -> Merge 2 -> Trunk C6 -> Merge 3 -> Trunk C7
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (2.4, 1.5) -- (2.4, 1.3) -- (2.9, 1.3) -- (2.9, 0.9) -- (2.05, 0.9) -- (2.05, 0.6) -- (3.42, 0.6) -- (3.42, 0.4);
+                        \node[above] at (2.4, 1.5) {\small $C_3$};
+                        \node[above=2pt] at (2.9, 1.3) {\small $C_4$};
+                        
+                        % Branch C1 -> Merge 1 -> Trunk C4 -> Merge 2 -> Trunk C6 -> Merge 3 -> Trunk C7
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (3.4, 3.2) -- (3.4, 1.3) -- (2.9, 1.3) -- (2.9, 0.9) -- (2.05, 0.9) -- (2.05, 0.6) -- (3.42, 0.6) -- (3.42, 0.4);
+                        \node[above] at (3.4, 3.2) {\small $C_1$};
+                        
+                        % Branch C2 -> Merge 2 -> Trunk C6 -> Merge 3 -> Trunk C7
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (1.2, 2.0) -- (1.2, 0.9) -- (2.05, 0.9) -- (2.05, 0.6) -- (3.42, 0.6) -- (3.42, 0.4);
+                        \node[above] at (1.2, 2.0) {\small $C_2$};
+                        \node[above=2pt] at (2.05, 0.9) {\small $C_6$};
+                        
+                        % Branch C5 -> Merge 3 -> Trunk C7
+                        \draw[inria-rouge, line width=1.5pt, rounded corners=4pt] (4.8, 1.3) -- (4.8, 0.6) -- (3.42, 0.6) -- (3.42, 0.4);
+                        \node[above] at (4.8, 1.3) {\small $C_5$};
+                        
+                        \node[above=2pt] at (3.42, 0.6) {\small $C_7$};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: Estimation}
+    \vspace{1.0cm}
+    \begin{center}
+        \begin{tikzpicture}[xscale=1.2, yscale=1.2]
+            \useasboundingbox (-1,-3) rectangle (8,2);
+            
+            \node (unknown) at (0, 0) [align=center] {\huge $f$ unknown};
+            
+            % Thick gray arrow
+            \draw[-{Latex[length=8pt, width=8pt]}, line width=4.5pt, color=gray!30] (1.8, 0) -- (3.6, 0);
+            
+            \node (estimation) at (5.8, 0) [align=center] {\huge \textbf{Estimation} $\widehat{f}$};
+            
+            \node (expensive) at (5.8, -0.85) [align=center] {
+                \normalsize Expensive naive methods\\
+                \small (discretization of $\mathbb{R}^d$)
+            };
+            
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: Density Estimator}
+    \begin{center}
+        \Large $\widehat{f} \leftarrow \widehat{f}_{K-\text{NN}}$ \\[4pt]
+        \normalsize \textbf{Estimator}: $K$-Nearest Neighbors ($K$-NN)
+    \end{center}
+    
+    \vspace{0.4cm}
+    
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \begin{center}
+                \vspace{0.2cm}
+                {\Large\mathversion{bold} $\forall x \in \mathbb{R}^d, \quad \widehat{f}_{K-\text{NN}}(x) = \frac{K}{n \, \omega_d \, r_K(x)^d}$}
+                
+                \vspace{1.0cm}
+                
+                {\large\mathversion{bold} $r_K(x) = \min \left\{ r \ge 0 \;\middle|\; |B(x,r) \cap \mathcal{X}| \ge K \right\}$}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.42\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{8pt}
+                \item \textbf{$n$}: number of points in $\mathcal{X}$
+                \item \textbf{$\omega_d$}: volume of the unit ball in $\mathbb{R}^d$
+                \item \textbf{$r_K(x)$}: distance to the $K$-th nearest neighbor of $x$
+                \item \textbf{$\omega_d r_K(x)^d$}: volume of the ball containing the $K$ neighbors
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: The Case $K=1$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[xscale=0.55, yscale=0.55]
+                    \useasboundingbox (-0.5, -0.5) rectangle (10.5, 6.5);
+                    
+                    \tikzset{dot/.style={circle, fill=inria-2024-bleu-canard, inner sep=1.4pt, outer sep=0pt}}
+                    \tikzset{edge/.style={line width=0.8pt, inria-rouge, opacity=0.7}}
+                    \tikzset{pruned/.style={line width=0.6pt, gray!40, dotted}}
+                    
+                    \only<2-3>{
+                        \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                            \fill[inria-bleu, opacity=0.22] (\x, \y) circle (0.55);
+                        }
+                    }
+                    
+                    \only<2-5>{
+                        \draw[line width=1.5pt, inria-rouge] (5.2, 5.9) -- (5.75, 5.9);
+                        \node[above] at (5.475, 5.9) {\small $r_0$};
+                    }
+                    
+                    \only<3-4>{
+                        \draw[edge] (5.16,0.57)--(4.33,0.85) (6.02,4.14)--(5.94,3.29) (7.04,3.24)--(6.51,2.31) (7.04,3.24)--(7.71,2.56) (7.04,3.24)--(7.16,3.92) (7.04,3.24)--(7.91,3.8) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(8.85,3.91) (8.31,3.24)--(7.91,3.8) (8.31,3.24)--(9.13,2.85) (3.02,4.45)--(2.56,3.8) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(3.27,5.47) (6.51,2.31)--(5.71,1.83) (6.51,2.31)--(6.55,1.27) (2.89,1.18)--(3.66,1.24) (2.89,1.18)--(3.51,0.51) (7.71,2.56)--(8.39,1.89) (4.33,0.85)--(4.4,1.59) (4.33,0.85)--(3.66,1.24) (4.33,0.85)--(3.51,0.51) (3.58,2.45)--(4.37,2.77) (3.58,2.45)--(3.65,3.45) (3.58,2.45)--(2.86,2.72) (6.66,5.36)--(7.27,4.75) (8.24,1.21)--(8.39,1.89) (8.24,1.21)--(7.39,0.91) (2.15,2.64)--(1.69,1.9) (2.15,2.64)--(1.47,2.64) (2.15,2.64)--(2.86,2.72) (1.65,4.56)--(2.41,4.96) (1.65,4.56)--(1.01,5.13) (1.65,4.56)--(1.73,5.45) (8.16,5.38)--(7.27,4.75) (8.16,5.38)--(8.85,4.99) (1.69,1.9)--(1.47,2.64) (1.69,1.9)--(1.04,1.76) (8.85,3.91)--(7.91,3.8) (8.85,3.91)--(9.13,2.85) (8.85,3.91)--(8.85,4.99) (4.7,4.94)--(4.09,5.44) (5.71,1.83)--(6.55,1.27) (8.39,1.89)--(9.39,2.11) (7.16,3.92)--(7.91,3.8) (7.16,3.92)--(7.27,4.75) (1.47,2.64)--(1.04,1.76) (5.23,3.21)--(4.37,2.77) (5.23,3.21)--(4.64,3.77) (5.23,3.21)--(5.94,3.29) (1.16,0.84)--(1.04,1.76) (7.39,0.91)--(6.55,1.27) (2.41,4.96)--(3.27,5.47) (2.41,4.96)--(1.73,5.45) (4.37,2.77)--(3.65,3.45) (4.37,2.77)--(4.64,3.77) (3.65,3.45)--(2.86,2.72) (3.65,3.45)--(4.64,3.77) (4.4,1.59)--(3.66,1.24) (3.27,5.47)--(4.09,5.44) (9.39,2.11)--(9.13,2.85) (3.66,1.24)--(3.51,0.51) (1.01,5.13)--(1.73,5.45);
+                    }
+                    
+                    \only<5>{
+                        \draw[pruned] (5.16,0.57)--(4.33,0.85) (6.02,4.14)--(5.94,3.29) (7.04,3.24)--(6.51,2.31) (7.04,3.24)--(7.71,2.56) (7.04,3.24)--(7.16,3.92) (7.04,3.24)--(7.91,3.8) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(8.85,3.91) (8.31,3.24)--(7.91,3.8) (8.31,3.24)--(9.13,2.85) (3.02,4.45)--(2.56,3.8) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(3.27,5.47) (6.51,2.31)--(5.71,1.83) (6.51,2.31)--(6.55,1.27) (2.89,1.18)--(3.66,1.24) (2.89,1.18)--(3.51,0.51) (7.71,2.56)--(8.39,1.89) (4.33,0.85)--(4.4,1.59) (4.33,0.85)--(3.66,1.24) (4.33,0.85)--(3.51,0.51) (3.58,2.45)--(4.37,2.77) (3.58,2.45)--(3.65,3.45) (3.58,2.45)--(2.86,2.72) (6.66,5.36)--(7.27,4.75) (8.24,1.21)--(8.39,1.89) (8.24,1.21)--(7.39,0.91) (2.15,2.64)--(1.69,1.9) (2.15,2.64)--(1.47,2.64) (2.15,2.64)--(2.86,2.72) (1.65,4.56)--(2.41,4.96) (1.65,4.56)--(1.01,5.13) (1.65,4.56)--(1.73,5.45) (8.16,5.38)--(7.27,4.75) (8.16,5.38)--(8.85,4.99) (1.69,1.9)--(1.47,2.64) (1.69,1.9)--(1.04,1.76) (8.85,3.91)--(7.91,3.8) (8.85,3.91)--(9.13,2.85) (8.85,3.91)--(8.85,4.99) (4.7,4.94)--(4.09,5.44) (5.71,1.83)--(6.55,1.27) (8.39,1.89)--(9.39,2.11) (7.16,3.92)--(7.91,3.8) (7.16,3.92)--(7.27,4.75) (1.47,2.64)--(1.04,1.76) (5.23,3.21)--(4.37,2.77) (5.23,3.21)--(4.64,3.77) (5.23,3.21)--(5.94,3.29) (1.16,0.84)--(1.04,1.76) (7.39,0.91)--(6.55,1.27) (2.41,4.96)--(3.27,5.47) (2.41,4.96)--(1.73,5.45) (4.37,2.77)--(3.65,3.45) (4.37,2.77)--(4.64,3.77) (3.65,3.45)--(2.86,2.72) (3.65,3.45)--(4.64,3.77) (4.4,1.59)--(3.66,1.24) (3.27,5.47)--(4.09,5.44) (9.39,2.11)--(9.13,2.85) (3.66,1.24)--(3.51,0.51) (1.01,5.13)--(1.73,5.45);
+                        \draw[edge] (1.69,1.9)--(1.04,1.76) (2.15,2.64)--(1.47,2.64) (8.31,3.24)--(7.91,3.8) (7.04,3.24)--(7.16,3.92) (8.24,1.21)--(8.39,1.89) (2.15,2.64)--(2.86,2.72) (5.23,3.21)--(5.94,3.29) (4.33,0.85)--(4.4,1.59) (3.66,1.24)--(3.51,0.51) (7.16,3.92)--(7.91,3.8) (3.58,2.45)--(2.86,2.72) (1.69,1.9)--(1.47,2.64) (2.89,1.18)--(3.66,1.24) (4.33,0.85)--(3.66,1.24) (9.39,2.11)--(9.13,2.85) (1.01,5.13)--(1.73,5.45) (4.7,4.94)--(4.09,5.44) (8.16,5.38)--(8.85,4.99) (3.02,4.45)--(2.41,4.96) (3.02,4.45)--(2.56,3.8) (5.23,3.21)--(4.64,3.77) (3.27,5.47)--(4.09,5.44) (7.16,3.92)--(7.27,4.75) (2.41,4.96)--(1.73,5.45) (3.58,2.45)--(4.37,2.77) (6.02,4.14)--(5.94,3.29) (1.65,4.56)--(1.01,5.13) (8.31,3.24)--(8.85,3.91) (6.66,5.36)--(7.27,4.75) (5.16,0.57)--(4.33,0.85) (8.24,1.21)--(7.39,0.91) (8.31,3.24)--(7.71,2.56) (8.31,3.24)--(9.13,2.85) (7.39,0.91)--(6.55,1.27) (1.16,0.84)--(1.04,1.76) (6.51,2.31)--(5.71,1.83) (7.71,2.56)--(8.39,1.89) (5.23,3.21)--(4.37,2.77) (4.37,2.77)--(3.65,3.45) (2.41,4.96)--(3.27,5.47) (5.71,1.83)--(6.55,1.27) (8.85,3.91)--(8.85,4.99);
+                    }
+                    
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \node[dot] at (\x, \y) {};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.40\textwidth}
+            \only<1>{
+                \begin{center}
+                    \vspace{1.5cm}
+                    {\large Poisson point cloud $\mathcal{X} \subset \mathbb{R}^2$}
+                \end{center}
+            }
+            \only<2>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(x) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(x) \le r_0$}
+                    
+                    \vspace{0.8cm}
+                    
+                    High-density level sets \\
+                    = \textbf{Boolean model}
+                \end{center}
+            }
+            \only<3>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(x) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(x) \le r_0$}
+                    
+                    \vspace{0.8cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $G(\mathcal{X}, r_0)$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Geometric graph} \cite{penrose2003}
+                \end{center}
+            }
+            \only<4>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(x) \le r_0$}
+                    
+                    \vspace{1.0cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $G(\mathcal{X}, r_0)$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Geometric graph} \cite{penrose2003}
+                \end{center}
+            }
+            \only<5>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(x) \le r_0$}
+                    
+                    \vspace{1.0cm}
+                    
+                    High-density clusters \\
+                    = \textbf{Connected components} of $\text{MST}_{r_0}(\mathcal{X})$
+                    
+                    \vspace{0.6cm}
+                    \textbf{Pruned Minimum Spanning Tree}
+                \end{center}
+            }
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Robust SL / (H)DBSCAN ($K=2$)}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Point cloud and balls of radius $r$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % Circles of radius r (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, inria-bleu, thick] (\P) circle (\r);
+                    }
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.75, >=latex, font=\scriptsize]
+                    % Dendrogram branches for A, B, C, D, E, F (all very thick, black)
+                    \draw[very thick, black] (0.5, 0.3) -- (0.5, 2.0);
+                    \draw[very thick, black] (1.5, 0.3) -- (1.5, 2.0);
+                    \draw[very thick, black] (2.5, 0.3) -- (2.5, 2.0);
+                    \draw[very thick, black] (3.5, 0.3) -- (3.5, 2.0);
+                    \draw[very thick, black] (4.5, 0.3) -- (4.5, 2.0);
+                    \draw[very thick, black] (5.5, 0.3) -- (5.5, 2.0);
+                    
+                    % Horizontal bar at y=2.0 (resolution 2r)
+                    \draw[very thick, black] (0.5, 2.0) -- (5.5, 2.0);
+                    \draw[very thick, black] (3.0, 2.0) -- (3.0, 2.8);
+                    
+                    % Leaf nodes
+                    \node[below] at (0.5, 0.3) {$A$};
+                    \node[below] at (1.5, 0.3) {$B$};
+                    \node[below] at (2.5, 0.3) {$C$};
+                    \node[below] at (3.5, 0.3) {$D$};
+                    \node[below] at (4.5, 0.3) {$E$};
+                    \node[below] at (5.5, 0.3) {$F$};
+                    
+                    % Height axis
+                    \draw[->, thick] (0, 0.2) -- (0, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, black] (-0.1, 2.0) -- (0.5, 2.0);
+                    \node[left, black] at (-0.1, 2.0) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Point cloud and balls at level $r$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \def\rprime{1.25}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rprime);
+                                \fill[inria-bleu, opacity=0.3] (\q) circle (\rprime);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % Circles of radius r (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rprime);
+                    }
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rprime) node[midway, sloped, above] {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Dashed trunks going up
+                        \draw[very thick, inria-rouge, dashed] (M\i) -- (\x+0.25, \hr+1.2);
+                    }
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.5) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 1}: The 7 segments merge at threshold $r$.
+    \end{center}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r'$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Triangles and $3$-intersections at $r'$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \pgfmathsetmacro{\rprime}{\r * 2 / sqrt(3)}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rprime);
+                                \fill[inria-bleu, opacity=0.3] (\q) circle (\rprime);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % Circles of radius r' (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rprime);
+                    }
+                    
+                    % 3-intersection circumcenters marked in red
+                    \fill[inria-rouge] (barycentric cs:A=1,B=1,C=1) circle (3.5pt);
+                    \fill[inria-rouge] (barycentric cs:D=1,E=1,F=1) circle (3.5pt);
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rprime) node[midway, sloped, above] {$r'$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge, dashed] (1.35, \hrprime) -- (1.35, \hrprime+0.8);
+                    
+                    % Trunk 4 (CD) at 3.55 continues straight up as dashed
+                    \draw[very thick, inria-rouge, dashed] (3.55, \hrprime) -- (3.55, \hrprime+0.8);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge, dashed] (5.75, \hrprime) -- (5.75, \hrprime+0.8);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.5) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 2}: Merging of triangles at $r'$ via $3$-intersections. $CD$ remains isolated.
+    \end{center}
+\end{frame}
+
+\begin{frame}{The True $2$-NN Hierarchy: Scale $r''$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Global connectivity at $r''$}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.52]
+                    \def\r{1.2}
+                    \pgfmathsetmacro{\h}{\r*sqrt(3)}
+                    \pgfmathsetmacro{\rsecond}{\r * sqrt(2 + sqrt(3))}
+                    
+                    \coordinate (C) at (-\r, 0);
+                    \coordinate (D) at (\r, 0);
+                    \coordinate (A) at (-\r-\h, \r);
+                    \coordinate (B) at (-\r-\h, -\r);
+                    \coordinate (E) at (\r+\h, \r);
+                    \coordinate (F) at (\r+\h, -\r);
+ 
+                    % 2-intersections fill (light blue)
+                    \begin{scope}
+                        \foreach \p/\q in {A/B, B/C, C/A, C/D, D/E, E/F, F/D} {
+                            \begin{scope}
+                                \clip (\p) circle (\rsecond);
+                                \fill[inria-bleu, opacity=0.15] (\q) circle (\rsecond);
+                            \end{scope}
+                        }
+                    \end{scope}
+ 
+                    % 3-intersections fill (color overlay in red)
+                    \begin{scope}
+                        \clip (A) circle (\rsecond);
+                        \clip (B) circle (\rsecond);
+                        \clip (C) circle (\rsecond);
+                        \fill[inria-rouge, opacity=0.25] (-10,-10) rectangle (10,10);
+                    \end{scope}
+                    \begin{scope}
+                        \clip (D) circle (\rsecond);
+                        \clip (E) circle (\rsecond);
+                        \clip (F) circle (\rsecond);
+                        \fill[inria-rouge, opacity=0.25] (-10,-10) rectangle (10,10);
+                    \end{scope}
+ 
+                    % Circles of radius r'' (transparent, dashed)
+                    \foreach \P in {A,B,C,D,E,F} {
+                        \draw[dashed, gray!60, thick] (\P) circle (\rsecond);
+                    }
+                    
+                    % 4 points of tangency marked in red
+                    \fill[inria-rouge] ($ (A)!0.5!(D) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (C)!0.5!(E) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (B)!0.5!(D) $) circle (3.5pt);
+                    \fill[inria-rouge] ($ (C)!0.5!(F) $) circle (3.5pt);
+                    
+                    % Points
+                    \foreach \P/\pos in {A/left, B/left, C/above left, D/above right, E/right, F/right} {
+                        \fill (\P) circle (2.5pt);
+                        \node[\pos] at (\P) {\small \P};
+                    }
+                    
+                    % Radius arrow
+                    \draw[->, >=latex] (A) -- ++(120:\rsecond) node[midway, sloped, above] {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Hierarchical tree}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.6, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    \def\hrsecond{2.3}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge] (1.35, \hrprime) -- (1.35, \hrsecond);
+                    
+                    % Trunk 4 (CD) at 3.55 goes straight up to hrsecond
+                    \draw[very thick, inria-rouge] (3.55, \hrprime) -- (3.55, \hrsecond);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge] (5.75, \hrprime) -- (5.75, \hrsecond);
+                    
+                    % Horizontal bar at hrsecond (resolution r'')
+                    \draw[very thick, inria-rouge] (1.35, \hrsecond) -- (5.75, \hrsecond);
+                    \draw[very thick, inria-rouge] (3.55, \hrsecond) -- (3.55, \hrsecond+0.4);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 2.9) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrsecond) -- (1.35, \hrsecond);
+                    \node[left, inria-rouge] at (-0.6, \hrsecond) {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Step 3}: Global connectivity at $r''$ through tangency points.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Robust SL vs. True $2$-NN Hierarchy: Comparison}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Robust SL Hierarchy ($K=2$)}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.7, >=latex, font=\scriptsize]
+                    % Dendrogram branches for A, B, C, D, E, F (very thick, black)
+                    \draw[very thick, black] (0.5, 0.3) -- (0.5, 2.0);
+                    \draw[very thick, black] (1.5, 0.3) -- (1.5, 2.0);
+                    \draw[very thick, black] (2.5, 0.3) -- (2.5, 2.0);
+                    \draw[very thick, black] (3.5, 0.3) -- (3.5, 2.0);
+                    \draw[very thick, black] (4.5, 0.3) -- (4.5, 2.0);
+                    \draw[very thick, black] (5.5, 0.3) -- (5.5, 2.0);
+                    
+                    % Horizontal bar at y=2.0 (resolution 2r)
+                    \draw[very thick, black] (0.5, 2.0) -- (5.5, 2.0);
+                    \draw[very thick, black] (3.0, 2.0) -- (3.0, 2.8);
+                    
+                    % Leaf nodes
+                    \node[below] at (0.5, 0.3) {$A$};
+                    \node[below] at (1.5, 0.3) {$B$};
+                    \node[below] at (2.5, 0.3) {$C$};
+                    \node[below] at (3.5, 0.3) {$D$};
+                    \node[below] at (4.5, 0.3) {$E$};
+                    \node[below] at (5.5, 0.3) {$F$};
+                    
+                    % Height axis
+                    \draw[->, thick] (0, 0.2) -- (0, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, black] (-0.1, 2.0) -- (0.5, 2.0);
+                    \node[left, black] at (-0.1, 2.0) {$r$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{True $2$-NN Hierarchy}}
+                
+                \vspace{0.4cm}
+                \begin{tikzpicture}[scale=0.7, >=latex, font=\scriptsize]
+                    \def\hr{1.0}
+                    \def\hrprime{1.5}
+                    \def\hrsecond{2.3}
+                    % Dendrogram branches for A, B, C, D, E, F
+                    \foreach \L/\R [count=\i] in {A/B, B/C, A/C, C/D, D/E, E/F, D/F} {
+                        \pgfmathsetmacro{\x}{(\i-1)*1.1}
+                        \coordinate (L\i) at (\x, 0.3);
+                        \coordinate (R\i) at (\x+0.5, 0.3);
+                        \coordinate (M\i) at (\x+0.25, \hr);
+                        
+                        \node[below] at (L\i) {\L};
+                        \node[below] at (R\i) {\R};
+                        
+                        \draw[very thick, inria-rouge] (L\i) -- (\x, \hr);
+                        \draw[very thick, inria-rouge] (R\i) -- (\x+0.5, \hr);
+                        \draw[very thick, inria-rouge] (\x, \hr) -- (\x+0.5, \hr);
+                        
+                        % Vertical extension to hrprime
+                        \draw[very thick, inria-rouge] (M\i) -- (\x+0.25, \hrprime);
+                    }
+                    
+                    % Left triangle ABC merges at hrprime (trunks at 0.25, 1.35, 2.45)
+                    \draw[very thick, inria-rouge] (0.25, \hrprime) -- (2.45, \hrprime);
+                    \draw[very thick, inria-rouge] (1.35, \hrprime) -- (1.35, \hrsecond);
+                    
+                    % Trunk 4 (CD) at 3.55 goes straight up to hrsecond
+                    \draw[very thick, inria-rouge] (3.55, \hrprime) -- (3.55, \hrsecond);
+                    
+                    % Right triangle DEF merges at hrprime (trunks at 4.65, 5.75, 6.85)
+                    \draw[very thick, inria-rouge] (4.65, \hrprime) -- (6.85, \hrprime);
+                    \draw[very thick, inria-rouge] (5.75, \hrprime) -- (5.75, \hrsecond);
+                    
+                    % Horizontal bar at hrsecond (resolution r'')
+                    \draw[very thick, inria-rouge] (1.35, \hrsecond) -- (5.75, \hrsecond);
+                    \draw[very thick, inria-rouge] (3.55, \hrsecond) -- (3.55, \hrsecond+0.5);
+                    
+                    % Height axis
+                    \draw[->, thick] (-0.5, 0.2) -- (-0.5, 3.0) node[above] {Threshold $\epsilon$};
+                    \draw[dashed, inria-rouge] (-0.6, \hr) -- (0, \hr);
+                    \node[left, inria-rouge] at (-0.6, \hr) {$r$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrprime) -- (0.25, \hrprime);
+                    \node[left, inria-rouge] at (-0.6, \hrprime) {$r'$};
+                    \draw[dashed, inria-rouge] (-0.6, \hrsecond) -- (1.35, \hrsecond);
+                    \node[left, inria-rouge] at (-0.6, \hrsecond) {$r''$};
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Summary}: The true $2$-NN hierarchy isolates the connection bridge $C\text{-}D$, unlike Robust SL.
+    \end{center}
+\end{frame}
+
+\begin{frame}{Clustering on Euclidean Data $\mathcal{X} \subset \mathbb{R}^d$: High-Density Clusters ($K \ge 2$)}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.60\textwidth}
+            \begin{center}
+                \begin{itemize}
+                    \setlength{\itemsep}{12pt}
+                    \item If \textbf{$\widehat{f} = \widehat{f}_{K-\text{NN}}$} ($K \ge 2$): density estimator by $K$-nearest neighbors.
+                    \item Transition to \textbf{hypergraphs} (geometric complexes):
+                    \begin{itemize}
+                        \setlength{\itemsep}{6pt}
+                        \item Edges and triangles appear at the intersections of balls of radius $r$.
+                    \end{itemize}
+                    \item Higher-order clustering algorithms:
+                    \begin{itemize}
+                        \setlength{\itemsep}{6pt}
+                        \item Connected components are replaced by \textbf{$K$-polyhedra}.
+                        \item For $K \ge 2$, clusters (polyhedra) can overlap.
+                    \end{itemize}
+                \end{itemize}
+            \end{center}
+        \end{column}
+        
+        \begin{column}{0.38\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[xscale=0.42, yscale=0.42]
+                    \useasboundingbox (-0.5, -0.5) rectangle (10.5, 6.5);
+                    
+                    \tikzset{dot/.style={circle, fill=inria-2024-bleu-canard, inner sep=1.1pt, outer sep=0pt}}
+                    \tikzset{cech_edge/.style={line width=0.4pt, gray!80}}
+                    
+                    % 1. Disks
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \fill[inria-bleu, opacity=0.18] (\x, \y) circle (0.55);
+                    }
+                    
+                    % 2. Cech Triangles
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (7.04,3.24)--(7.16,3.92)--(7.91,3.8)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (8.31,3.24)--(8.85,3.91)--(7.91,3.8)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (2.89,1.18)--(3.66,1.24)--(3.51,0.51)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (4.33,0.85)--(4.4,1.59)--(3.66,1.24)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (4.33,0.85)--(3.66,1.24)--(3.51,0.51)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (2.15,2.64)--(1.69,1.9)--(1.47,2.64)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.65,4.56)--(2.41,4.96)--(1.73,5.45)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.65,4.56)--(1.01,5.13)--(1.73,5.45)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (1.69,1.9)--(1.47,2.64)--(1.04,1.76)--cycle;
+                    \fill[inria-2024-bleu-canard!40, opacity=0.55] (5.23,3.21)--(4.37,2.77)--(4.64,3.77)--cycle;
+                    
+                    % 3. Cech Edges
+                    \draw[cech_edge] (5.16,0.57)--(4.33,0.85);
+                    \draw[cech_edge] (6.02,4.14)--(5.94,3.29);
+                    \draw[cech_edge] (7.04,3.24)--(6.51,2.31);
+                    \draw[cech_edge] (7.04,3.24)--(7.71,2.56);
+                    \draw[cech_edge] (7.04,3.24)--(7.16,3.92);
+                    \draw[cech_edge] (7.04,3.24)--(7.91,3.8);
+                    \draw[cech_edge] (8.31,3.24)--(7.71,2.56);
+                    \draw[cech_edge] (8.31,3.24)--(8.85,3.91);
+                    \draw[cech_edge] (8.31,3.24)--(7.91,3.8);
+                    \draw[cech_edge] (8.31,3.24)--(9.13,2.85);
+                    \draw[cech_edge] (3.02,4.45)--(2.56,3.8);
+                    \draw[cech_edge] (3.02,4.45)--(2.41,4.96);
+                    \draw[cech_edge] (3.02,4.45)--(3.27,5.47);
+                    \draw[cech_edge] (6.51,2.31)--(5.71,1.83);
+                    \draw[cech_edge] (6.51,2.31)--(6.55,1.27);
+                    \draw[cech_edge] (2.89,1.18)--(3.66,1.24);
+                    \draw[cech_edge] (2.89,1.18)--(3.51,0.51);
+                    \draw[cech_edge] (7.71,2.56)--(8.39,1.89);
+                    \draw[cech_edge] (4.33,0.85)--(4.4,1.59);
+                    \draw[cech_edge] (4.33,0.85)--(3.66,1.24);
+                    \draw[cech_edge] (4.33,0.85)--(3.51,0.51);
+                    \draw[cech_edge] (3.58,2.45)--(4.37,2.77);
+                    \draw[cech_edge] (3.58,2.45)--(3.65,3.45);
+                    \draw[cech_edge] (3.58,2.45)--(2.86,2.72);
+                    \draw[cech_edge] (6.66,5.36)--(7.27,4.75);
+                    \draw[cech_edge] (8.24,1.21)--(8.39,1.89);
+                    \draw[cech_edge] (8.24,1.21)--(7.39,0.91);
+                    \draw[cech_edge] (2.15,2.64)--(1.69,1.9);
+                    \draw[cech_edge] (2.15,2.64)--(1.47,2.64);
+                    \draw[cech_edge] (2.15,2.64)--(2.86,2.72);
+                    \draw[cech_edge] (1.65,4.56)--(2.41,4.96);
+                    \draw[cech_edge] (1.65,4.56)--(1.01,5.13);
+                    \draw[cech_edge] (1.65,4.56)--(1.73,5.45);
+                    \draw[cech_edge] (8.16,5.38)--(7.27,4.75);
+                    \draw[cech_edge] (8.16,5.38)--(8.85,4.99);
+                    \draw[cech_edge] (1.69,1.9)--(1.47,2.64);
+                    \draw[cech_edge] (1.69,1.9)--(1.04,1.76);
+                    \draw[cech_edge] (8.85,3.91)--(7.91,3.8);
+                    \draw[cech_edge] (8.85,3.91)--(9.13,2.85);
+                    \draw[cech_edge] (8.85,3.91)--(8.85,4.99);
+                    \draw[cech_edge] (4.7,4.94)--(4.09,5.44);
+                    \draw[cech_edge] (5.71,1.83)--(6.55,1.27);
+                    \draw[cech_edge] (8.39,1.89)--(9.39,2.11);
+                    \draw[cech_edge] (7.16,3.92)--(7.91,3.8);
+                    \draw[cech_edge] (7.16,3.92)--(7.27,4.75);
+                    \draw[cech_edge] (1.47,2.64)--(1.04,1.76);
+                    \draw[cech_edge] (5.23,3.21)--(4.37,2.77);
+                    \draw[cech_edge] (5.23,3.21)--(4.64,3.77);
+                    \draw[cech_edge] (5.23,3.21)--(5.94,3.29);
+                    \draw[cech_edge] (1.16,0.84)--(1.04,1.76);
+                    \draw[cech_edge] (7.39,0.91)--(6.55,1.27);
+                    \draw[cech_edge] (2.41,4.96)--(3.27,5.47);
+                    \draw[cech_edge] (2.41,4.96)--(1.73,5.45);
+                    \draw[cech_edge] (4.37,2.77)--(3.65,3.45);
+                    \draw[cech_edge] (4.37,2.77)--(4.64,3.77);
+                    \draw[cech_edge] (3.65,3.45)--(2.86,2.72);
+                    \draw[cech_edge] (3.65,3.45)--(4.64,3.77);
+                    \draw[cech_edge] (4.4,1.59)--(3.66,1.24);
+                    \draw[cech_edge] (3.27,5.47)--(4.09,5.44);
+                    \draw[cech_edge] (9.39,2.11)--(9.13,2.85);
+                    \draw[cech_edge] (3.66,1.24)--(3.51,0.51);
+                    \draw[cech_edge] (1.01,5.13)--(1.73,5.45);
+                    
+                    % 5. Redraw Points
+                    \foreach \x/\y in {5.16/0.57, 6.02/4.14, 7.04/3.24, 8.31/3.24, 3.02/4.45, 6.51/2.31, 2.89/1.18, 7.71/2.56, 4.33/0.85, 3.58/2.45, 6.66/5.36, 8.24/1.21, 2.15/2.64, 1.65/4.56, 2.56/3.8, 8.16/5.38, 1.69/1.9, 8.85/3.91, 4.7/4.94, 5.71/1.83, 8.39/1.89, 0.52/4.12, 7.16/3.92, 1.47/2.64, 5.23/3.21, 1.16/0.84, 9.42/0.8, 7.39/0.91, 2.41/4.96, 4.37/2.77, 7.91/3.8, 3.65/3.45, 4.4/1.59, 2.86/2.72, 6.55/1.27, 3.27/5.47, 9.39/2.11, 3.66/1.24, 1.01/5.13, 1.04/1.76, 1.73/5.45, 4.64/3.77, 7.27/4.75, 4.09/5.44, 5.94/3.29, 9.13/2.85, 8.85/4.99, 3.51/0.51} {
+                        \node[dot] at (\x, \y) {};
+                    }
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The Case $K=1$: The \textsc{Gabriel} Graph}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{Definition}:
+                \begin{itemize}
+                    \item An edge $[A, B]$ is a \textsc{Gabriel} edge if its \textbf{diametral disk} does not contain any other point in $\mathcal{X}$.
+                \end{itemize}
+                \item \textbf{Intermediate structure}:
+                \begin{itemize}
+                    \item Key structure between the MST and the triangulation:
+                    \[ \text{MST} \ \subseteq \ \text{\textsc{Gabriel} Graph} \ \subseteq \ \text{\textsc{Delaunay}} \]
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, >=latex]
+                    % Left: Gabriel edge
+                    \begin{scope}[shift={(0,1.4)}]
+                        \coordinate (A) at (-1.1,0);
+                        \coordinate (B) at (1.1,0);
+                        \draw[fill=inria-bleu!10, draw=inria-bleu, thick] (0,0) circle (1.1);
+                        \draw[line width=1.5pt, inria-rouge] (A) -- (B);
+                        \fill[black] (A) circle (2pt) node[left] {$A$};
+                        \fill[black] (B) circle (2pt) node[right] {$B$};
+                        \node[below, font=\scriptsize] at (0,-1.2) {\textbf{\textsc{Gabriel} edge} (empty)};
+                    \end{scope}
+                    
+                    % Right: Non-Gabriel edge
+                    \begin{scope}[shift={(0,-1.9)}]
+                        \coordinate (A2) at (-1.1,0);
+                        \coordinate (B2) at (1.1,0);
+                        \coordinate (C2) at (0.3,0.4);
+                        \draw[fill=inria-rouge!10, draw=inria-rouge, thick, dashed] (0,0) circle (1.1);
+                        \draw[line width=1.5pt, gray!60, dashed] (A2) -- (B2);
+                        \fill[black] (A2) circle (2pt) node[left] {$A$};
+                        \fill[black] (B2) circle (2pt) node[right] {$B$};
+                        \fill[inria-rouge] (C2) circle (2.5pt) node[above] {$C$ (intruder)};
+                        \node[below, font=\scriptsize] at (0,-1.2) {\textbf{Non-\textsc{Gabriel}} (non-empty)};
+                    \end{scope}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Generalization to Order $K$: Splitting Simplices}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{$K$-splitting simplex}:
+                \begin{itemize}
+                    \item It is a $K$-simplex that has a \textbf{real influence} (causes clusters to merge) on the $K$-NN hierarchy.
+                    \item \textbf{Case $K=1$}: $1$-splitting simplices are precisely the \textbf{edges of the MST}.
+                \end{itemize}
+                \item \textbf{\textsc{Gabriel} condition}:
+                \begin{itemize}
+                    \item \textbf{Theorem}: Any $K$-splitting simplex is necessarily a \textbf{\textsc{Gabriel} simplex} ($\mathring{B}_\sigma \cap (\mathcal{X} \setminus \sigma) = \varnothing$).
+                    \item \textbf{Computational domain}: The \textbf{higher-order \textsc{Delaunay} mosaic} \cite{osangEdelsbrunner2023algorithm}.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \begin{tikzpicture}[scale=0.8, >=latex]
+                    % Top: Obtuse Gabriel triangle (empty miniball)
+                    \begin{scope}[shift={(0,1.4)}, scale=0.5]
+                        \coordinate (C) at (0,0);
+                        \coordinate (S) at (-2,0);
+                        \coordinate (T) at (2,0);
+                        \coordinate (U) at (0,1);
+                        \fill[inria-bleu!10] (C) circle (2);
+                        \draw[inria-bleu, thick] (C) circle (2);
+                        \fill[inria-rouge!15, draw=inria-rouge, thick] (S) -- (T) -- (U) -- cycle;
+                        \fill[black] (S) circle (3pt) node[left] {$x_1$};
+                        \fill[black] (T) circle (3pt) node[right] {$x_2$};
+                        \fill[black] (U) circle (3pt) node[above] {$x_3$};
+                        \node[below, font=\scriptsize] at (0,-2.2) {\textbf{\textsc{Gabriel} triangle} (empty)};
+                    \end{scope}
+                    
+                    % Bottom: Obtuse Non-Gabriel triangle (non-empty miniball with intruder z)
+                    \begin{scope}[shift={(0,-1.9)}, scale=0.5]
+                        \coordinate (C) at (0,0);
+                        \coordinate (S) at (-2,0);
+                        \coordinate (T) at (2,0);
+                        \coordinate (U) at (0,1);
+                        \coordinate (Z) at (-0.4,-0.8);
+                        \fill[inria-rouge!10] (C) circle (2);
+                        \draw[inria-rouge, thick, dashed] (C) circle (2);
+                        \draw[gray!50, dashed] (S) -- (T) -- (U) -- cycle;
+                        \fill[black] (S) circle (3pt) node[left] {$x_1$};
+                        \fill[black] (T) circle (3pt) node[right] {$x_2$};
+                        \fill[black] (U) circle (3pt) node[above] {$x_3$};
+                        \fill[inria-rouge] (Z) circle (3.5pt) node[below right] {$z$ (intruder)};
+                        \node[below, font=\scriptsize] at (0,-2.2) {\textbf{Non-\textsc{Gabriel}} (non-empty)};
+                    \end{scope}
+                \end{tikzpicture}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{The $K$-Minimum Spanning Tree Analogy}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            Similar to $K=1$, the higher-order hierarchy relies on a sparse combinatorial structure:
+            
+            \vspace{0.3cm}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{Percolation objects}:
+                \begin{itemize}
+                    \item It is no longer points, but \textbf{facets} ($(K-1)$-simplices) that merge.
+                \end{itemize}
+                \item \textbf{\textsc{Gabriel} simplices}:
+                \begin{itemize}
+                    \item The simplices causing the merges (splitting simplices) are \textbf{\textsc{Gabriel}} simplices.
+                \end{itemize}
+                \item \textbf{Computational domain}:
+                \begin{itemize}
+                    \item The search is restricted to the simplices of the \textbf{higher-order \textsc{Delaunay} mosaic} \cite{osangEdelsbrunner2023algorithm}.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textbf{Comparison $1$-MST vs. $K$-MST}
+                
+                \vspace{0.5cm}
+                \small
+                \renewcommand{\arraystretch}{1.5}
+                \begin{tabular}{lcc}
+                    \toprule
+                    & \textbf{$K = 1$} & \textbf{$K \ge 2$} \\
+                    \midrule
+                    \textbf{Vertices} & Points & $(K-1)$-simplices \\
+                    \textbf{Merges} & Edges & $K$-simplices \\
+                    \textbf{Condition} & \textsc{Gabriel} & \textsc{Gabriel} \\
+                    \textbf{Domain} & \textsc{Delaunay} & Order-$K$ \textsc{Delaunay} \\
+                    \bottomrule
+                \end{tabular}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Backup 4 : Résultats en Segmentation Temporelle 4D (SemanticKITTI)}
+    \begin{itemize}
+        \item Suivi temporel d'instances sur des nuages de points 3D séquentiels.
+        \item Combinaison de \textbf{HGP-Clusterer} avec du \textbf{Transport Optimal Déséquilibré} (\emph{Unbalanced Optimal Transport}).
+        \item Solution complètement \textbf{sans apprentissage} (comparée à Geo-4D ou Alpine).
+        \item Élimination totale du besoin de réentraînement lors des changements de domaine de capteurs.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Backup 5 : Application à la Génomique (Haplotype Assembly)}
+  \centering
+  \only<1>{%
+    \begin{block}{1. Contexte biologique : Deux chromosomes homologues (Haplotypes)}
+      Les humains sont diploïdes : ils possèdent deux copies de chaque chromosome.
+    \end{block}
+    \drawHaplotypePresentation{1}
+  }%
+  \only<2>{%
+    \begin{block}{2. Séquençage haut débit : Reads d'ADN}
+      Le séquençage génère de courts fragments chevauchants appelés \textbf{reads} issus des deux chromosomes.
+    \end{block}
+    \drawHaplotypePresentation{2}
+  }%
+  \only<3>{%
+    \begin{block}{3. Modélisation sous forme de graphe signé}
+      N\oe{}uds = reads \qquad Arêtes = chevauchements (attractions / répulsions)\\
+      \textbf{But :} Reconstruire l'affectation d'haplotypes {\Large $\boldsymbol{\Sigma}$} à partir de ce graphe signé bruité.
+    \end{block}
+    \drawHaplotypePresentation{3}
+  }%
+\end{frame}
+
+\begin{frame}{Backup 6 : Détection de Communautés sur Graphes Signés}
+  \begin{block}{Détection de communautés sur graphes signés ($K=2$)}
+    \begin{itemize}
+      \item Partitionner les n\oe{}uds en $K=2$ communautés : $\Sigma_i \in \{+1, -1\}$.
+      \item Les liens représentent des \textbf{attractions} (pleins) et des \textbf{répulsions} (pointillés).
+      \item Au-delà du SBM classique : couplage entre géométrie spatiale et structure de communauté !
+    \end{itemize}
+  \end{block}
+  \begin{block}{Le défi géométrique}
+    \begin{itemize}
+      \item Plongement spatial (ex: positions sur $\mathbb{Z}$ ou $\mathbb{R}^d$).
+      \item Probabilités d'arêtes dépendant de la distance $r = \|x_i - x_j\|$ :
+        \begin{align*}
+            \mathbb{P}(\text{arête attractive} \mid \text{même communauté}) &= f_{\mathrm{in}}(r) \\
+            \mathbb{P}(\text{arête attractive} \mid \text{communautés différentes}) &= f_{\mathrm{out}}(r)
+        \end{align*}
+      \item \textbf{Intérêt principal et verrou} : Capturer cette géométrie sous-jacente.
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{References}
+    \bibliographystyle{plain}
+    \bibliography{referencesThesis}
+\end{frame}
+
+\end{document}
