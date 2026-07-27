@@ -187,11 +187,17 @@
     \textcolor{inria-noir}{\textbf{\Roman{tocsectioncounter})~\inserttocsection}}%
 }
 
+\newif\ifshowsectionframe
+\showsectionframetrue
+
 \AtBeginSection[]{
-  \begin{frame}[plain,c]
-    \centering
-    \Huge \textbf{\textcolor{inria-noir}{\Roman{section})~\insertsection}}
-  \end{frame}
+  \ifshowsectionframe
+    \begin{frame}[plain,c]
+      \centering
+      \Huge \textbf{\textcolor{inria-noir}{\Roman{section})~\insertsection}}
+    \end{frame}
+  \fi
+  \showsectionframetrue
 }
 
 \begin{document}
@@ -316,6 +322,7 @@
     \end{itemize}
 \end{frame}
 
+\showsectionframefalse
 \section{Technologie}
 % Slide 4: La solution technique Percolia (3D LiDAR)
 \begin{frame}{La solution technique Percolia (3D LiDAR)}
