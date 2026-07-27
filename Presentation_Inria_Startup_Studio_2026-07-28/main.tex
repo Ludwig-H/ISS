@@ -285,30 +285,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 2.4: Constat (problème à résoudre) - Exemple 4 (Exwayz)
-\begin{frame}{Exemple 4 : SLAM \& Traitement LiDAR temps réel (Exwayz)}
-    \begin{columns}[T]
-        \begin{column}{0.52\textwidth}
-            \textbf{\bleu Qu'est-ce que le SLAM ?}
-            \begin{itemize}
-                \item \textbf{Cartographie :} Construction d'une carte 3D de l'environnement.
-                \item \textbf{Localisation :} Positionnement en temps réel du robot dans cette carte.
-            \end{itemize}
-            \vspace{0.2cm}
-            \textbf{\bleu Le verrou technologique}
-            \begin{itemize}
-                \item Problème circulaire (la localisation dépend de la carte et réciproquement).
-                \item Le bruit relie à tort les objets dynamiques aux structures statiques (perte de tracking).
-            \end{itemize}
-        \end{column}
-        \begin{column}{0.44\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{imgs/exwayz_lidar_slam.jpg}\\
-            \vspace{0.2cm}
-            \tiny \textcolor{inria-2024-gris-bleu}{Logiciel de cartographie et localisation (SLAM) 3D temps réel (source : exwayz.fr).}
-        \end{column}
-    \end{columns}
-\end{frame}
+
 
 \section{Projet \& Solution}
 % Slide 3: Le standard de l'état de l'art
@@ -530,6 +507,31 @@
 \end{frame}
 
 % --- ANNEXES (TECHNICAL BACKUP) ---
+% Slide 2.4: Constat (problème à résoudre) - Exemple 4 (Exwayz)
+\begin{frame}{Exemple 4 : SLAM \& Traitement LiDAR temps réel (Exwayz)}
+    \begin{columns}[T]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Qu'est-ce que le SLAM ?}
+            \begin{itemize}
+                \item \textbf{Cartographie :} Construction d'une carte 3D de l'environnement.
+                \item \textbf{Localisation :} Positionnement en temps réel du robot dans cette carte.
+            \end{itemize}
+            \vspace{0.2cm}
+            \textbf{\bleu Le verrou technologique}
+            \begin{itemize}
+                \item Problème circulaire (la localisation dépend de la carte et réciproquement).
+                \item Le bruit relie à tort les objets dynamiques aux structures statiques (perte de tracking).
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/exwayz_lidar_slam.jpg}\\
+            \vspace{0.2cm}
+            \tiny \textcolor{inria-2024-gris-bleu}{Logiciel de cartographie et localisation (SLAM) 3D temps réel (source : exwayz.fr).}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 \begin{frame}{Backup 1 : Généralisation à l'axe Logs Cyber}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
