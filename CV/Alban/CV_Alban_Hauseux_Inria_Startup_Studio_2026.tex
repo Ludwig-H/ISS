@@ -1,0 +1,156 @@
+% !TEX program = lualatex
+% CV français ciblé pour Inria Startup Studio / Percolia.
+% Compilation : lualatex -interaction=nonstopmode -halt-on-error CV_Alban_Hauseux_Inria_Startup_Studio_2026.tex
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{fontspec}
+\setsansfont{TeX Gyre Heros}[Ligatures=TeX]
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[left=1.35cm,right=1.35cm,top=0.85cm,bottom=0.85cm]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{hyperref}
+
+\definecolor{darkblue}{RGB}{20,52,80}
+\definecolor{midblue}{RGB}{53,94,128}
+\definecolor{softgray}{RGB}{78,78,78}
+
+\hypersetup{
+  unicode=true,
+  colorlinks=true,
+  urlcolor=darkblue,
+  linkcolor=darkblue,
+  pdfauthor={Alban Hauseux},
+  pdftitle={Curriculum vitae -- Alban Hauseux -- Inria Startup Studio},
+  pdfsubject={Candidature Inria Startup Studio -- projet Percolia},
+  pdfkeywords={Inria Startup Studio, Percolia, porteur business, produit, Python, SQL, finance quantitative}
+}
+\urlstyle{same}
+
+\titleformat{\section}
+  {\normalsize\bfseries\color{darkblue}}
+  {}{0pt}{\MakeUppercase}[\vspace{-0.32em}\color{midblue}\rule{\textwidth}{0.45pt}]
+\titlespacing*{\section}{0pt}{0.52em}{0.24em}
+
+\setlength{\parindent}{0pt}
+\setlength{\tabcolsep}{0pt}
+\setlist[itemize]{
+  leftmargin=2.68cm,
+  label=\textcolor{midblue}{\raisebox{0.12ex}{\scriptsize$\bullet$}},
+  labelsep=0.42em,
+  itemsep=0.03em,
+  topsep=0.05em,
+  parsep=0pt,
+  partopsep=0pt
+}
+
+\newcommand{\cventry}[4]{%
+  \begin{tabularx}{\textwidth}{@{}p{2.32cm}@{\hspace{0.22cm}}X@{}}
+    \textcolor{softgray}{#1} & \textbf{#2}\if\relax\detokenize{#3}\relax\else\hfill\textcolor{softgray}{#3}\fi\\[-0.15ex]
+    & \textbf{#4}
+  \end{tabularx}\vspace{-0.25em}
+}
+
+\newcommand{\compactentry}[2]{%
+  \begin{tabularx}{\textwidth}{@{}p{2.32cm}@{\hspace{0.22cm}}X@{}}
+    \textcolor{softgray}{#1} & #2
+  \end{tabularx}\par
+}
+
+\begin{document}
+\pagestyle{empty}
+\frenchspacing
+
+% ==================== EN-TÊTE ====================
+\begin{center}
+  {\LARGE\bfseries Alban \textsc{Hauseux}}\\[0.22em]
+  {\large\bfseries\color{darkblue}Porteur business de Percolia}\\[0.12em]
+  {\normalsize Développement commercial, audits clients et intégration logicielle}\\[0.32em]
+  Paris
+  \enspace\textcolor{midblue}{\textbullet}\enspace
+  +33~(0)6~87~59~29~26
+  \enspace\textcolor{midblue}{\textbullet}\enspace
+  \href{mailto:alban.hau@gmail.com}{alban.hau@gmail.com}
+\end{center}
+\vspace{-0.55em}
+
+% ==================== PROFIL ====================
+\section*{Profil}
+Ingénieur télécom et diplômé du master Économie et Finance de l'Université Paris-Dauphine
+PSL, expérimenté en développement d'outils quantitatifs, vente et exécution de produits
+financiers, contrôle de modèles et coordination Front Office--IT. Dans \textbf{Percolia},
+mon rôle prévu est de structurer le développement commercial et les audits clients, puis
+d'accompagner l'intégration logicielle aux côtés de Louis Hauseux, porteur de la technologie.
+Candidature pour un engagement à temps plein au sein d'Inria Startup Studio.
+
+% ==================== PERCOLIA ====================
+\section*{Projet entrepreneurial}
+\cventry{2026}{Percolia -- projet candidat à Inria Startup Studio}{}{Porteur business -- responsabilités prévues}
+\begin{itemize}
+  \item Structurer la découverte client, le démarchage et les audits comparatifs payants sur
+  le cas d'usage prioritaire des nuages de points 3D LiDAR, puis convertir les cas validés en
+  API ou licences logicielles récurrentes.
+  \item Piloter l'interface client--R\&D : données et besoins métier, spécifications, tests
+  d'acceptation, restitution des résultats et intégration ; contribuer au développement en
+  Python et SQL.
+\end{itemize}
+
+% ==================== EXPÉRIENCE ====================
+\section*{Expériences professionnelles}
+\cventry{2023--auj.}{HSBC}{Paris}{Assistant Trader Repo (depuis 2025) ; Rates Products (2023--2024)}
+\begin{itemize}
+  \item Développer des outils d'analyse et d'aide à la décision en Python, SQL et VBA ;
+  produire notamment le calcul du P\&L de la salle des marchés.
+  \item Assurer le support du desk et l'interface Front Office--Middle/Back Office--IT ;
+  gérer le booking de swaps, FRA, forward bonds et swaps d'inflation zéro-coupon.
+  \item Reconcevoir un processus d'allocation du P\&L sur un périmètre de taux souverains
+  européens : spécifications, procédures et tests menés avec l'IT.
+\end{itemize}
+
+\cventry{2021--2022}{Société Générale}{Luxembourg}{Cross-Asset Structured Products Sales and Execution Trader}
+\begin{itemize}
+  \item Exécuter les ordres sur les marchés gris et secondaire, contrôler les prix des
+  émetteurs et proposer des produits structurés adaptés aux besoins des clients.
+  \item Développer en Python un outil de contrôle des prix connecté à Bloomberg et au système
+  de booking.
+\end{itemize}
+
+\cventry{2020--2021}{HSBC}{Paris}{Assistant Trader Exotic Equity Derivatives -- développement Python \& VBA (alternance)}
+\begin{itemize}
+  \item Développer et améliorer les outils du desk : financement d'autocallables, couverture
+  du vega, suivi du P\&L et backtests de stratégies.
+\end{itemize}
+
+\cventry{2019--2020}{Crédit Mutuel}{Paris}{Audit quantitatif -- Inspection générale groupe}
+\begin{itemize}
+  \item Contribuer à des missions sur les modèles de crédit, les critères de défaut bâlois
+  et la réconciliation de bases de données opérationnelles et décisionnelles.
+\end{itemize}
+
+\cventry{2018--2019}{Banque de France--ACPR}{Paris}{Contrôle des modèles internes Solvabilité~II}
+\begin{itemize}
+  \item Contribuer aux contrôles sur place d'assureurs : risques de marché et d'assurance,
+  conformité prudentielle, modèles de taux et modèles actions.
+  \item Implémenter en Python un générateur de scénarios économiques mobilisant modèles de
+  taux et actions, équations différentielles stochastiques, optimisation et arbres multinomiaux.
+\end{itemize}
+
+% ==================== COMPÉTENCES ====================
+\section*{Compétences}
+\compactentry{Logiciel \& data}{\textbf{Python, SQL, VBA} ; API Bloomberg ; automatisation,
+analyse de données, backtests, scénarios économiques et outils de P\&L.}
+\compactentry{Produit \& projet}{Spécifications fonctionnelles, procédures, plans de test,
+coordination métiers--IT, restitution d'audits et intégration d'outils décisionnels.}
+\compactentry{Quantitatif}{Repo, taux, dérivés actions, produits structurés ;
+exécution, relation client, pricing, modèles de risque et réglementation prudentielle.}
+
+% ==================== FORMATION ====================
+\section*{Formation}
+\compactentry{2020--2021}{\textbf{Master Économie et Finance}, Université Paris-Dauphine PSL -- Paris.}
+\compactentry{2015--2018}{\textbf{Diplôme d'ingénieur}, IMT Atlantique (ex-Télécom Bretagne) -- Brest.}
+\compactentry{2012--2015}{Classes préparatoires scientifiques, lycée Saint-Louis -- Paris.}
+
+\end{document}
