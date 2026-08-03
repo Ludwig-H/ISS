@@ -1,5 +1,5 @@
 % !TEX program = lualatex
-% CV français ciblé pour l'instruction RH Inria Startup Studio / Percolia.
+% CV français ciblé pour Inria Startup Studio / Percolia.
 % Compilation : lualatex -interaction=nonstopmode -halt-on-error CV_Alban_Hauseux_Inria_Startup_Studio_2026.tex
 \documentclass[10pt,a4paper]{article}
 
@@ -17,7 +17,6 @@
 \definecolor{darkblue}{RGB}{20,52,80}
 \definecolor{midblue}{RGB}{53,94,128}
 \definecolor{softgray}{RGB}{78,78,78}
-\definecolor{paleblue}{RGB}{238,244,248}
 
 \hypersetup{
   unicode=true,
@@ -26,7 +25,7 @@
   linkcolor=darkblue,
   pdfauthor={Alban Hauseux},
   pdftitle={Curriculum vitae -- Alban Hauseux -- Inria Startup Studio},
-  pdfsubject={Instruction RH et candidature Inria Startup Studio -- projet Percolia},
+  pdfsubject={Candidature Inria Startup Studio -- projet Percolia},
   pdfkeywords={Inria Startup Studio, Percolia, porteur business, audits, intégration logicielle, Python, SQL, finance quantitative}
 }
 \urlstyle{same}
@@ -50,18 +49,12 @@
   partopsep=0pt
 }
 
-% #1 période ; #2 durée déclarée ; #3 employeur ; #4 lieu ; #5 fonction.
+% #1 période ; #2 durée ; #3 employeur ; #4 lieu ; #5 fonction.
 \newcommand{\cventry}[5]{%
   \begin{tabularx}{\textwidth}{@{}L{3.30cm}@{\hspace{0.22cm}}X@{}}
     \textcolor{softgray}{#1} & \textbf{#3}\hfill\textcolor{softgray}{#4}\\[-0.10ex]
     \small\textcolor{darkblue}{\textbf{#2}} & \textbf{#5}
   \end{tabularx}\vspace{-0.22em}
-}
-
-\newcommand{\apportpercolia}[1]{%
-  \begin{tabularx}{\textwidth}{@{}L{3.30cm}@{\hspace{0.22cm}}X@{}}
-    & \textcolor{darkblue}{\textbf{Compétences mobilisables pour Percolia :}} #1
-  \end{tabularx}\par\vspace{0.12em}
 }
 
 \newcommand{\compactentry}[2]{%
@@ -97,17 +90,6 @@ développement commercial et les audits clients, de traduire les besoins en spé
 tests, puis d'accompagner l'intégration logicielle aux côtés de Louis Hauseux, porteur de la
 technologie. Candidature pour un engagement à temps plein au sein d'Inria Startup Studio.
 
-\smallskip
-\noindent\colorbox{paleblue}{%
-  \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
-    \textbf{Repère pour l'instruction RH : cumul indicatif de 90 mois d'expérience
-    déclarée au 3 août 2026, soit 7 ans et 6 mois.}\\[-0.05em]
-    \small HSBC Repo 20 mois + HSBC Rates 18 mois + Société Générale 12 mois + alternance
-    HSBC 12 mois + Crédit Mutuel 10 mois + Banque de France--ACPR 18 mois. La reprise
-    effective dépendra des dates exactes, quotités et justificatifs validés par Inria.
-  }%
-}
-
 % ==================== PERCOLIA ====================
 \section*{Projet entrepreneurial — Percolia}
 \cventry{2026}{Temps plein prévu}{Projet candidat à Inria Startup Studio}{}{Porteur business -- responsabilités prévues}
@@ -122,32 +104,35 @@ technologie. Candidature pour un engagement à temps plein au sein d'Inria Start
 \end{itemize}
 
 \smallskip
-{\normalsize\bfseries\color{darkblue}Correspondance directe entre le parcours et le projet}\par
+{\normalsize\bfseries\color{darkblue}Expérience mise au service de Percolia}\par
 \smallskip
-\compactentry{Produit / intégration}{HSBC Repo et Rates : besoins métier, outils d'aide à
-la décision, spécifications, procédures, tests et coordination avec l'IT.}
+\compactentry{Produit / intégration}{HSBC Repo : outil Python/PyQt utilisé directement par
+les traders, automatisation de contrôles et de rapports, spécifications, tests et
+coordination métiers--IT.}
 \compactentry{Commercial / clients}{Société Générale : portefeuille client, proposition de
 produits adaptés, contrôle des prix et exécution.}
 \compactentry{Audits / validation}{Banque de France--ACPR et Crédit Mutuel : audit de
 modèles, contrôle de conformité et réconciliation de données.}
-\compactentry{Développement}{Python dans cinq expériences sur six ; SQL et VBA pour
-automatiser des analyses et construire des outils utilisés par les métiers.}
+\compactentry{Développement}{Python dans cinq expériences sur six ; PyQt, SQL et VBA pour
+concevoir une interface métier et automatiser analyses, rapports et contrôles.}
 
 % ==================== EXPÉRIENCE PAGE 1 ====================
 \section*{Expériences professionnelles}
-\cventry{2025--auj.}{1 an 8 mois -- 20 mois}{HSBC}{Paris, France}{Assistant Trader Repo}
+\cventry{2025--auj.}{20 mois}{HSBC}{Paris, France}{Assistant Trader Repo}
 \begin{itemize}
   \item Assurer le support Front Office du desk et l'interface avec les équipes Middle
   Office, Back Office et IT.
   \item Concevoir des macros et outils d'aide à la décision destinés aux traders en SQL,
   VBA et Python.
+  \item Créer en Python un outil d'analyse des P\&L et des opérations non dénouées
+  (\textit{unsettled}), doté d'une interface graphique PyQt et utilisé directement par les traders.
+  \item Automatiser des rapports en Python, VBA et SQL : positions \textit{straight short}
+  de la banque, statistiques sur les trades triparty, contrôles automatiques des erreurs de
+  booking et calcul mensuel des factures sur les trades non-cash.
   \item Refaire le processus d'allocation du P\&L du périmètre EurGov : rédaction des
   spécifications et procédures, puis réalisation de tests en lien avec l'IT.
 \end{itemize}
-\apportpercolia{expérience transférable au cadrage et à l'intégration de Percolia :
-traduction d'un besoin métier en spécifications et tests, puis coordination utilisateurs--IT.}
-
-\cventry{2023--2024}{1 an 6 mois -- 18 mois}{HSBC}{Paris, France}{Assistant Trader Rates Products}
+\cventry{2023--2024}{18 mois}{HSBC}{Paris, France}{Assistant Trader Rates Products}
 \begin{itemize}
   \item Réaliser le booking de produits de taux d'intérêt : swaps, FRA, forward bonds et
   swaps d'inflation zéro-coupon.
@@ -156,9 +141,6 @@ traduction d'un besoin métier en spécifications et tests, puis coordination ut
   VBA et Python.
   \item Réaliser diverses productions, dont le calcul du P\&L de la salle des marchés.
 \end{itemize}
-\apportpercolia{compréhension de workflows métier, automatisation d'analyses et
-production de résultats exploitables par des utilisateurs opérationnels.}
-
 % Le saut de page évite de couper une expérience et réserve la seconde page aux quatre
 % autres postes, aux compétences et à la formation.
 \newpage
@@ -170,7 +152,7 @@ production de résultats exploitables par des utilisateurs opérationnels.}
 \vspace{-0.75em}
 
 \section*{Expériences professionnelles — suite}
-\cventry{2021--2022}{1 an -- 12 mois}{Société Générale}{Luxembourg}{Cross-Asset Structured Products Sales and Execution Trader}
+\cventry{2021--2022}{12 mois}{Société Générale}{Luxembourg}{Cross-Asset Structured Products Sales and Execution Trader}
 \begin{itemize}
   \item Exécuter les ordres sur le marché gris et le marché secondaire.
   \item Vérifier les prix fournis par les émetteurs.
@@ -179,28 +161,19 @@ production de résultats exploitables par des utilisateurs opérationnels.}
   \item Développer en Python un outil de contrôle des prix connecté à l'API Bloomberg et à
   l'outil interne de booking.
 \end{itemize}
-\apportpercolia{relation client, adaptation de l'offre aux besoins, contrôle des résultats
-et connexion d'un outil Python aux systèmes métier.}
-
-\cventry{2020--2021}{1 an -- 12 mois}{HSBC}{Paris, France}{Assistant Trader Exotic Equity Derivatives -- développement Python \& VBA (alternance)}
+\cventry{2020--2021}{12 mois}{HSBC}{Paris, France}{Assistant Trader Exotic Equity Derivatives -- développement Python \& VBA (alternance)}
 \begin{itemize}
   \item Améliorer et développer les outils du desk de trading en Python et VBA.
   \item Réalisations : financement des autocallables, couverture du vega du book, suivi du
   P\&L et backtesting de stratégies.
 \end{itemize}
-\apportpercolia{développement et amélioration d'outils en Python/VBA, suivi du P\&L et
-backtesting de stratégies.}
-
 \cventry{2019--2020}{10 mois}{Crédit Mutuel}{Paris, France}{Audit quantitatif -- Inspection générale groupe}
 \begin{itemize}
   \item Participer à des missions d'audit portant sur des sujets quantitatifs.
   \item Travaux menés sur les modèles de crédit, les nouveaux critères de défaut bâlois et
   la réconciliation de bases de données opérationnelles et décisionnelles.
 \end{itemize}
-\apportpercolia{audit de modèles et réconciliation de bases de données opérationnelles et
-décisionnelles, transférables à la structuration des audits comparatifs clients.}
-
-\cventry{2018--2019}{1 an 6 mois -- 18 mois}{Banque de France--ACPR}{Paris, France}{Audit quantitatif -- Contrôleur des modèles internes Solvabilité II}
+\cventry{2018--2019}{18 mois}{Banque de France--ACPR}{Paris, France}{Audit quantitatif -- Contrôleur des modèles internes Solvabilité II}
 \begin{itemize}
   \item Participer à des contrôles sur place d'organismes d'assurance portant sur les
   modèles internes.
@@ -211,13 +184,11 @@ décisionnelles, transférables à la structuration des audits comparatifs clien
   \item Mobiliser des équations différentielles stochastiques, des algorithmes
   d'optimisation et des arbres multinomiaux.
 \end{itemize}
-\apportpercolia{participation à des contrôles de modèles, vérification prudentielle et
-développement quantitatif en Python.}
-
 % ==================== COMPÉTENCES ====================
-\section*{Compétences directement mobilisables pour Percolia}
-\compactentry{Logiciel / données}{\textbf{Python, SQL, VBA} ; API Bloomberg ; automatisation,
-analyse et réconciliation de données, backtesting, scénarios économiques et outils de P\&L.}
+\section*{Compétences}
+\compactentry{Logiciel / données}{\textbf{Python, PyQt, SQL, VBA} ; API Bloomberg ; interfaces
+graphiques, automatisation de rapports et de contrôles, analyse et réconciliation de données,
+backtesting, scénarios économiques et outils de P\&L.}
 \compactentry{Produit / intégration}{Spécifications, procédures, tests, coordination
 Front/Middle/Back Office--IT et connexion d'outils aux systèmes métier.}
 \compactentry{Commercial / audit}{Relation client, prise en compte des besoins, proposition
@@ -234,8 +205,7 @@ Saint-Louis -- Paris, France.}
 
 \vfill
 \begin{center}
-  {\scriptsize\color{softgray}Cumul arrêté au 3 août 2026 ; la durée reprise sera déterminée
-  par Inria à partir des dates exactes, quotités, contrats et justificatifs.}
+  {\scriptsize\color{softgray}CV actualisé au 3 août 2026.}
 \end{center}
 
 \end{document}

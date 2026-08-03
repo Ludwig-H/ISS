@@ -19,11 +19,13 @@ positionnement le plus crédible et le mieux étayé est :
 Son parcours fournit trois preuves complémentaires particulièrement adaptées au projet :
 
 1. il sait traduire un besoin métier en outil, spécifications et tests, en coordonnant Front
-   Office, Middle/Back Office et IT ;
+   Office, Middle/Back Office et IT ; chez HSBC Repo, il a notamment livré un outil Python
+   avec interface PyQt d'analyse des P&L et des opérations non dénouées (*unsettled*), utilisé
+   directement par les traders ;
 2. il sait auditer des modèles, des données et des résultats dans des environnements où la
    fiabilité est critique ;
-3. il a une expérience directe de la relation client, de l'identification du besoin, du
-   pricing et de l'exécution.
+3. il a une expérience directe de la relation client, de la proposition de produits adaptés,
+   du contrôle des prix et de l'exécution.
 
 Louis reste le porteur de la technologie et du noyau algorithmique. Alban porte la
 transformation de cette technologie en problème client bien défini, audit vendable, produit
@@ -35,12 +37,12 @@ Sur la rémunération :
 - le seul plancher 2026 directement publié pour une offre ISS comparable est
   **2 692 € brut par mois** ;
 - la reconstruction prudente de l'ancien cadre Inria place plutôt Alban au **niveau 3**,
-  autour de **2 977 € brut par mois**, si au moins cinq ans d'expérience sont reconnus ;
+  autour de **2 977 € brut par mois**, si au moins 60 mois d'expérience sont reconnus ;
 - une demande d'ouverture à **3 400–3 500 € brut par mois** est cohérente pour défendre une
   position haute, mais ce montant n'est ni garanti ni issu d'une grille 2026 publique ;
-- le niveau 4 historique ne devient solide qu'à partir de huit ans d'expérience reconnus.
-  Le CV source totalise 90 mois déclarés, soit 7 ans et 6 mois, avant contrôle des dates,
-  quotités et règles de reprise.
+- le niveau 4 historique ne devient solide qu'à partir de 96 mois d'expérience reconnus.
+  Le CV source totalise 90 mois déclarés avant contrôle des dates, quotités et règles de
+  reprise.
 
 La priorité immédiate n'est donc pas d'affirmer un salaire, mais d'obtenir des RH le barème
 daté, la filière, le niveau, les périodes reprises et la marge éventuellement appliquée.
@@ -60,7 +62,7 @@ fixent les principes suivants :
   ou la preuve de concept, pas seulement de piloter une équipe qui le ferait ;
 - au moins un porteur technique doit travailler à 100 % sur le projet ;
 - les porteurs financés doivent être disponibles à 100 % pendant au moins six mois et,
-  idéalement, pendant l'année complète ;
+  idéalement, pendant les 12 mois complets ;
 - une équipe peut inclure plusieurs porteurs ou ressources, mais ISS distingue les porteurs
   décisionnaires des personnes qui apportent seulement un soutien ponctuel ;
 - aucun lien antérieur avec Inria et aucun doctorat ne sont obligatoires ;
@@ -77,7 +79,7 @@ version, engagement à 100 % des porteurs financés et société non encore cré
 
 La page actuelle du programme annonce :
 
-- jusqu'à deux personnes financées pendant un an ;
+- jusqu'à deux personnes financées pendant 12 mois ;
 - un budget projet pouvant aller jusqu'à 10 000 € ;
 - l'hébergement dans un des neuf centres Inria ;
 - des formations, un réseau et un accompagnement conjoint du centre et de l'équipe nationale
@@ -152,7 +154,7 @@ Ce message est plus solide que :
 - « Alban est expert LiDAR/cyber », non établi par le CV ;
 - « Alban pilotera les développeurs », insuffisant au regard du critère de capacité à faire.
 
-### 2.3 Feuille de route d'Alban pendant l'année ISS
+### 2.3 Feuille de route d'Alban pendant les 12 mois ISS
 
 Les responsabilités suivantes sont cohérentes avec le dossier, mais doivent être présentées
 comme une feuille de route tant qu'elles ne sont pas personnellement réalisées :
@@ -184,16 +186,20 @@ précisément corriger ce risque.
 
 | Période affichée | Durée déclarée | Employeur et fonction | Éléments utiles pour Percolia |
 |---|---:|---|---|
-| 2025–auj. | 1 an 8 mois | HSBC — Assistant Trader Repo | Outils Python/SQL/VBA, interface Front/Middle/Back/IT, spécifications, procédures et tests d'un processus de P&L |
-| 2023–2024 | 1 an 6 mois | HSBC — Assistant Trader Rates Products | Outils d'aide à la décision, suivi P&L, support métier, produits de taux |
-| 2021–2022 | 1 an | Société Générale — Cross-Asset Structured Products Sales and Execution Trader | Portefeuille client, besoins, produits adaptés, exécution, contrôle des prix, outil Python/API Bloomberg |
-| 2020–2021 | 1 an | HSBC — Assistant Trader Exotic Equity Derivatives, alternance | Outils Python/VBA, financement, couverture, P&L et backtests |
+| 2025–auj. | 20 mois | HSBC — Assistant Trader Repo | Outil Python/PyQt d'analyse des P&L et des opérations non dénouées (*unsettled*) utilisé par les traders ; rapports et contrôles automatisés en Python/VBA/SQL ; interface Front/Middle/Back/IT ; spécifications, procédures et tests |
+| 2023–2024 | 18 mois | HSBC — Assistant Trader Rates Products | Outils d'aide à la décision, suivi P&L, support métier, produits de taux |
+| 2021–2022 | 12 mois | Société Générale — Cross-Asset Structured Products Sales and Execution Trader | Portefeuille client, besoins, produits adaptés, exécution, contrôle des prix, outil Python/API Bloomberg |
+| 2020–2021 | 12 mois | HSBC — Assistant Trader Exotic Equity Derivatives, alternance | Outils Python/VBA, financement, couverture, P&L et backtests |
 | 2019–2020 | 10 mois | Crédit Mutuel — Audit quantitatif | Modèles de crédit, critères de défaut, réconciliation de bases |
-| 2018–2019 | 1 an 6 mois | Banque de France/ACPR — contrôle de modèles internes Solvabilité II | Contrôles sur place, risques, réglementation, modèles taux/actions, scénarios Python |
+| 2018–2019 | 18 mois | Banque de France/ACPR — contrôle de modèles internes Solvabilité II | Contrôles sur place, risques, réglementation, modèles taux/actions, scénarios Python |
 
 Au 3 août 2026, les durées affichées donnent le calcul suivant :
 
-> **20 + 18 + 12 + 12 + 10 + 18 = 90 mois, soit 7 ans et 6 mois.**
+> **20 + 18 + 12 + 12 + 10 + 18 = 90 mois.**
+
+Ce calcul sert uniquement à préparer le dossier et ne figure volontairement pas dans le CV :
+chaque durée y est affichée séparément, en mois, afin de laisser Inria établir son propre
+décompte à partir des pièces.
 
 Repères de contenu, non additionnables au total :
 
@@ -212,8 +218,12 @@ justificatifs.
 
 #### 1. Interface technologie–métier
 
-La refonte d'un processus d'allocation de P&L réunit les éléments recherchés pour un logiciel
-B2B : compréhension du besoin, spécifications, procédures, tests et coordination avec l'IT.
+Chez HSBC Repo, l'outil Python/PyQt d'analyse des P&L et des opérations non dénouées
+(*unsettled*), utilisé directement par les traders, constitue la preuve la plus concrète
+d'une boucle produit B2B :
+compréhension du besoin, interface utilisable, adoption métier et exploitation quotidienne.
+La refonte d'un processus d'allocation de P&L complète cette preuve par les spécifications,
+procédures, tests et la coordination avec l'IT.
 
 #### 2. Audit et validation
 
@@ -222,15 +232,18 @@ modèle économique de Percolia : vendre un diagnostic comparatif sérieux avant
 
 #### 3. Client et commercial
 
-Chez Société Générale, Alban a animé un portefeuille, identifié des besoins, proposé des
-produits adaptés, vérifié des prix et exécuté des ordres. C'est la meilleure preuve actuelle
-de sa capacité commerciale.
+Chez Société Générale, Alban a animé un portefeuille, proposé des produits adaptés aux
+besoins des clients, vérifié des prix et exécuté des ordres. C'est la meilleure preuve
+actuelle de sa capacité commerciale.
 
 #### 4. Construction d'outils
 
-Python, SQL, VBA, API Bloomberg, systèmes de booking, P&L, backtests et scénarios démontrent
-une capacité technique appliquée. Le message n'est pas qu'Alban invente l'algorithme cœur,
-mais qu'il peut contribuer au produit et dialoguer avec le client comme avec la R&D.
+Python, PyQt, SQL, VBA, API Bloomberg, systèmes de booking, P&L, backtests et scénarios
+démontrent une capacité technique appliquée. L'automatisation de rapports sur les positions
+*straight short*, les trades triparty, les erreurs de booking et la facturation mensuelle des
+trades non-cash apporte en plus une preuve concrète d'automatisation de contrôles récurrents.
+Le message n'est pas qu'Alban invente l'algorithme cœur, mais qu'il peut contribuer au produit
+et dialoguer avec le client comme avec la R&D.
 
 #### 5. Environnements exigeants
 
@@ -240,8 +253,8 @@ clients industriels.
 
 ### 3.3 Changements réalisés dans le CV optimisé
 
-- passage du format Letter à deux pages A4, afin de privilégier l'instruction RH plutôt que
-  la contrainte artificielle d'une page ;
+- passage du format Letter à deux pages A4, afin de conserver l'intégralité du parcours sans
+  imposer la contrainte artificielle d'une page ;
 - conservation de l'en-tête centré, des dates à gauche, des lieux à droite et des filets de
   section du CV initial ;
 - utilisation d'une seule police sans-serif et d'un bleu sobre ;
@@ -249,12 +262,14 @@ clients industriels.
 - insertion de Percolia avant les expériences ;
 - formulation explicite de la complémentarité avec Louis ;
 - maintien des six postes sur six entrées distinctes, notamment HSBC Repo et HSBC Rates ;
-- affichage de chaque durée en années et en mois : 20, 18, 12, 12, 10 et 18 mois ;
-- affichage d'un cumul indicatif de 90 mois, soit 7 ans et 6 mois, sous réserve de l'examen
-  des dates exactes, quotités et justificatifs par les RH Inria ;
+- affichage de chaque durée dans une seule unité : 20, 18, 12, 12, 10 et 18 mois ;
+- absence volontaire de total, d'équivalence en années et de commentaire administratif dans
+  le CV ; le décompte interne reste cantonné à la présente analyse ;
 - conservation de toutes les informations du CV original, réécrites en verbes d'action ;
-- ajout, sous chaque poste, des compétences directement mobilisables pour Percolia sans
-  transformer une expérience passée en réalisation entrepreneuriale déjà acquise ;
+- ajout des réalisations HSBC Repo communiquées par Alban : outil Python/PyQt utilisé par les
+  traders et automatisations Python/VBA/SQL ;
+- rapprochement synthétique entre les expériences et Percolia, sans encart répétitif sous
+  chaque poste et sans transformer une expérience passée en réalisation entrepreneuriale ;
 - séparation de Banque de France/ACPR et Crédit Mutuel pour faciliter la reprise de chaque
   période ;
 - ajout d'une synthèse des compétences réellement sourcées ;
@@ -345,10 +360,10 @@ classement.
 
 | Niveau historique | Condition historique à partir d'un diplôme niveau 7 | Plancher 2026 reconstitué | Lecture pour Alban |
 |---|---|---:|---|
-| Niveau 1 | 0 à moins de 2 ans | 2 692 € | Minimum générique, très défavorable au vu du parcours |
-| Niveau 2 | 2 à moins de 5 ans | 2 765 € | Scénario strict si une grande partie des expériences était écartée |
-| **Niveau 3** | **5 à moins de 8 ans** | **2 977 €** | Scénario central et défendable avec les pièces |
-| Niveau 4 | 8 à moins de 12 ans | 3 404 € | Possible seulement avec au moins 96 mois reconnus |
+| Niveau 1 | 0 à moins de 24 mois | 2 692 € | Minimum générique, très défavorable au vu du parcours |
+| Niveau 2 | 24 à moins de 60 mois | 2 765 € | Scénario strict si une grande partie des expériences était écartée |
+| **Niveau 3** | **60 à moins de 96 mois** | **2 977 €** | Scénario central et défendable avec les pièces |
+| Niveau 4 | 96 à moins de 144 mois | 3 404 € | Possible seulement avec au moins 96 mois reconnus |
 
 Le diplôme d'ingénieur IMT Atlantique obtenu en 2018 est un diplôme de niveau 7, comme un
 master, selon la [nomenclature du ministère de l'Enseignement supérieur](https://www.enseignementsup-recherche.gouv.fr/fr/nomenclature-relative-au-niveau-de-diplome-45785).
@@ -374,14 +389,14 @@ connaître la situation du foyer.
 Trois niveaux doivent être distingués :
 
 1. **ancrage de discussion : 3 400–3 500 € brut mensuel** ;
-2. **classement minimum argumenté : niveau 3**, si au moins cinq ans sont repris ;
+2. **classement minimum argumenté : niveau 3**, si au moins 60 mois sont repris ;
 3. **seuil personnel d'acceptation : à déterminer par Alban**, en fonction de son salaire
    actuel, de ses charges, de sa trésorerie et de sa part prévue au capital.
 
 La fourchette de 3 400–3 500 € est une demande, pas une « espérance » statistique. Elle peut
 être défendue par le niveau d'études, les 90 mois déclarés, la double capacité business et
 technique appliquée, la responsabilité entrepreneuriale et le coût d'opportunité. Elle ne
-doit pas être présentée comme un droit au niveau 4 tant que huit ans ne sont pas reconnus.
+doit pas être présentée comme un droit au niveau 4 tant que 96 mois ne sont pas reconnus.
 
 Si l'offre initiale reste à 2 692 €, la bonne réponse est de demander le détail du classement,
 pas de contester abstraitement le salaire.
@@ -392,7 +407,7 @@ La fiche Service Public [« Indemnité de fin de contrat dans la fonction publiq
 le 1er juin 2026](https://www.service-public.gouv.fr/particuliers/vosdroits/F1606?quest0=1)
 prévoit, sous conditions, une indemnité de 10 % de la rémunération brute totale lorsque :
 
-- la durée du contrat, renouvellement compris, ne dépasse pas un an ;
+- la durée du contrat, renouvellement compris, ne dépasse pas 12 mois ;
 - la rémunération brute globale moyenne reste au plus égale à 3 734,03 € par mois ;
 - aucune exclusion ne s'applique, notamment en cas de renouvellement immédiat ou de nouveau
   contrat public.
@@ -459,7 +474,7 @@ elle ne doit pas être préremplie par Alban.
 
 | Expérience | Durée déclarée au 03/08/2026 | Dates exactes | Statut et quotité | Chevauchement et durée ETP | Justificatif à réunir | Correspondance Percolia | Durée retenue par Inria |
 |---|---:|---|---|---|---|---|---|
-| HSBC — Repo | 20 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Avenant de mobilité, contrat, certificat | Spécifications, procédures, tests, Python/SQL/VBA, interface métiers–IT | À renseigner par Inria |
+| HSBC — Repo | 20 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Avenant de mobilité, contrat, certificat | Outil Python/PyQt utilisé par les traders ; automatisation Python/VBA/SQL ; spécifications, tests et interface métiers–IT | À renseigner par Inria |
 | HSBC — Rates Products | 18 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Avenant ou attestation séparant le poste Repo, certificat | Outils décisionnels, support métier, Python/SQL/VBA, P&L | À renseigner par Inria |
 | Société Générale Luxembourg | 12 mois | À compléter en MM/AAAA | Entité et quotité à confirmer | À vérifier ; ETP à calculer | Contrat et certificat de l'entité luxembourgeoise | Client, offre adaptée, contrôle des prix, Python/API | À renseigner par Inria |
 | HSBC — Exotic Equity Derivatives | 12 mois | À compléter en MM/AAAA | Alternance ; quotité à confirmer | Concomitance avec le master à documenter ; ETP à calculer | Contrat d'apprentissage ou de professionnalisation, certificat | Développement Python/VBA et backtests | À renseigner par Inria |
@@ -481,7 +496,7 @@ Points de contrôle particuliers :
 ### 6.3 Question RH recommandée
 
 > Mon diplôme d'ingénieur IMT Atlantique, obtenu en 2018, est un diplôme de niveau 7. Mon
-> parcours documente plus de sept années d'expérience professionnelle déclarée en ingénierie quantitative,
+> parcours documente 90 mois d'expérience professionnelle déclarée en ingénierie quantitative,
 > développement d'outils d'aide à la décision, audit de modèles et coordination métier–IT.
 > Les missions de portage entrepreneurial et de maturation économique correspondaient
 > historiquement à la filière Inria « Ingénieurs Transfert & innovation ». Pouvez-vous me
@@ -623,6 +638,6 @@ Depuis le dossier `CV/Alban` :
 lualatex -interaction=nonstopmode -halt-on-error CV_Alban_Hauseux_Inria_Startup_Studio_2026.tex
 ```
 
-Avant tout envoi officiel, relire une dernière fois le CV avec Alban, remplacer les années
-par les mois exacts si possible et vérifier chaque formulation au regard de ses obligations
-de confidentialité.
+Avant tout envoi officiel, relire une dernière fois le CV avec Alban, remplacer les périodes
+annuelles par des dates exactes au format MM/AAAA si possible et vérifier chaque formulation
+au regard de ses obligations de confidentialité.
