@@ -191,16 +191,22 @@ précisément corriger ce risque.
 | 2019–2020 | 10 mois | Crédit Mutuel — Audit quantitatif | Modèles de crédit, critères de défaut, réconciliation de bases |
 | 2018–2019 | 1 an 6 mois | Banque de France/ACPR — contrôle de modèles internes Solvabilité II | Contrôles sur place, risques, réglementation, modèles taux/actions, scénarios Python |
 
-Les durées affichées totalisent 90 mois, soit 7 ans et 6 mois :
+Au 3 août 2026, les durées affichées donnent le calcul suivant :
+
+> **20 + 18 + 12 + 12 + 10 + 18 = 90 mois, soit 7 ans et 6 mois.**
+
+Repères de contenu, non additionnables au total :
 
 - 50 mois chez HSBC ;
 - 62 mois sur des activités de marché/trading ;
 - 28 mois en audit et contrôle quantitatif ;
-- Python est explicitement cité dans cinq expériences sur six.
+- Python est explicitement cité dans cinq expériences sur six, représentant 80 mois déclarés.
 
-Ces agrégats sont utiles pour préparer le dossier, mais les RH travailleront sur les dates
-mensuelles, les quotités et les justificatifs, pas sur un total calculé à partir d'années
-arrondies.
+Ces agrégats sont utiles pour préparer le dossier, mais ils ne sont pas des durées déjà
+reprises par Inria. Le poste HSBC actuel continuera en outre d'ajouter des mois jusqu'à la
+date réelle de sortie. Le décompte devra donc être actualisé au dernier jour précédant
+l'entrée à Inria et rapproché des dates mensuelles, quotités, éventuels chevauchements et
+justificatifs.
 
 ### 3.2 Forces à mettre en avant, par ordre de valeur
 
@@ -234,16 +240,23 @@ clients industriels.
 
 ### 3.3 Changements réalisés dans le CV optimisé
 
-- passage du format Letter à une page A4 ;
+- passage du format Letter à deux pages A4, afin de privilégier l'instruction RH plutôt que
+  la contrainte artificielle d'une page ;
 - conservation de l'en-tête centré, des dates à gauche, des lieux à droite et des filets de
   section du CV initial ;
 - utilisation d'une seule police sans-serif et d'un bleu sobre ;
 - ajout d'un titre professionnel ciblé et d'un profil ;
 - insertion de Percolia avant les expériences ;
 - formulation explicite de la complémentarité avec Louis ;
-- regroupement des deux postes HSBC récents pour rendre visible la continuité ;
-- séparation de Banque de France/ACPR et Crédit Mutuel pour préserver la lisibilité RH ;
-- réécriture des tâches en verbes d'action et suppression des répétitions ;
+- maintien des six postes sur six entrées distinctes, notamment HSBC Repo et HSBC Rates ;
+- affichage de chaque durée en années et en mois : 20, 18, 12, 12, 10 et 18 mois ;
+- affichage d'un cumul indicatif de 90 mois, soit 7 ans et 6 mois, sous réserve de l'examen
+  des dates exactes, quotités et justificatifs par les RH Inria ;
+- conservation de toutes les informations du CV original, réécrites en verbes d'action ;
+- ajout, sous chaque poste, des compétences directement mobilisables pour Percolia sans
+  transformer une expérience passée en réalisation entrepreneuriale déjà acquise ;
+- séparation de Banque de France/ACPR et Crédit Mutuel pour faciliter la reprise de chaque
+  période ;
 - ajout d'une synthèse des compétences réellement sourcées ;
 - métadonnées PDF propres et texte extractible.
 
@@ -436,11 +449,36 @@ Il faut donc calculer avant signature :
 - bulletins ou attestation de rémunération uniquement si les RH les demandent et si leur
   transmission est pertinente.
 
-Les périodes doivent être recensées séparément même lorsqu'elles sont regroupées visuellement
-dans le CV. Une alternance est une expérience professionnelle, mais son traitement exact par
-la grille doit être demandé plutôt que supposé.
+Les six périodes sont présentées séparément dans le CV. Une alternance est une expérience
+professionnelle, mais son traitement exact par la grille doit être demandé plutôt que supposé.
 
-### 6.2 Question RH recommandée
+### 6.2 Tableau de reprise à compléter avec les justificatifs
+
+Ce tableau doit être complété avant l'envoi aux RH. La dernière colonne appartient à Inria ;
+elle ne doit pas être préremplie par Alban.
+
+| Expérience | Durée déclarée au 03/08/2026 | Dates exactes | Statut et quotité | Chevauchement et durée ETP | Justificatif à réunir | Correspondance Percolia | Durée retenue par Inria |
+|---|---:|---|---|---|---|---|---|
+| HSBC — Repo | 20 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Avenant de mobilité, contrat, certificat | Spécifications, procédures, tests, Python/SQL/VBA, interface métiers–IT | À renseigner par Inria |
+| HSBC — Rates Products | 18 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Avenant ou attestation séparant le poste Repo, certificat | Outils décisionnels, support métier, Python/SQL/VBA, P&L | À renseigner par Inria |
+| Société Générale Luxembourg | 12 mois | À compléter en MM/AAAA | Entité et quotité à confirmer | À vérifier ; ETP à calculer | Contrat et certificat de l'entité luxembourgeoise | Client, offre adaptée, contrôle des prix, Python/API | À renseigner par Inria |
+| HSBC — Exotic Equity Derivatives | 12 mois | À compléter en MM/AAAA | Alternance ; quotité à confirmer | Concomitance avec le master à documenter ; ETP à calculer | Contrat d'apprentissage ou de professionnalisation, certificat | Développement Python/VBA et backtests | À renseigner par Inria |
+| Crédit Mutuel | 10 mois | À compléter en MM/AAAA | À confirmer | À vérifier ; ETP à calculer | Contrat et certificat | Audit quantitatif et réconciliation de données | À renseigner par Inria |
+| Banque de France–ACPR | 18 mois | À compléter en MM/AAAA | Statut et quotité à confirmer | À vérifier ; ETP à calculer | Contrat, arrêté ou certificat | Contrôle de modèles, conformité, scénarios Python | À renseigner par Inria |
+| **Total indicatif** | **90 mois** | Vérifier toutes les bornes | — | Dédupliquer les chevauchements ; total ETP à calculer | Six jeux de pièces | Six correspondances documentées | **À calculer par Inria** |
+
+Points de contrôle particuliers :
+
+- séparer précisément, par avenants ou attestations, les périodes HSBC Rates et Repo ;
+- vérifier si certains mois Banque de France–ACPR précèdent l'obtention du diplôme
+  d'ingénieur en 2018 ;
+- vérifier l'absence de chevauchement entre Banque de France–ACPR et Crédit Mutuel ;
+- documenter la nature et la quotité de l'alternance HSBC ;
+- identifier l'entité juridique de Société Générale au Luxembourg et vérifier si une
+  traduction du certificat est demandée ;
+- actualiser les 20 mois du poste Repo jusqu'à la date de fin réelle.
+
+### 6.3 Question RH recommandée
 
 > Mon diplôme d'ingénieur IMT Atlantique, obtenu en 2018, est un diplôme de niveau 7. Mon
 > parcours documente plus de sept années d'expérience professionnelle déclarée en ingénierie quantitative,
@@ -452,7 +490,7 @@ la grille doit être demandé plutôt que supposé.
 > souhaite que soit examinée une position haute du niveau correspondant, autour de
 > 3 400–3 500 € brut mensuel.
 
-### 6.3 Questions à obtenir par écrit avant signature
+### 6.4 Questions à obtenir par écrit avant signature
 
 - CDD classique, contrat de projet ou autre fondement juridique ?
 - durée, période d'essai, renouvellement et date de prise de fonctions ?

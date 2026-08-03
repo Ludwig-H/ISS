@@ -1,12 +1,12 @@
 % !TEX program = lualatex
-% CV français ciblé pour Inria Startup Studio / Percolia.
+% CV français ciblé pour l'instruction RH Inria Startup Studio / Percolia.
 % Compilation : lualatex -interaction=nonstopmode -halt-on-error CV_Alban_Hauseux_Inria_Startup_Studio_2026.tex
 \documentclass[10pt,a4paper]{article}
 
 \usepackage{fontspec}
 \setsansfont{TeX Gyre Heros}[Ligatures=TeX]
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage[left=1.35cm,right=1.35cm,top=0.85cm,bottom=0.85cm]{geometry}
+\usepackage[left=1.35cm,right=1.35cm,top=0.95cm,bottom=0.95cm]{geometry}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -17,6 +17,7 @@
 \definecolor{darkblue}{RGB}{20,52,80}
 \definecolor{midblue}{RGB}{53,94,128}
 \definecolor{softgray}{RGB}{78,78,78}
+\definecolor{paleblue}{RGB}{238,244,248}
 
 \hypersetup{
   unicode=true,
@@ -25,37 +26,46 @@
   linkcolor=darkblue,
   pdfauthor={Alban Hauseux},
   pdftitle={Curriculum vitae -- Alban Hauseux -- Inria Startup Studio},
-  pdfsubject={Candidature Inria Startup Studio -- projet Percolia},
-  pdfkeywords={Inria Startup Studio, Percolia, porteur business, produit, Python, SQL, finance quantitative}
+  pdfsubject={Instruction RH et candidature Inria Startup Studio -- projet Percolia},
+  pdfkeywords={Inria Startup Studio, Percolia, porteur business, audits, intégration logicielle, Python, SQL, finance quantitative}
 }
 \urlstyle{same}
 
 \titleformat{\section}
   {\normalsize\bfseries\color{darkblue}}
-  {}{0pt}{\MakeUppercase}[\vspace{-0.32em}\color{midblue}\rule{\textwidth}{0.45pt}]
-\titlespacing*{\section}{0pt}{0.52em}{0.24em}
+  {}{0pt}{\MakeUppercase}[\vspace{-0.30em}\color{midblue}\rule{\textwidth}{0.45pt}]
+\titlespacing*{\section}{0pt}{0.65em}{0.32em}
 
 \setlength{\parindent}{0pt}
 \setlength{\tabcolsep}{0pt}
+\setlength{\emergencystretch}{2em}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 \setlist[itemize]{
-  leftmargin=2.68cm,
+  leftmargin=3.67cm,
   label=\textcolor{midblue}{\raisebox{0.12ex}{\scriptsize$\bullet$}},
   labelsep=0.42em,
-  itemsep=0.03em,
-  topsep=0.05em,
+  itemsep=0.05em,
+  topsep=0.06em,
   parsep=0pt,
   partopsep=0pt
 }
 
-\newcommand{\cventry}[4]{%
-  \begin{tabularx}{\textwidth}{@{}p{2.32cm}@{\hspace{0.22cm}}X@{}}
-    \textcolor{softgray}{#1} & \textbf{#2}\if\relax\detokenize{#3}\relax\else\hfill\textcolor{softgray}{#3}\fi\\[-0.15ex]
-    & \textbf{#4}
-  \end{tabularx}\vspace{-0.25em}
+% #1 période ; #2 durée déclarée ; #3 employeur ; #4 lieu ; #5 fonction.
+\newcommand{\cventry}[5]{%
+  \begin{tabularx}{\textwidth}{@{}L{3.30cm}@{\hspace{0.22cm}}X@{}}
+    \textcolor{softgray}{#1} & \textbf{#3}\hfill\textcolor{softgray}{#4}\\[-0.10ex]
+    \small\textcolor{darkblue}{\textbf{#2}} & \textbf{#5}
+  \end{tabularx}\vspace{-0.22em}
+}
+
+\newcommand{\apportpercolia}[1]{%
+  \begin{tabularx}{\textwidth}{@{}L{3.30cm}@{\hspace{0.22cm}}X@{}}
+    & \textcolor{darkblue}{\textbf{Compétences mobilisables pour Percolia :}} #1
+  \end{tabularx}\par\vspace{0.12em}
 }
 
 \newcommand{\compactentry}[2]{%
-  \begin{tabularx}{\textwidth}{@{}p{2.32cm}@{\hspace{0.22cm}}X@{}}
+  \begin{tabularx}{\textwidth}{@{}L{3.30cm}@{\hspace{0.22cm}}X@{}}
     \textcolor{softgray}{#1} & #2
   \end{tabularx}\par
 }
@@ -66,91 +76,166 @@
 
 % ==================== EN-TÊTE ====================
 \begin{center}
-  {\LARGE\bfseries Alban \textsc{Hauseux}}\\[0.22em]
-  {\large\bfseries\color{darkblue}Porteur business de Percolia}\\[0.12em]
-  {\normalsize Développement commercial, audits clients et intégration logicielle}\\[0.32em]
+  {\LARGE\bfseries Alban \textsc{Hauseux}}\\[0.20em]
+  {\large\bfseries\color{darkblue}Porteur business de Percolia}\\[0.10em]
+  {\normalsize Développement commercial, audits clients et intégration logicielle}\\[0.28em]
   Paris
   \enspace\textcolor{midblue}{\textbullet}\enspace
   +33~(0)6~87~59~29~26
   \enspace\textcolor{midblue}{\textbullet}\enspace
   \href{mailto:alban.hau@gmail.com}{alban.hau@gmail.com}
 \end{center}
-\vspace{-0.55em}
+\vspace{-0.45em}
 
 % ==================== PROFIL ====================
 \section*{Profil}
-Ingénieur télécom et diplômé du master Économie et Finance de l'Université Paris-Dauphine
-PSL, expérimenté en développement d'outils quantitatifs, vente et exécution de produits
-financiers, contrôle de modèles et coordination Front Office--IT. Dans \textbf{Percolia},
-mon rôle prévu est de structurer le développement commercial et les audits clients, puis
-d'accompagner l'intégration logicielle aux côtés de Louis Hauseux, porteur de la technologie.
-Candidature pour un engagement à temps plein au sein d'Inria Startup Studio.
+Ingénieur télécom diplômé de l'IMT Atlantique et titulaire du master Économie et Finance de
+l'Université Paris-Dauphine PSL. Expérience en développement d'outils quantitatifs, vente et
+exécution de produits financiers, audit et contrôle de modèles, ainsi qu'en coordination
+Front Office--Middle/Back Office--IT. Dans \textbf{Percolia}, mon rôle prévu est de porter le
+développement commercial et les audits clients, de traduire les besoins en spécifications et
+tests, puis d'accompagner l'intégration logicielle aux côtés de Louis Hauseux, porteur de la
+technologie. Candidature pour un engagement à temps plein au sein d'Inria Startup Studio.
+
+\smallskip
+\noindent\colorbox{paleblue}{%
+  \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+    \textbf{Repère pour l'instruction RH : cumul indicatif de 90 mois d'expérience
+    déclarée au 3 août 2026, soit 7 ans et 6 mois.}\\[-0.05em]
+    \small HSBC Repo 20 mois + HSBC Rates 18 mois + Société Générale 12 mois + alternance
+    HSBC 12 mois + Crédit Mutuel 10 mois + Banque de France--ACPR 18 mois. La reprise
+    effective dépendra des dates exactes, quotités et justificatifs validés par Inria.
+  }%
+}
 
 % ==================== PERCOLIA ====================
-\section*{Projet entrepreneurial}
-\cventry{2026}{Percolia -- projet candidat à Inria Startup Studio}{}{Porteur business -- responsabilités prévues}
+\section*{Projet entrepreneurial — Percolia}
+\cventry{2026}{Temps plein prévu}{Projet candidat à Inria Startup Studio}{}{Porteur business -- responsabilités prévues}
 \begin{itemize}
   \item Structurer la découverte client, le démarchage et les audits comparatifs payants sur
-  le cas d'usage prioritaire des nuages de points 3D LiDAR, puis convertir les cas validés en
-  API ou licences logicielles récurrentes.
+  le cas d'usage prioritaire des nuages de points 3D LiDAR.
   \item Piloter l'interface client--R\&D : données et besoins métier, spécifications, tests
-  d'acceptation, restitution des résultats et intégration ; contribuer au développement en
-  Python et SQL.
+  d'acceptation, restitution des résultats et intégration ; contribuer aux développements et
+  aux outils de données en Python et SQL.
+  \item Transformer les cas d'usage validés en offre récurrente sous forme d'API ou de
+  licence logicielle, en complément de la responsabilité scientifique et technologique de Louis.
 \end{itemize}
 
-% ==================== EXPÉRIENCE ====================
+\smallskip
+{\normalsize\bfseries\color{darkblue}Correspondance directe entre le parcours et le projet}\par
+\smallskip
+\compactentry{Produit / intégration}{HSBC Repo et Rates : besoins métier, outils d'aide à
+la décision, spécifications, procédures, tests et coordination avec l'IT.}
+\compactentry{Commercial / clients}{Société Générale : portefeuille client, proposition de
+produits adaptés, contrôle des prix et exécution.}
+\compactentry{Audits / validation}{Banque de France--ACPR et Crédit Mutuel : audit de
+modèles, contrôle de conformité et réconciliation de données.}
+\compactentry{Développement}{Python dans cinq expériences sur six ; SQL et VBA pour
+automatiser des analyses et construire des outils utilisés par les métiers.}
+
+% ==================== EXPÉRIENCE PAGE 1 ====================
 \section*{Expériences professionnelles}
-\cventry{2023--auj.}{HSBC}{Paris}{Assistant Trader Repo (depuis 2025) ; Rates Products (2023--2024)}
+\cventry{2025--auj.}{1 an 8 mois -- 20 mois}{HSBC}{Paris, France}{Assistant Trader Repo}
 \begin{itemize}
-  \item Développer des outils d'analyse et d'aide à la décision en Python, SQL et VBA ;
-  produire notamment le calcul du P\&L de la salle des marchés.
-  \item Assurer le support du desk et l'interface Front Office--Middle/Back Office--IT ;
-  gérer le booking de swaps, FRA, forward bonds et swaps d'inflation zéro-coupon.
-  \item Reconcevoir un processus d'allocation du P\&L sur un périmètre de taux souverains
-  européens : spécifications, procédures et tests menés avec l'IT.
+  \item Assurer le support Front Office du desk et l'interface avec les équipes Middle
+  Office, Back Office et IT.
+  \item Concevoir des macros et outils d'aide à la décision destinés aux traders en SQL,
+  VBA et Python.
+  \item Refaire le processus d'allocation du P\&L du périmètre EurGov : rédaction des
+  spécifications et procédures, puis réalisation de tests en lien avec l'IT.
 \end{itemize}
+\apportpercolia{expérience transférable au cadrage et à l'intégration de Percolia :
+traduction d'un besoin métier en spécifications et tests, puis coordination utilisateurs--IT.}
 
-\cventry{2021--2022}{Société Générale}{Luxembourg}{Cross-Asset Structured Products Sales and Execution Trader}
+\cventry{2023--2024}{1 an 6 mois -- 18 mois}{HSBC}{Paris, France}{Assistant Trader Rates Products}
 \begin{itemize}
-  \item Exécuter les ordres sur les marchés gris et secondaire, contrôler les prix des
-  émetteurs et proposer des produits structurés adaptés aux besoins des clients.
-  \item Développer en Python un outil de contrôle des prix connecté à Bloomberg et au système
-  de booking.
+  \item Réaliser le booking de produits de taux d'intérêt : swaps, FRA, forward bonds et
+  swaps d'inflation zéro-coupon.
+  \item Assurer le support du desk sur l'activité vanilla rates.
+  \item Concevoir des macros et outils d'aide à la décision destinés aux traders en SQL,
+  VBA et Python.
+  \item Réaliser diverses productions, dont le calcul du P\&L de la salle des marchés.
 \end{itemize}
+\apportpercolia{compréhension de workflows métier, automatisation d'analyses et
+production de résultats exploitables par des utilisateurs opérationnels.}
 
-\cventry{2020--2021}{HSBC}{Paris}{Assistant Trader Exotic Equity Derivatives -- développement Python \& VBA (alternance)}
-\begin{itemize}
-  \item Développer et améliorer les outils du desk : financement d'autocallables, couverture
-  du vega, suivi du P\&L et backtests de stratégies.
-\end{itemize}
+% Le saut de page évite de couper une expérience et réserve la seconde page aux quatre
+% autres postes, aux compétences et à la formation.
+\newpage
 
-\cventry{2019--2020}{Crédit Mutuel}{Paris}{Audit quantitatif -- Inspection générale groupe}
-\begin{itemize}
-  \item Contribuer à des missions sur les modèles de crédit, les critères de défaut bâlois
-  et la réconciliation de bases de données opérationnelles et décisionnelles.
-\end{itemize}
+% ==================== EXPÉRIENCE PAGE 2 ====================
+\begin{center}
+  {\small\color{softgray}Alban \textsc{Hauseux} -- Percolia -- CV détaillé \textbullet{} 2/2}
+\end{center}
+\vspace{-0.75em}
 
-\cventry{2018--2019}{Banque de France--ACPR}{Paris}{Contrôle des modèles internes Solvabilité~II}
+\section*{Expériences professionnelles — suite}
+\cventry{2021--2022}{1 an -- 12 mois}{Société Générale}{Luxembourg}{Cross-Asset Structured Products Sales and Execution Trader}
 \begin{itemize}
-  \item Contribuer aux contrôles sur place d'assureurs : risques de marché et d'assurance,
-  conformité prudentielle, modèles de taux et modèles actions.
-  \item Implémenter en Python un générateur de scénarios économiques mobilisant modèles de
-  taux et actions, équations différentielles stochastiques, optimisation et arbres multinomiaux.
+  \item Exécuter les ordres sur le marché gris et le marché secondaire.
+  \item Vérifier les prix fournis par les émetteurs.
+  \item Animer le portefeuille client et proposer des produits structurés adaptés aux
+  besoins des clients.
+  \item Développer en Python un outil de contrôle des prix connecté à l'API Bloomberg et à
+  l'outil interne de booking.
 \end{itemize}
+\apportpercolia{relation client, adaptation de l'offre aux besoins, contrôle des résultats
+et connexion d'un outil Python aux systèmes métier.}
+
+\cventry{2020--2021}{1 an -- 12 mois}{HSBC}{Paris, France}{Assistant Trader Exotic Equity Derivatives -- développement Python \& VBA (alternance)}
+\begin{itemize}
+  \item Améliorer et développer les outils du desk de trading en Python et VBA.
+  \item Réalisations : financement des autocallables, couverture du vega du book, suivi du
+  P\&L et backtesting de stratégies.
+\end{itemize}
+\apportpercolia{développement et amélioration d'outils en Python/VBA, suivi du P\&L et
+backtesting de stratégies.}
+
+\cventry{2019--2020}{10 mois}{Crédit Mutuel}{Paris, France}{Audit quantitatif -- Inspection générale groupe}
+\begin{itemize}
+  \item Participer à des missions d'audit portant sur des sujets quantitatifs.
+  \item Travaux menés sur les modèles de crédit, les nouveaux critères de défaut bâlois et
+  la réconciliation de bases de données opérationnelles et décisionnelles.
+\end{itemize}
+\apportpercolia{audit de modèles et réconciliation de bases de données opérationnelles et
+décisionnelles, transférables à la structuration des audits comparatifs clients.}
+
+\cventry{2018--2019}{1 an 6 mois -- 18 mois}{Banque de France--ACPR}{Paris, France}{Audit quantitatif -- Contrôleur des modèles internes Solvabilité II}
+\begin{itemize}
+  \item Participer à des contrôles sur place d'organismes d'assurance portant sur les
+  modèles internes.
+  \item Modéliser les risques de marché et d'assurance.
+  \item Vérifier le respect de la réglementation prudentielle.
+  \item Étudier des modèles de taux d'intérêt et des modèles actions.
+  \item Implémenter en Python un outil générant des jeux de scénarios économiques.
+  \item Mobiliser des équations différentielles stochastiques, des algorithmes
+  d'optimisation et des arbres multinomiaux.
+\end{itemize}
+\apportpercolia{participation à des contrôles de modèles, vérification prudentielle et
+développement quantitatif en Python.}
 
 % ==================== COMPÉTENCES ====================
-\section*{Compétences}
-\compactentry{Logiciel \& data}{\textbf{Python, SQL, VBA} ; API Bloomberg ; automatisation,
-analyse de données, backtests, scénarios économiques et outils de P\&L.}
-\compactentry{Produit \& projet}{Spécifications fonctionnelles, procédures, plans de test,
-coordination métiers--IT, restitution d'audits et intégration d'outils décisionnels.}
-\compactentry{Quantitatif}{Repo, taux, dérivés actions, produits structurés ;
-exécution, relation client, pricing, modèles de risque et réglementation prudentielle.}
+\section*{Compétences directement mobilisables pour Percolia}
+\compactentry{Logiciel / données}{\textbf{Python, SQL, VBA} ; API Bloomberg ; automatisation,
+analyse et réconciliation de données, backtesting, scénarios économiques et outils de P\&L.}
+\compactentry{Produit / intégration}{Spécifications, procédures, tests, coordination
+Front/Middle/Back Office--IT et connexion d'outils aux systèmes métier.}
+\compactentry{Commercial / audit}{Relation client, prise en compte des besoins, proposition
+de solutions adaptées, contrôle des prix, audit et contrôle quantitatif.}
+\compactentry{Finance quantitative}{Repo, taux, dérivés actions, produits structurés ;
+risques de marché, d'assurance et de crédit ; réglementation prudentielle.}
 
 % ==================== FORMATION ====================
 \section*{Formation}
-\compactentry{2020--2021}{\textbf{Master Économie et Finance}, Université Paris-Dauphine PSL -- Paris.}
-\compactentry{2015--2018}{\textbf{Diplôme d'ingénieur}, IMT Atlantique (ex-Télécom Bretagne) -- Brest.}
-\compactentry{2012--2015}{Classes préparatoires scientifiques, lycée Saint-Louis -- Paris.}
+\compactentry{2020--2021}{\textbf{Master Économie et Finance}, Université Paris-Dauphine PSL -- Paris, France.}
+\compactentry{2015--2018}{\textbf{Diplôme d'ingénieur}, IMT Atlantique (ex-Télécom Bretagne) -- Brest, France.}
+\compactentry{2012--2015}{Classes préparatoires aux grandes écoles d'ingénieurs, lycée
+Saint-Louis -- Paris, France.}
+
+\vfill
+\begin{center}
+  {\scriptsize\color{softgray}Cumul arrêté au 3 août 2026 ; la durée reprise sera déterminée
+  par Inria à partir des dates exactes, quotités, contrats et justificatifs.}
+\end{center}
 
 \end{document}
