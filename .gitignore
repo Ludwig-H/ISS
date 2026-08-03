@@ -33,5 +33,8 @@
 # Track the final PDF at the root
 !/Manuscrit_de_these.pdf
 
+# Track the generated French CV delivered to Inria
+!/CV/CV_Louis_Hauseux_Inria_Startup_Studio_2026.pdf
+
 # Temporary scratch files
 scratch/
