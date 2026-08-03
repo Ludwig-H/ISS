@@ -18,14 +18,54 @@ L'objectif réaliste du CV est donc de rendre toutes les périodes potentielleme
 - Le statut de normalien élève recruté par concours est bien celui de fonctionnaire stagiaire rémunéré : [FAQ officielle de l'ENS Paris-Saclay](https://ens-paris-saclay.fr/admission/inscription-et-reinscription/faq-inscriptions) et [articles 16 et 17 du décret n° 2011-21](https://www.legifrance.gouv.fr/loda/id/LEGISCTA000023404062).
 - Le [Code de la recherche, article L. 412-1](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000044467582), reconnaît, une fois la formation à et par la recherche sanctionnée par le doctorat, l'expérience professionnelle qui en résulte, notamment pour certains recrutements et classements en catégorie A. Cela renforce la présentation du contrat doctoral dans les expériences après la soutenance, sans garantir pour autant son décompte dans la grille d'un CDD Inria.
 
-## Indice historique à faire confirmer par Inria en 2026
+## « Ingénieur de recherche bac+8 » : réponse précise
 
-Un ancien document DRH Inria de décembre 2016, intitulé « Cadre d'emploi des contractuels Inria », classait explicitement le portage d'un projet de création d'entreprise dans la filière « Ingénieurs Transfert & innovation » et distinguait des niveaux selon l'expérience après M2 ou après thèse. Ce document n'est ni récent ni hébergé sur le site officiel actuel ; il ne doit donc pas être présenté comme la grille 2026. Il justifie toutefois deux choix de rédaction :
+Le doctorat est bien un diplôme de [niveau 8](https://www.enseignementsup-recherche.gouv.fr/fr/nomenclature-relative-au-niveau-de-diplome-45785), mais « ingénieur de recherche » n'est pas juridiquement synonyme de « bac+8 » :
 
-1. faire apparaître sans ambiguïté le premier M2 obtenu en 2016 ;
-2. détailler toute l'expérience professionnelle acquise depuis ce diplôme, au lieu de ne présenter que le doctorat obtenu en 2026.
+- le corps des ingénieurs de recherche des EPST est un corps de fonctionnaires de catégorie A ([article R. 423-17 du Code de la recherche](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000048771552)) ;
+- son concours externe est accessible dès un diplôme de niveau 7, donc bac+5 ([article R. 423-22](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000048771564)) ;
+- être docteur ne vaut donc ni nomination dans ce corps, ni attribution automatique de sa grille indiciaire ;
+- la bonification de deux ans prévue pour certains docteurs recrutés par concours dans le corps IR ([article R. 423-29](https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000048771578)) concerne les fonctionnaires ainsi recrutés, pas le CDD ISS.
 
-Question à poser au service RH : « Pour le CDD ISS d'ingénieur scientifique contractuel, quelle grille 2026 s'applique, quelles périodes d'expérience sont retenues, et le calcul est-il fait à partir du premier M2 pertinent obtenu en 2016 ou à partir du doctorat soutenu en 2026 ? »
+L'offre ISS comparable d'octobre 2026 mentionne seulement la fonction d'« ingénieur scientifique contractuel », un niveau exigé bac+5 et un minimum de 2 692 euros brut ; elle ne mentionne pas de corps d'accueil IR. À l'inverse, une [offre Inria 2026 de CDD scientifique à Sophia Antipolis](https://jobs.inria.fr/public/classic/fr/offres/2026-10049/topdf) indique explicitement « corps d'accueil : Ingénieur d'Études / Ingénieur de Recherche ». Même dans ce dernier cas, il s'agit d'une équivalence d'emploi pour un contractuel, non d'une titularisation.
+
+Pour Percolia, le rattachement le plus plausible est donc la grille interne de la filière ingénierie, probablement « Transfert & innovation », avec une éventuelle équivalence IR à faire confirmer. La qualification de docteur doit peser dans la fixation de la rémunération, mais elle ne crée pas à elle seule une « grille bac+8 ».
+
+Question à transmettre avant l'édition du contrat :
+
+> Confirmez-vous que mon CDD Inria Startup Studio relève de la filière ingénierie, avec équivalence ou corps d'accueil IR, et que mon classement est calculé au niveau 3 à partir de mon premier M2 obtenu en 2016, en intégrant mon contrat doctoral et mes expériences professionnelles documentées ? Merci de m'indiquer la version datée du barème, le niveau retenu, chaque période reprise avec sa quotité et le montant brut correspondant.
+
+## Reconstruction prudente de la grille ingénierie 2026
+
+Le cadre détaillé que j'ai pu retrouver publiquement est le [« Cadre d'emploi des contractuels Inria » de décembre 2016](https://remy.grunblatt.org/pdfs/Documents/DGDA-DRH_Cadre_emploi_contractuels_2016-12.pdf), [communiqué par Inria en 2022 à la suite d'une demande d'accès](https://madada.fr/request/cadre_demploi_des_contractuels_i). Il classait explicitement le portage d'un projet de création d'entreprise dans la filière « Ingénieurs Transfert & innovation ». Ce document ancien n'est pas opposable en 2026.
+
+Ses planchers peuvent néanmoins être revalorisés à titre d'estimation par le rapport entre la valeur annuelle de l'indice 100 en 2026, 5 907,34 euros ([décret n° 2023-519](https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000047749211)), et celle applicable au 1er février 2017, 5 623,23 euros ([décret n° 2016-670](https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000032584306)). Cette reconstruction retrouve à un euro près les minima de 2 692 et 2 765 euros publiés dans deux offres Inria 2026 : l'[offre ISS comparable](https://recrutement.inria.fr/public/classic/fr/offres/2026-10286) et une [offre d'ingénieur scientifique visant trois à cinq ans d'expérience et appréciant le doctorat](https://recrutement.inria.fr/public/classic/fr/offres/2026-10270). Les niveaux 3 et 4 restent des extrapolations à faire confirmer.
+
+| Niveau interne historique | Condition historique | Plancher mensuel 2026 reconstitué | Application possible au dossier |
+|---|---|---:|---|
+| Niveau 1 | M2 + 0 à moins de 2 ans | 2 692 € | Minimum générique de l'offre ISS ; trop défavorable si le doctorat et les contrats sont reconnus |
+| Niveau 2 | M2 + 2 à moins de 5 ans, ou thèse + 0 à moins de 2 ans | 2 765 € | Scénario strict : doctorat tout juste soutenu, ou seulement 44 mois de recherche/ingénierie retenus |
+| Niveau 3 | M2 + 5 à moins de 8 ans, ou thèse + 2 à moins de 5 ans | 2 977 € | Objectif défendable : environ 68 mois non concomitants en ajoutant les emplois d'enseignement 2020–2022 aux 8 mois Inria et aux 36 mois de doctorat |
+| Niveau 4 | M2 + 8 à moins de 12 ans, ou thèse + 5 à moins de 8 ans | 3 404 € | Scénario maximal, seulement si Inria retient largement les services de normalien et les autres expériences ; faible niveau de confiance |
+
+La demande prioritaire doit être le **niveau 3**, et non une hypothétique « grille bac+8 ». Le doctorat fraîchement acquis sécurise l'argument du niveau 2 dans l'ancien cadre ; le premier M2 de 2016 et au moins cinq années d'activité justifiée servent à défendre le niveau 3. Les dates exactes, quotités et certificats conditionnent ce calcul.
+
+## Estimation du salaire net et « supernet »
+
+Hypothèses de calcul : agent contractuel d'un établissement public administratif de l'État, métropole hors Alsace-Moselle, douze mois au même salaire, célibataire avec une part fiscale, aucun autre revenu, charge, réduction ou crédit d'impôt. Sont exclus la protection sociale complémentaire, les remboursements de transport, les titres-restaurant, une éventuelle indemnité de résidence et tout autre élément individuel.
+
+Sous le plafond mensuel de la Sécurité sociale 2026 de 4 005 euros ([arrêté du 22 décembre 2025](https://www.legifrance.gouv.fr/jorf/article_jo/JORFARTI000053143455)), le net avant impôt est estimé à **80,33 % du brut**. Le calcul applique les cotisations 2026 des agents non titulaires de l'État publiées par l'[Urssaf](https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-public.html) et le taux agent Ircantec de tranche A de 2,84 % ([Ircantec](https://www.ircantec.retraites.fr/employeur/actualite/augmentation-des-taux-de-cotisations-ircantec-au-1er-janvier-2026)).
+
+Le « supernet » ci-dessous est une estimation annualisée du net après impôt, **à législation et barème 2026 constants** : net imposable de paie, abattement forfaitaire de 10 % pour frais professionnels, puis [barème et décote de l'impôt 2026](https://www.economie.gouv.fr/particuliers/impots-et-fiscalite/gerer-mon-impot-sur-le-revenu/comment-calculer-votre-impot-dapres-le-bareme-de-limpot-sur-le-revenu). Il s'agit d'un ordre de grandeur en régime de croisière, pas nécessairement du montant du bulletin d'octobre 2026. Le barème cité s'applique aux revenus 2025 ; les barèmes définitifs des revenus 2026 et 2027 ne sont pas encore connus. Le prélèvement à la source réel dépendra en outre du taux personnalisé du foyer.
+
+| Classement estimé | Brut mensuel | Net avant impôt | Net après impôt mensuel estimé, à barème constant |
+|---|---:|---:|---:|
+| Minimum générique ISS / niveau 1 | 2 692 € | ≈ 2 162 € | ≈ 2 070 € |
+| Scénario strict / niveau 2 | 2 765 € | ≈ 2 221 € | ≈ 2 120 € |
+| **Objectif défendable / niveau 3** | **2 977 €** | **≈ 2 391 €** | **≈ 2 265 €** |
+| Scénario maximal / niveau 4 | 3 404 € | ≈ 2 734 € | ≈ 2 545 € |
+
+Estimation centrale à ce stade : **2 977 euros brut, environ 2 391 euros net avant impôt et 2 265 euros après impôt estimé à barème constant par mois**, si Inria accepte le niveau 3 au plancher reconstitué. Une rémunération supérieure au plancher reste possible selon la marge appliquée et le financement, mais aucune table publique 2026 ne permet de la chiffrer de façon fiable.
 
 ## Périodes mises en avant dans le CV
 
