@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{helvet}
 \renewcommand{\familydefault}{\sfdefault}
-\usepackage[left=1.35cm,right=1.35cm,top=0.95cm,bottom=0.95cm]{geometry}
+\usepackage[left=1.30cm,right=1.30cm,top=0.90cm,bottom=0.90cm]{geometry}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage{titlesec}
@@ -35,7 +35,7 @@
 \titleformat{\section}
   {\normalsize\bfseries\color{darkblue}}
   {}{0pt}{\MakeUppercase}[\vspace{-0.30em}\color{midblue}\rule{\textwidth}{0.45pt}]
-\titlespacing*{\section}{0pt}{0.68em}{0.34em}
+\titlespacing*{\section}{0pt}{0.64em}{0.30em}
 
 \setlength{\parindent}{0pt}
 \setlength{\tabcolsep}{0pt}
@@ -43,28 +43,43 @@
 \newcolumntype{L}[1]{>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}p{#1}}
 \newcolumntype{Y}{>{\RaggedRight\arraybackslash\hyphenpenalty=10000\exhyphenpenalty=10000}X}
 \setlist[itemize]{
-  leftmargin=3.60cm,
+  leftmargin=3.58cm,
   label=\textcolor{midblue}{\raisebox{0.12ex}{\scriptsize$\bullet$}},
   labelsep=0.42em,
-  itemsep=0.04em,
-  topsep=0.05em,
+  itemsep=0.03em,
+  topsep=0.04em,
   parsep=0pt,
   partopsep=0pt
 }
 
 % #1 période ; #2 durée/statut ; #3 employeur/projet ; #4 lieu ; #5 fonction.
 \newcommand{\cventry}[5]{%
-  \begin{tabularx}{\textwidth}{@{}L{3.23cm}@{\hspace{0.25cm}}Y@{}}
+  \begin{tabularx}{\textwidth}{@{}L{3.20cm}@{\hspace{0.25cm}}Y@{}}
     \textcolor{softgray}{#1} & \textbf{#3}\hfill\textcolor{softgray}{#4}\\[-0.10ex]
     \small\textcolor{darkblue}{\textbf{#2}} & \textbf{#5}
   \end{tabularx}\vspace{-0.20em}
 }
 
 \newcommand{\compactentry}[2]{%
-  \begin{tabularx}{\textwidth}{@{}L{3.23cm}@{\hspace{0.25cm}}Y@{}}
+  \begin{tabularx}{\textwidth}{@{}L{3.20cm}@{\hspace{0.25cm}}Y@{}}
     \textcolor{softgray}{#1} & #2
   \end{tabularx}\par
 }
+
+\newcommand{\pubentry}[2]{%
+  \begin{tabularx}{\textwidth}{@{}L{1.60cm}@{\hspace{0.18cm}}Y@{}}
+    \footnotesize\textcolor{softgray}{#1} & \footnotesize #2
+  \end{tabularx}
+}
+
+\newcommand{\pageheader}[1]{%
+  \begin{center}
+    {\small\color{softgray}Louis Hauseux -- Percolia -- CV détaillé \textbullet{} #1/3}
+  \end{center}
+  \vspace{-0.78em}
+}
+
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{DOI}}
 
 \begin{document}
 \pagestyle{empty}
@@ -80,11 +95,7 @@
   {\normalsize Normalien (ENS Paris-Saclay) \textbullet{} Doctorant en informatique -- soutenance le 8 septembre 2026}\\[0.28em]
   Sophia Antipolis
   \enspace\textcolor{midblue}{\textbullet}\enspace
-  \href{mailto:louis.hauseux@inria.fr}{louis.hauseux@inria.fr}
-  \enspace\textcolor{midblue}{\textbullet}\enspace
-  \href{https://github.com/Ludwig-H}{GitHub}
-  \enspace\textcolor{midblue}{\textbullet}\enspace
-  \href{https://inria.hal.science/search/index/?q=authIdHal_s:louis-hauseux}{HAL}
+  \href{mailto:louis.hauseux@gmail.com}{louis.hauseux@gmail.com}
 \end{center}
 \vspace{-0.48em}
 
@@ -95,7 +106,8 @@ données, clustering hiérarchique, géométrie algorithmique et traitement de n
 3D. Au cours de mon doctorat, j'ai conçu \textbf{HGP-Clusterer}, noyau scientifique du projet
 \textbf{Percolia}. J'en porte la R\&D, la robustesse, le passage à l'échelle et la transformation
 en produit logiciel. J'interviens en complémentarité avec Alban Hauseux, porteur business,
-chargé de la découverte client, des audits comparatifs et de l'intégration.
+chargé de la découverte client, des audits comparatifs et de l'intégration. Mon parcours
+associe recherche scientifique, ingénierie, enseignement et travaux publiés en philologie.
 
 % ==================== PERCOLIA ====================
 \section*{Projet entrepreneurial -- Percolia}
@@ -144,7 +156,7 @@ collaboration Cerema ; formation Starthèse et actions Inria Startup Studio.}
   \item Équipe AYANA, 3 mois, contrat Airbus Defence and Space : télédétection, détection et
   suivi d'objets sur images satellitaires, synthèse et valorisation scientifiques.
   \item Équipe NEO, 5 mois, contrat Nokia : estimation de densité, graphes géométriques et
-  clustering ; développement d'un prototype et contributions scientifiques.
+  clustering, avec développement d'un prototype et contributions scientifiques.
 \end{itemize}
 
 \cventry{2021--2022}{Année scolaire}{Lycée EMC2--Hadamard}{Paris}{Enseignant en mathématiques -- classes préparatoires scientifiques}
@@ -156,23 +168,140 @@ collaboration Cerema ; formation Starthèse et actions Inria Startup Studio.}
 \newpage
 
 % ==================== PAGE 2 ====================
-\begin{center}
-  {\small\color{softgray}Louis Hauseux -- Percolia -- CV détaillé \textbullet{} 2/2}
-\end{center}
-\vspace{-0.75em}
+\pageheader{2}
+\enlargethispage{1.5\baselineskip}
 
 \section*{Expériences professionnelles -- suite}
 \cventry{2020--2022}{Activité concomitante}{Cours particuliers de mathématiques}{}{Professeur particulier}
-
 \cventry{2020--2021}{Année scolaire}{Lycée Saint-Joseph}{Marvejols}{Professeur de mathématiques -- filières scientifiques}
-
 \cventry{2013--2017}{4 ans}{École normale supérieure de Cachan}{Cachan / Paris}{Normalien élève -- fonctionnaire stagiaire}
 \begin{itemize}
   \item Scolarité rémunérée après admission au concours d'informatique ; formation en
   mathématiques et informatique jusqu'à deux diplômes de Master 2.
 \end{itemize}
 
-% ==================== COMPÉTENCES ====================
+% ==================== PARCOURS ====================
+\section*{Parcours académique et travaux de recherche}
+\compactentry{2023--2026}{\textbf{Doctorat en informatique}, Université Côte d'Azur, École
+doctorale STIC ; accueil Inria, financement DS4H/3IA ; direction K. Avrachenkov et
+co-encadrement J. Zerubia. Soutenance prévue le 8 septembre 2026.}
+\compactentry{2017--2023}{\textbf{Philologie grecque et romane} : formation au CEROC de
+Sorbonne Université et à l'Université Paul-Valéry Montpellier, ainsi qu'en grec ancien à
+l'ENS Ulm (2017--2020), puis travaux personnels d'édition critique et publications
+sur Aristophane (2020--2023).}
+\compactentry{2018--2020}{\textbf{Philologie de la chanson et ethnomusicologie historique} :
+recherche documentaire sur les traditions orales et les répertoires des XVIII\textsuperscript{e}
+et XIX\textsuperscript{e} siècles ; études et conférence diffusées publiquement.}
+\compactentry{2016--2017}{\textbf{Master 2 Probabilités et modèles aléatoires}, ENS Ulm /
+École polytechnique / UPMC ; recherche à Inria Paris sur le clustering par complexes
+simpliciaux et la stylométrie.}
+\compactentry{2015--2016}{\textbf{Master 2 Mathématiques fondamentales}, ENS Ulm / École
+polytechnique / UPMC ; premier diplôme de niveau master obtenu en 2016.}
+\compactentry{2013--2015}{Licence de mathématiques et d'informatique, puis Master 1 de
+mathématiques, ENS Cachan / ENS Ulm / UPMC / Université Paris-Diderot.}
+\compactentry{2011--2013}{Classes préparatoires scientifiques MPSI--MP*, lycée Henri-IV,
+Paris ; admission à l'ENS Cachan par le concours d'informatique.}
+
+% ==================== PUBLICATIONS SCIENTIFIQUES ====================
+\section*{Publications scientifiques -- socle de Percolia}
+\pubentry{2026}{L. Hauseux, K. Avrachenkov et J. Zerubia,
+\textit{Generalization of Single-Linkage with Higher-Order Interactions},
+\textit{Applied Network Science} 11(1), art. 9. \doi{10.1007/s41109-025-00756-1}.}
+\pubentry{2025}{L. Hauseux, K. Avrachenkov et J. Zerubia,
+\textit{Hypergraphs, Percolation, and Hierarchical Clustering},
+\textit{Complex Networks \& Their Applications XIII}, p. 16--30.
+\doi{10.1007/978-3-031-82431-9_2}.}
+\pubentry{2025}{L. Hauseux, \textit{How Can We Theoretically Measure the Performance of
+Density-Based Clustering Algorithms?}, \textit{ACM SIGMETRICS Performance Evaluation Review}
+52(4), p. 19--20. \doi{10.1145/3725536.3725546}.}
+\pubentry{2024}{L. Hauseux, K. Avrachenkov et J. Zerubia,
+\textit{Benefits of Hypergraphs for Density-Based Clustering}, EUSIPCO, p. 2302--2306.
+\doi{10.23919/EUSIPCO63174.2024.10715271}.}
+
+\section*{Autres publications scientifiques évaluées}
+\pubentry{2026}{L. Hauseux, R. Antoine, P. Foucher, P. Charbonnier et J. Zerubia,
+\textit{Multi-Modal, Training-Free Crack Extraction via Generalized Frangi Graph},
+communication acceptée, à paraître à IEEE EUVIP 2026.}
+\pubentry{2025}{L. Hauseux, N. Soprano-Loto et K. Avrachenkov,
+\textit{Higher-Order Monte Carlo Cluster Dynamics for Community Detection in Euclidean
+Graphs}, Asilomar, p. 1038--1044. \doi{10.1109/IEEECONF67917.2025.11443861}.}
+\pubentry{2025}{L. Hauseux, R. Antoine, P. Foucher, P. Charbonnier et J. Zerubia,
+\textit{Généralisation du filtre de Frangi pour l'extraction des réseaux de fissures au sein
+d'images d'un glissement de terrain. Comparaison avec une méthode d'apprentissage profond},
+GRETSI, p. 389--392.}
+\pubentry{2024}{L. Hauseux, K. Avrachenkov et J. Zerubia,
+\textit{Graph Based Approach for Galaxy Filament Extraction},
+\textit{Complex Networks \& Their Applications XII}, p. 384--396.
+\doi{10.1007/978-3-031-53472-0_32}.}
+\pubentry{2019}{L. Hauseux et F. Le Roux,
+\textit{Entropie polynomiale des homéomorphismes de Brouwer},
+\textit{Annales Henri Lebesgue} 2, p. 39--57. \doi{10.5802/ahl.12}.}
+
+\section*{Manuscrit, rapports, prépublications et communications}
+\pubentry{2026}{\textit{Utilisation de graphes pour la classification et l'extraction de
+structures. Généralisation à des interactions d'ordre supérieur}, manuscrit de doctorat,
+Université Côte d'Azur.}
+\pubentry{2023}{L. Hauseux, K. Avrachenkov et J. Zerubia,
+\textit{Un nouvel estimateur des niveaux de densité utilisant les graphes et complexes
+simpliciaux. Application à la détection des clusters de galaxies}, poster,
+XVI\textsuperscript{e} Journées de géostatistiques.}
+\pubentry{2017}{L. Hauseux et F. Le Roux,
+\textit{Polynomial Entropy of Brouwer Homeomorphisms}, prépublication anglaise du travail
+publié en 2019, arXiv:1712.01502.}
+\pubentry{2017}{L. Hauseux et B. Blaszczyszyn,
+\textit{Un classificateur non supervisé utilisant les complexes simpliciaux
+(avec une application à la stylométrie)}, rapport de recherche, Inria Paris.}
+\pubentry{2016}{L. Hauseux, sous la direction de F. Le Roux,
+\textit{Entropie polynomiale et homéomorphismes de Brouwer}, mémoire de recherche.}
+
+\newpage
+
+% ==================== PAGE 3 ====================
+\pageheader{3}
+
+% La troisième page est moins chargée : bibliographie en corps légèrement plus grand.
+\renewcommand{\pubentry}[2]{%
+  \begin{tabularx}{\textwidth}{@{}L{1.60cm}@{\hspace{0.18cm}}Y@{}}
+    \small\textcolor{softgray}{#1} & \small #2
+  \end{tabularx}
+}
+
+\section*{Publications et travaux de philologie grecque}
+\pubentry{À paraître}{\textit{Les Thesmophories d'Aristophane (Thesmophoriazusae)},
+édition critique de 236 pages : texte grec, traduction, commentaire et apparats critique et
+des témoins ; ouvrage accepté, à paraître chez L'Harmattan.}
+\pubentry{2023}{\textit{Philologie pratique : quelques exemples d'images chez Aristophane},
+\textit{Philologie de l'avenir}.}
+\pubentry{2022}{\textit{Aristophane et les proverbes}, \textit{Ho Lychnos},
+Connaissance hellénique, no 163, novembre 2022, article 1.}
+\pubentry{2021}{\textit{Nouvelles notes sur les Thesmophories d'Aristophane},
+\textit{Ho Lychnos}, Connaissance hellénique, no 158, mars 2021, article 6.}
+\pubentry{2020}{\textit{Notes sur les Thesmophories d'Aristophane},
+\textit{Ho Lychnos}, Connaissance hellénique, no 157, novembre 2020, article 2.}
+
+\section*{Philologie de la chanson et ethnomusicologie}
+\pubentry{2018--2020}{\textit{Analyse exhaustive d'un carnet de chants en circulation dans
+le milieu de la reconstitution Premier Empire afin de l'expurger des nombreux
+anachronismes}, étude, 10 p.}
+\pubentry{2018--2020}{\textit{Note sur la chanson La Pernette (Ne pleure pas Jeannette)},
+étude de tradition orale, 6 p.}
+\pubentry{2018--2020}{\textit{Note sur le quatuor de Lucile : « Où peut-on être mieux qu'au
+sein de sa famille ? »}, étude historique et musicale, 7 p.}
+\pubentry{2018--2020}{\textit{Note sur la chanson « Veillons au salut de l'empire »},
+étude historique et musicale, 4 p.}
+\pubentry{2018--2020}{\textit{Note sur la chanson des « Dragons de Noailles »},
+étude de filiation historique, 7 p.}
+\pubentry{2018--2020}{\textit{Note sur la chanson de tradition orale « Dans les prisons de
+Nantes »}, étude comparative des versions, 6 p.}
+\pubentry{2019}{\textit{Entre traditions et re-créations : le chœur Montjoie Saint Denis},
+conférence donnée en avril 2019, 16 p.}
+
+\section*{Vulgarisation et transfert}
+\pubentry{2023}{L. Hauseux, \textit{Au cœur de la télédétection par satellite -- l'équipe
+AYANA d'Inria}, Société française de photogrammétrie et de télédétection.}
+\pubentry{2023}{J. Zerubia et L. Hauseux, \textit{Remote Sensing: Detecting and Tracking
+Vehicles on Satellite Images and Videos}, \textit{ERCIM News} 133.}
+
 \section*{Compétences}
 \compactentry{Algorithmique / IA}{Clustering hiérarchique et non supervisé ; géométrie
 algorithmique ; graphes, hypergraphes et complexes simpliciaux ; méthodes interprétables sans
@@ -184,35 +313,11 @@ prototypage et optimisation, notebooks, traitement de grands jeux de données, \
 \compactentry{Transfert}{Cadrage de cas d'usage, benchmark, démonstrateur, communication
 scientifique et collaboration avec chercheurs, ingénieurs et partenaires industriels.}
 
-% ==================== FORMATION ====================
-\section*{Formation}
-\compactentry{2023--2026}{\textbf{Doctorat en informatique}, Université Côte d'Azur, École
-doctorale STIC ; accueil Inria, financement DS4H/3IA ; direction K. Avrachenkov,
-co-encadrement J. Zerubia. Soutenance prévue le 8 septembre 2026.}
-\compactentry{2016--2017}{\textbf{Master 2 Probabilités et modèles aléatoires}, ENS Ulm /
-École polytechnique / UPMC ; travail de recherche à Inria Paris sur le clustering par
-complexes simpliciaux.}
-\compactentry{2015--2016}{\textbf{Master 2 Mathématiques fondamentales}, ENS Ulm / École
-polytechnique / UPMC ; premier diplôme de niveau master obtenu en 2016.}
-\compactentry{2013--2015}{Licence de mathématiques et d'informatique, puis Master 1 de
-mathématiques, ENS Cachan / ENS Ulm / UPMC / Université Paris-Diderot.}
-\compactentry{2011--2013}{Classes préparatoires scientifiques MPSI--MP*, lycée Henri-IV,
-Paris ; admission à l'ENS Cachan par le concours d'informatique.}
-
-% ==================== PUBLICATIONS ====================
-\section*{Publications et distinctions sélectionnées}
-\compactentry{2026}{\textit{Generalization of Single-Linkage with Higher-Order Interactions},
-avec K. Avrachenkov et J. Zerubia, \textit{Applied Network Science}.
-\href{https://doi.org/10.1007/s41109-025-00756-1}{DOI}.}
-\compactentry{2025}{\textit{How Can We Theoretically Measure the Performance of
-Density-Based Clustering Algorithms?}, \textit{ACM SIGMETRICS Performance Evaluation
-Review}. \href{https://doi.org/10.1145/3725536.3725546}{DOI}.}
-\compactentry{2024--2025}{Publications sur les hypergraphes et le clustering (EUSIPCO,
-Complex Networks) et sur l'extraction de fissures (GRETSI) ; liste complète sur
-\href{https://inria.hal.science/search/index/?q=authIdHal_s:louis-hauseux}{HAL}.}
-\compactentry{Distinctions}{Finaliste du prix Pierre Laffitte 2025 ; médaille d'excellence
-de l'Université Côte d'Azur 2024 ; 2\textsuperscript{e} prix, catégorie \textit{Graduate},
-ACM Student Research Competition SIGMETRICS 2024.}
+\section*{Prix et distinctions}
+\compactentry{2025}{Finaliste du prix Pierre Laffitte.}
+\compactentry{2024}{Médaille d'excellence de l'Université Côte d'Azur.}
+\compactentry{2024}{2\textsuperscript{e} prix, catégorie \textit{Graduate}, ACM Student
+Research Competition, SIGMETRICS.}
 
 \vfill
 \begin{center}
