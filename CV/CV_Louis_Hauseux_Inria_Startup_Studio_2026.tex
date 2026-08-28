@@ -23,6 +23,8 @@
 \renewcommand{\og}{{\unicodefont\symbol{"00AB}}\nobreakspace}
 \renewcommand{\fg}{\unskip\nobreakspace{\unicodefont\symbol{"00BB}}}
 \newcommand{\lychnos}{{\greekfont\itshape ὁ λύχνος}}
+\newcommand{\ensparissaclay}{ENS Paris-Saclay}
+\newcommand{\enscachan}{ENS Cachan (aujourd'hui \ensparissaclay)}
 \usepackage[left=1.35cm,right=1.35cm,top=0.95cm,bottom=0.95cm]{geometry}
 \usepackage{microtype}
 \usepackage{xcolor}
@@ -38,6 +40,8 @@
 
 \hypersetup{
   unicode=true,
+  pdflang={fr-FR},
+  pdfdisplaydoctitle=true,
   colorlinks=true,
   urlcolor=darkblue,
   linkcolor=darkblue,
@@ -84,7 +88,7 @@
 
 \newcommand{\pubentry}[2]{%
   \begin{tabularx}{\textwidth}{@{}L{1.60cm}@{\hspace{0.18cm}}Y@{}}
-    \footnotesize\textcolor{softgray}{#1} & \footnotesize #2
+    \small\textcolor{softgray}{#1} & \small #2
   \end{tabularx}
 }
 
@@ -106,7 +110,7 @@
 \begin{center}
   {\LARGE\bfseries Louis~\textsc{Hauseux}}\\[0.20em]
   {\large\bfseries\color{darkblue}Recherche et développement technologique de Percolia}\\[0.10em]
-  {\normalsize Normalien (ENS Paris-Saclay) \textbullet{} Doctorant en informatique -- soutenance le 8~septembre~2026}\\[0.28em]
+  {\normalsize Normalien (\ensparissaclay) \textbullet{} Doctorant en informatique -- soutenance le 8~septembre~2026}\\[0.28em]
   Sophia Antipolis
   \enspace\textcolor{midblue}{\textbullet}\enspace
   \href{mailto:louis.hauseux@gmail.com}{louis.hauseux@gmail.com}
@@ -128,7 +132,7 @@
 
 % ==================== PERCOLIA ====================
 \section*{Projet entrepreneurial -- Percolia}
-\cventry{2025--2026}{Entrée ISS : 1\textsuperscript{er}~octobre~2026}{Projet Percolia -- Inria Startup Studio}{Sophia Antipolis}{Recherche et développement technologique -- conception, passage à l'échelle et mise en produit}
+\cventry{2025--2026}{Entrée à l'ISS : 1\textsuperscript{er}~octobre~2026}{Projet Percolia -- Inria Startup Studio}{Sophia Antipolis}{Recherche et développement technologique -- conception, passage à l'échelle et mise en produit}
 \begin{itemize}
   \item \textbf{HGP-Clusterer} : interactions d'ordre supérieur et percolation ; réduction du
   chaînage dû au bruit.
@@ -153,10 +157,10 @@ méthodes sans apprentissage.}
 
 % ==================== EXPÉRIENCE PAGE 1 ====================
 \section*{Expériences professionnelles}
-\cventry{oct.~2023--sept.~2026}{36~mois}{Université Côte d'Azur}{Sophia Antipolis}{Doctorant contractuel en informatique -- accueilli au Centre Inria, équipes NEO et AYANA}
+\cventry{oct.~2023--sept.~2026}{36~mois}{Université Côte d'Azur}{Sophia Antipolis}{Doctorant contractuel en informatique -- accueilli au Centre Inria d'Université Côte d'Azur, au sein des équipes-projets NEO et AYANA}
 \begin{itemize}
   \item \textbf{HGP-Clusterer} : définition théorique, analyse et implémentation.
-  \item \textbf{Validation} : amas de forte densité $K$-NN ; \emph{Robust Single-Linkage} ; DBSCAN ;
+  \item \textbf{Validation} : amas de forte densité estimés par \(K\)-NN ; \emph{Robust Single-Linkage} ; DBSCAN ;
   HDBSCAN ; percolation.
   \item \textbf{Applications} : LiDAR 3D/4D ; images multimodales ; graphes pondérés signés.
   \item \textbf{Enseignement} : \textbf{\(3 \times 64\)~heures/an} ;
@@ -185,9 +189,9 @@ méthodes sans apprentissage.}
 \begin{itemize}
   \item Enseignement dans l'ensemble des filières scientifiques.
 \end{itemize}
-\cventry{2013--2017}{4~ans}{École normale supérieure de Cachan}{Cachan et Paris}{Normalien élève -- fonctionnaire stagiaire}
+\cventry{2013--2017}{4~ans}{École normale supérieure de Cachan (aujourd'hui \ensparissaclay)}{Cachan et Paris}{Normalien élève -- fonctionnaire stagiaire}
 \begin{itemize}
-  \item Admission à l'ENS Cachan sur le concours Informatique ; mathématiques et informatique ;
+  \item Admission sur le concours Informatique ; mathématiques et informatique ;
   deux diplômes de master~2.
 \end{itemize}
 
@@ -203,7 +207,7 @@ méthodes sans apprentissage.}
 doctorale STIC ; Inria ; financement DS4H/3IA ; direction K.~\textsc{Avrachenkov} ;
 co-encadrement J.~\textsc{Zerubia} ; soutenance le 8~septembre~2026.}
 \compactentry{2017--2023}{\textbf{Philologie grecque et romane} ; CEROC, Sorbonne Université ;
-Université Paul-Valéry Montpellier ; grec ancien à l'ENS Ulm (2017--2020) ; édition critique ;
+Université Paul-Valéry Montpellier~3 ; grec ancien à l'ENS Ulm (2017--2020) ; édition critique ;
 publications sur Aristophane (2020--2023).}
 \compactentry{2018--2020}{\textbf{Philologie de la chanson et ethnomusicologie historique} ;
 traditions orales ; répertoires des XVIII\textsuperscript{e} et XIX\textsuperscript{e}~siècles ;
@@ -212,10 +216,11 @@ six études ; une conférence.}
 École polytechnique ; UPMC ; Inria Paris ; complexes simpliciaux ; stylométrie.}
 \compactentry{2015--2016}{\textbf{Master~2 Mathématiques fondamentales} ; ENS Ulm ; École
 polytechnique ; UPMC ; diplôme obtenu en 2016.}
+\compactentry{2013--2017}{\textbf{Normalien élève -- fonctionnaire stagiaire} ; \enscachan{} ;
+admission sur le concours Informatique.}
 \compactentry{2013--2015}{Licence de mathématiques et d'informatique ; master~1 de
-mathématiques ; ENS Cachan ; ENS Ulm ; UPMC ; Université Paris-Diderot.}
-\compactentry{2011--2013}{Classes préparatoires MPSI--MP* ; lycée Henri-IV ; Paris ;
-admission à l'ENS Cachan sur le concours Informatique.}
+mathématiques ; ENS Ulm ; UPMC ; Université Paris-Diderot.}
+\compactentry{2011--2013}{Classes préparatoires MPSI--MP* ; lycée Henri-IV ; Paris.}
 
 % ==================== PUBLICATIONS SCIENTIFIQUES ====================
 \section*{Publications scientifiques -- socle de Percolia}
@@ -236,15 +241,15 @@ Density-Based Clustering Algorithms?}\fg{}, \textit{ACM SIGMETRICS Performance E
 \section*{Autres publications scientifiques}
 \pubentry{2026}{L.~\textsc{Hauseux}, R.~\textsc{Antoine}, P.~\textsc{Foucher},
 P.~\textsc{Charbonnier} et J.~\textsc{Zerubia},
-\og \foreignlanguage{english}{Multi-Modal, Training-Free Crack Extraction via Generalized Frangi Graph}\fg{},
-communication acceptée, à paraître à IEEE EUVIP 2026.}
+\og \foreignlanguage{english}{Multi-Modal, Training-Free Crack Extraction via Generalized \textsc{Frangi} Graph}\fg{},
+communication acceptée à la conférence IEEE EUVIP 2026 ; actes à paraître.}
 \pubentry{2025}{L.~\textsc{Hauseux}, N.~\textsc{Soprano-Loto} et
 K.~\textsc{Avrachenkov},
 \og \foreignlanguage{english}{Higher-Order Monte Carlo Cluster Dynamics for Community Detection in Euclidean
 Graphs}\fg{}, Asilomar, p.~1038--1044. \doi{10.1109/IEEECONF67917.2025.11443861}.}
 \pubentry{2025}{L.~\textsc{Hauseux}, R.~\textsc{Antoine}, P.~\textsc{Foucher},
 P.~\textsc{Charbonnier} et J.~\textsc{Zerubia},
-\og Généralisation du filtre de Frangi pour l'extraction des réseaux de fissures au sein
+\og Généralisation du filtre de \textsc{Frangi} pour l'extraction des réseaux de fissures au sein
 d'images d'un glissement de terrain. Comparaison avec une méthode d'apprentissage profond\fg{},
 GRETSI, p.~389--392.}
 \pubentry{2024}{L.~\textsc{Hauseux}, K.~\textsc{Avrachenkov} et J.~\textsc{Zerubia},
@@ -252,7 +257,7 @@ GRETSI, p.~389--392.}
 \textit{Complex Networks \& Their Applications XII}, p.~384--396.
 \doi{10.1007/978-3-031-53472-0_32}.}
 \pubentry{2019}{L.~\textsc{Hauseux} et F.~\textsc{Le~Roux},
-\og Entropie polynomiale des homéomorphismes de Brouwer\fg{},
+\og Entropie polynomiale des homéomorphismes de \textsc{Brouwer}\fg{},
 \textit{Annales Henri Lebesgue} 2, p.~39--57. \doi{10.5802/ahl.12}.}
 
 \section*{Manuscrit, rapports, prépublications et communications}
@@ -264,49 +269,42 @@ Université Côte d'Azur.}
 simpliciaux. Application à la détection des clusters de galaxies\fg{}, poster,
 XVI\textsuperscript{e}~Journées de géostatistiques.}
 \pubentry{2017}{L.~\textsc{Hauseux} et F.~\textsc{Le~Roux},
-\og \foreignlanguage{english}{Polynomial Entropy of Brouwer Homeomorphisms}\fg{}, prépublication anglaise du travail
+\og \foreignlanguage{english}{Polynomial Entropy of \textsc{Brouwer} Homeomorphisms}\fg{}, prépublication anglaise du travail
 publié en 2019, arXiv:1712.01502.}
-\pubentry{2017}{L.~\textsc{Hauseux} et B.~\textsc{Blaszczyszyn},
+\pubentry{2017}{L.~\textsc{Hauseux} et B.~\textsc{B{\l}aszczyszyn},
 \textit{Un classificateur non supervisé utilisant les complexes simpliciaux
 (avec une application à la stylométrie)}, rapport de recherche, Inria Paris.}
 \pubentry{2016}{L.~\textsc{Hauseux}, sous la direction de F.~\textsc{Le~Roux},
-\textit{Entropie polynomiale et homéomorphismes de Brouwer}, mémoire de recherche.}
+\textit{Entropie polynomiale et homéomorphismes de \textup{\textsc{Brouwer}}}, mémoire de recherche.}
 
 \newpage
 
 % ==================== PAGE 3 ====================
 \pageheader{3}
 
-% La troisième page est moins chargée : bibliographie en corps légèrement plus grand.
-\renewcommand{\pubentry}[2]{%
-  \begin{tabularx}{\textwidth}{@{}L{1.60cm}@{\hspace{0.18cm}}Y@{}}
-    \small\textcolor{softgray}{#1} & \small #2
-  \end{tabularx}
-}
-
 \section*{Publications et travaux de philologie grecque}
 \pubentry{À paraître}{\textit{Les Thesmophories d'Aristophane (Thesmophoriazusae)},
-édition critique de 236~pages : texte grec, traduction, commentaire et apparats critique et
-des témoins ; ouvrage accepté, à paraître chez L'Harmattan.}
+édition critique de 236~pages : texte grec, traduction, commentaire, apparat critique et apparat
+des témoins ; ouvrage accepté chez L'Harmattan.}
 \pubentry{2023}{\og Philologie pratique : quelques exemples d'images chez Aristophane\fg{},
 \textit{Philologie de l'avenir}.}
 \pubentry{2022}{\og Aristophane et les proverbes\fg{}, \lychnos{},
-Connaissance hellénique, n\textsuperscript{o}~163, novembre 2022, article~1.}
+Connaissance hellénique, n\textsuperscript{o}~163, novembre 2022, art.~1.}
 \pubentry{2021}{\og Nouvelles notes sur les Thesmophories d'Aristophane\fg{},
-\lychnos{}, Connaissance hellénique, n\textsuperscript{o}~158, mars 2021, article~6.}
+\lychnos{}, Connaissance hellénique, n\textsuperscript{o}~158, mars 2021, art.~6.}
 \pubentry{2020}{\og Notes sur les Thesmophories d'Aristophane\fg{},
-\lychnos{}, Connaissance hellénique, n\textsuperscript{o}~157, novembre 2020, article~2.}
+\lychnos{}, Connaissance hellénique, n\textsuperscript{o}~157, novembre 2020, art.~2.}
 
 \section*{Philologie de la chanson et ethnomusicologie}
 \pubentry{2018--2020}{\textit{Analyse exhaustive d'un carnet de chants en circulation dans
 le milieu de la reconstitution Premier Empire}, étude, 10~p.}
-\pubentry{2018--2020}{\textit{Note sur la chanson La Pernette (Ne pleure pas Jeannette)},
+\pubentry{2018--2020}{\textit{Note sur la chanson \og La Pernette (Ne pleure pas Jeannette)\fg{}},
 étude de tradition orale, 6~p.}
 \pubentry{2018--2020}{\textit{Note sur le quatuor de Lucile : \og Où peut-on être mieux qu'au
 sein de sa famille ?\fg{}}, étude historique et musicale, 7~p.}
 \pubentry{2018--2020}{\textit{Note sur la chanson \og Veillons au salut de l'empire\fg{}},
 étude historique et musicale, 4~p.}
-\pubentry{2018--2020}{\textit{Note sur la chanson des \og Dragons de Noailles\fg{}},
+\pubentry{2018--2020}{\textit{Note sur la chanson \og Les Dragons de \textup{\textsc{Noailles}}\fg{}},
 étude de filiation historique, 7~p.}
 \pubentry{2018--2020}{\textit{Note sur la chanson de tradition orale \og Dans les prisons de
 Nantes\fg{}}, étude comparative des versions, 6~p.}
@@ -330,18 +328,10 @@ d'images multimodales ; transport optimal et suivi temporel d'instances.}
 \compactentry{R\&D informatique}{Conception algorithmique ; prototypage ; expérimentation ;
 passage à l'échelle ; assistance par IA générative ; \emph{workflow} GitHub Codespaces avec Claude Code et ChatGPT Codex ;
 développements parallèles ; audits croisés ; tests ; documentation.}
-\compactentry{Transfert}{Cadrage de cas d'usage, évaluation comparative, démonstrateur, communication
-scientifique et collaboration avec chercheurs, ingénieurs et partenaires industriels.}
-
 \section*{Prix et distinctions}
 \compactentry{2025}{Finaliste du prix Pierre~\textsc{Laffitte}.}
 \compactentry{2024}{Médaille d'excellence de l'Université Côte d'Azur.}
 \compactentry{2024}{2\textsuperscript{e}~prix, catégorie \emph{Graduate}, ACM Student
 Research Competition, SIGMETRICS.}
-
-\vfill
-\begin{center}
-  {\scriptsize\color{softgray}CV actualisé le 28~août~2026.}
-\end{center}
 
 \end{document}
