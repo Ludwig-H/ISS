@@ -33,6 +33,9 @@
 # Track the final PDF at the root
 !/Manuscrit_de_these.pdf
 
+# Track the compiled board meeting decks (one subfolder per meeting)
+!/Boards/*/*.pdf
+
 # Track the generated French CV delivered to Inria
 !/CV/CV_Louis_Hauseux_Inria_Startup_Studio_2026.pdf
 !/CV/Alban/CV_Alban_Hauseux_Inria_Startup_Studio_2026.pdf
