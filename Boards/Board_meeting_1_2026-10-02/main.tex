@@ -26,6 +26,10 @@
 
 \usetheme{inria}
 
+\usetikzlibrary{arrows.meta}
+% Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
+\newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
+
 % Logo Inria Startup Studio de la page de titre, à droite du bloc-marque RF-Inria
 \newlength{\isslogowidth}
 
@@ -173,6 +177,68 @@
             \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le benchmark de Marie \textsc{Aspro}. © Marie \textsc{Aspro} / Naval Group.}
         \end{column}
     \end{columns}
+\end{frame}
+
+% Slide 7 : Exemple 2 : Détection d'obstacles du véhicule autonome (Milla)
+% Schéma reproduit d'après la slide « Détection obstacles » présentée par Milla
+% aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
+\definecolor{milla-radar}{HTML}{8BAA4A}
+\definecolor{milla-lidar}{HTML}{8FD14F}
+\definecolor{milla-camera}{HTML}{D7B9A8}
+\definecolor{milla-violet}{HTML}{9F4DBE}
+\definecolor{milla-gris}{HTML}{8DA8BD}
+\begin{frame}{\large Exemple 2 : Détection d'obstacles d'un véhicule autonome (Milla)}
+    \centering
+    \begin{tikzpicture}[x=0.9cm, y=-0.76cm, font=\scriptsize, >={Latex[length=1.3mm]},
+        mbx/.style={draw=gray!70, fill=white, align=center, inner sep=1pt, text=black!75},
+        mcap/.style={draw=gray!60, align=center, inner sep=1pt, text=white},
+        ln/.style={draw=gray!70, ->, thin}]
+      % Capteurs
+      \bx[mcap]{radar}{2.84}{2.79}{2.9}{0.48}{milla-radar}{Radar};
+      \bx[mcap]{lidar}{7.45}{2.85}{2.85}{0.48}{milla-lidar}{Lidar};
+      \bx[mcap]{camera}{13.57}{2.84}{2.88}{0.46}{milla-camera}{Camera};
+      % Chaîne radar
+      \bx{radardet}{2.81}{4.17}{2.9}{1.28}{white}{Radar Object Detection};
+      % Chaîne lidar
+      \bx[mcap]{prefilt}{7.45}{3.63}{2.85}{0.42}{milla-violet}{Lidar pre-filtering};
+      \bx{cluster}{6.73}{4.47}{1.43}{0.9}{white}{\tiny 3D Object Detection Cluster};
+      \bx{ia}{8.24}{4.47}{1.43}{0.9}{white}{\tiny 3D Object Detection IA};
+      \bx[mcap]{pretrack}{7.42}{5.85}{3.05}{0.62}{milla-gris}{Pretracker\_Fusion};
+      \bx[mcap]{map}{7.42}{6.74}{3.05}{0.6}{milla-gris}{Map filter};
+      \bx[mcap]{mot}{7.42}{7.63}{3.05}{0.62}{milla-gris}{Multi object tracker};
+      \bx[mcap]{pred}{7.42}{8.55}{3.05}{0.6}{milla-gris}{Prediction map filtering};
+      \bx[mcap]{occ}{7.42}{9.43}{3.05}{0.6}{milla-gris}{Occupancy Grid Map};
+      % Chaîne caméra
+      \bx{person}{12.33}{3.77}{2.3}{0.98}{white}{2D Person Detection (Yolo)};
+      \bx{traffic}{14.75}{3.80}{2.16}{0.98}{white}{2D Traffic Light Detection (Yolo)};
+      \bx{frustum}{12.57}{5.06}{2.3}{0.98}{white}{frustrum};
+      % Légende
+      \bx[mcap]{sensor}{14.71}{9.43}{2.9}{0.42}{milla-violet}{Sensor dependant};
+      % Flèches
+      \draw[ln] (radar) -- (radardet);
+      \draw[ln] (radardet.south) -- (radardet.south |- mot.west) -- node[above, font=\tiny\itshape, text=black!70, pos=0.6] {Object velocity} (mot.west);
+      \draw[ln] (lidar) -- (prefilt);
+      \draw[ln] (cluster.north |- prefilt.south) -- (cluster);
+      \draw[ln] (ia.north |- prefilt.south) -- (ia);
+      \draw[ln] (cluster) -- (cluster |- pretrack.north);
+      \draw[ln] (ia) -- (ia |- pretrack.north);
+      \draw[ln] (pretrack) -- (map);
+      \draw[ln] (map) -- (mot);
+      \draw[ln] (mot) -- (pred);
+      \draw[ln] (pred) -- (occ);
+      \draw[ln] (prefilt.east) -- (10.15,3.63) -- (10.15,5.06) -- (frustum.west);
+      \draw[ln] (camera.south) -- (person.north);
+      \draw[ln] (camera.south) -- (traffic.north);
+      \draw[ln] (person) -- (frustum);
+      \draw[ln] (frustum.south) -- (frustum.south |- mot.east) -- (mot.east);
+      \draw[ln] ([yshift=-1.5pt]mot.east) -- ++(0.3,0) |- (pretrack.east);
+      % Partie concernée par Percolia
+      \draw[inria-rouge, very thick, rounded corners=2pt] ([shift={(-2pt,2pt)}]cluster.north west) rectangle ([shift={(2pt,-2pt)}]cluster.south east);
+      \node[text=inria-rouge, font=\scriptsize\bfseries, anchor=east, align=right] at ([xshift=-5pt]cluster.west) {Clustering\\Percolia};
+    \end{tikzpicture}
+
+    \vspace{0.1cm}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la slide « Détection obstacles » présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis. © Milla.}\par}
 \end{frame}
 
 % Slide 7 : Du benchmark à la licence logicielle
