@@ -6,11 +6,11 @@
 %                                  à Anne-Sophie Carrese, partner des fonds deep tech d'Elaia.
 % Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec trois slides en plus :
 %           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse),
-%           « Exemple 3 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
-%           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
+%           « Exemple 4 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
+%           « Exemple 5 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 %           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
-%           Slide « Panoptique 3D : l'état de l'art est un clustering » (ALPINE) reprise de la soutenance, après l'exemple 1.
+%           « Exemple 2 : Segmentation panoptique 3D (Valeo AI) », d'après la slide ALPINE de la soutenance.
 %           En fin de deck, quatre slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
 %           GPT/SAM, nuage artefact du capteur et figures reprises de la soutenance (dépôt Manuscrit-de-th-se,
 %           Soutenance/soutenance), projet décrit dans le dépôt E-HGP, dossier Zoltan/ (en conception).
@@ -240,42 +240,44 @@
     \end{columns}
 \end{frame}
 
-% Slide 8 : Panoptique 3D, l'état de l'art est un clustering (ALPINE)
-% Reprise de la soutenance de thèse (« Panoptique 3D : l'état de l'art est un clustering »), image imgs/Alpine.png.
+% Slide 8 : Exemple 2 : Segmentation panoptique 3D (Valeo AI)
+% D'après la slide de soutenance « Panoptique 3D : l'état de l'art est un clustering » (image imgs/Alpine.png).
 % Références : Sautier et al. 2025 (arXiv:2503.13203), Oh et al. 2025 (arXiv:2512.18991).
-\begin{frame}{\large Panoptique 3D : l'état de l'art \emph{est} un \emph{clustering}}
-    \begin{columns}[c, onlytextwidth]
-        \begin{column}{0.60\textwidth}
-            \small
-            Panoptique $=$ la \emph{classe} de chaque point $+$ son \emph{instance}
-
-            \vspace{0.15cm}
+% Lien avec la thèse (annexe « Colloques & formations ») : séminaire donné chez Valeo AI le 24 novembre 2025,
+% « Méthodes de clustering avec graphes. Ou "Comment hacker (H)DBSCAN ?" » ; contact avec Renaud Marlet,
+% Principal Scientist à Valeo.ai et coauteur d'ALPINE.
+\begin{frame}{\large Exemple 2 : Segmentation panoptique 3D (Valeo AI)}
+    \small
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \textbf{\bleu ALPINE, l'état de l'art sur LiDAR extérieur}
             \begin{itemize}
-                \setlength{\itemsep}{4pt}
-                \item L'instance s'apprenait de bout en bout, au prix d'annotations coûteuses
-                \item \textbf{ALPINE} Une bonne sémantique puis, classe par classe, un \textbf{\emph{clustering} classique} (graphe des $k$ plus proches voisins, seuil, \textbf{composantes connexes})
-                \item \textbf{Geo-4D} Garde le schéma en 4D et y ajoute une \textbf{association géométrique} entre trames, elle aussi sans apprentissage
+                \item \textbf{Panoptique} La classe de chaque point et son instance
+                \item \textbf{Avant} L'instance s'apprenait de bout en bout, au prix d'annotations coûteuses
+                \item \textbf{ALPINE} Une bonne sémantique puis, classe par classe, un \emph{clustering} classique sans apprentissage, repris en 4D par Geo-4D
             \end{itemize}
-
-            \vspace{0.15cm}
-            \begin{center}
-                \formulebox{\parbox{0.88\textwidth}{\centering\small
-                \textbf{État de l'art en segmentation panoptique sur LiDAR extérieur}}}
-            \end{center}
+            \textbf{\bleu Le verrou}
+            \begin{itemize}
+                \item Ce \emph{clustering} (graphe à rayon fixe, composantes connexes) peut fusionner des objets proches
+            \end{itemize}
         \end{column}
-        \begin{column}{0.38\textwidth}
-            \begin{center}
-                \includegraphics[height=0.54\textheight]{imgs/Alpine.png}
-            \end{center}
+
+        \begin{column}{0.40\textwidth}
+            \centering
+            \includegraphics[height=0.5\textheight]{imgs/Alpine.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Chaîne d'ALPINE, de la sémantique aux instances}
         \end{column}
     \end{columns}
 
     \vfill
+    \textbf{\orange Interlocuteur} \href{https://imagine.enpc.fr/~marletr/}{Renaud \textsc{Marlet}}, coauteur d'ALPINE, depuis le séminaire «~Comment \emph{hacker} (H)DBSCAN~?~» donné chez Valeo AI en novembre 2025
+
+    \vspace{0.1cm}
     {\tiny \textcolor{inria-2024-gris-bleu}{C.~\textsc{Sautier} \emph{et al.}, «~\href{https://arxiv.org/abs/2503.13203}{\foreignlanguage{english}{Is clustering enough for LiDAR instance segmentation? A state-of-the-art training-free baseline}}~» (ALPINE), 2025\\
     G.~\textsc{Oh} \emph{et al.}, «~\href{https://arxiv.org/abs/2512.18991}{\foreignlanguage{english}{Training-free global geometric association for 4D LiDAR panoptic segmentation}}~» (Geo-4D), 2025}\par}
 \end{frame}
 
-% Slide 9 : Exemple 2 : Détection d'obstacles du véhicule autonome (Milla)
+% Slide 9 : Exemple 3 : Détection d'obstacles du véhicule autonome (Milla)
 % Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par Milla
 % aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
 \definecolor{milla-radar}{HTML}{8BAA4A}
@@ -283,7 +285,7 @@
 \definecolor{milla-camera}{HTML}{D7B9A8}
 \definecolor{milla-violet}{HTML}{9F4DBE}
 \definecolor{milla-gris}{HTML}{8DA8BD}
-\begin{frame}{\large Exemple 2 : Détection d'obstacles d'un véhicule autonome (Milla)}
+\begin{frame}{\large Exemple 3 : Détection d'obstacles d'un véhicule autonome (Milla)}
     \centering
     \begin{tikzpicture}[x=0.9cm, y=-0.76cm, font=\scriptsize, >={Latex[length=1.3mm]},
         mbx/.style={draw=gray!70, fill=white, align=center, inner sep=1pt, text=black!75},
@@ -337,14 +339,14 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis\quad © Milla}\par}
 \end{frame}
 
-% Slide 10 : Exemple 3 : Jumeaux numériques urbains (Greehill)
+% Slide 10 : Exemple 4 : Jumeaux numériques urbains (Greehill)
 % Repris de l'exemple 2 de Presentation_Inria_Startup_Studio_2026-07-28 (comité ISS du 28 juillet 2026).
 % Étapes et images d'après la présentation de Greehill (documents/GreeHill.pdf, p. 25, « How do we extract
 % insights from the point cloud? ») : Semantic Segmentation et Wood-leaf separation, Instance Segmentation,
 % 3D representation. imgs/Greehill_Tree_Instances.png et imgs/Greehill_Tree_3D.png sont des copies de
 % Greehill_Wood_Leaf_After.png et de Greehill_Instance_Segmentation.png (présentation de juillet), renommées
 % d'après leur contenu.
-\begin{frame}{\large Exemple 3 : Jumeaux numériques urbains (\href{https://www.greehill.com/}{Greehill})}
+\begin{frame}{\large Exemple 4 : Jumeaux numériques urbains (\href{https://www.greehill.com/}{Greehill})}
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.52\textwidth}
             \textbf{\bleu Inventaire intelligent des arbres}
@@ -385,12 +387,12 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de \href{https://www.linkedin.com/in/gyula-szabolcs-fekete-6a029112/}{Gyula \textsc{Fekete}}, directeur technique de Greehill}\par}
 \end{frame}
 
-% Slide 11 : Exemple 4 : Rétroconception (reverse engineering)
+% Slide 11 : Exemple 5 : Rétroconception (reverse engineering)
 % Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
 % Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
 \definecolor{gaoli-peche}{HTML}{F8CBAD}
-\begin{frame}{\large Exemple 4 : Rétroconception (\emph{reverse engineering})}
+\begin{frame}{\large Exemple 5 : Rétroconception (\emph{reverse engineering})}
     La rétroconception consiste à recréer le modèle numérique d'un objet existant à partir de sa numérisation 3D
 
     \vfill
