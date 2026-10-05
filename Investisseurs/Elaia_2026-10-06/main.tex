@@ -6,11 +6,11 @@
 %                                  à Anne-Sophie Carrese, partner des fonds deep tech d'Elaia.
 % Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec trois slides en plus :
 %           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse),
-%           « Exemple 4 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
-%           « Exemple 5 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
+%           « Exemple 4 : arbres urbains (Greehill) » (repris de la présentation au comité ISS du 28 juillet 2026) et
+%           « Exemple 5 : rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 %           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
-%           « Exemple 2 : Segmentation panoptique 3D (Valeo AI) », d'après la slide ALPINE de la soutenance.
+%           « Exemple 2 : conduite autonome (Valeo AI) », d'après la slide ALPINE de la soutenance.
 %           En fin de deck, quatre slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
 %           GPT/SAM, nuage artefact du capteur et figures reprises de la soutenance (dépôt Manuscrit-de-th-se,
 %           Soutenance/soutenance), projet décrit dans le dépôt E-HGP, dossier Zoltan/ (en conception).
@@ -47,11 +47,6 @@
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
 
-% Encadré repris de la soutenance de thèse
-\newcommand{\formulebox}[1]{%
-  {\setlength{\fboxsep}{8pt}\setlength{\fboxrule}{0.8pt}%
-   \fcolorbox{inria-rouge}{gray!4}{#1}}}
-
 % Logos de la page de titre : Inria Startup Studio à droite du bloc-marque RF-Inria, Elaia sur la marge droite
 \newlength{\isslogowidth}
 \newlength{\elaialogowidth}
@@ -82,33 +77,32 @@
 
 % Slide 2 : Équipe fondatrice
 \begin{frame}{Équipe fondatrice}
-    \small
     \begin{columns}[T]
-        \begin{column}{0.53\textwidth}
+        \begin{column}{0.5\textwidth}
             \textbf{\bleu \href{https://www.linkedin.com/in/louis-hauseux-b80804434}{Louis Hauseux}}
             \begin{itemize}
                 \item Doctorat en informatique à Inria Sophia Antipolis
-                \item Normalien, double master en mathématiques fondamentales et appliquées
-                \item Conception et développement du noyau HGP-Clusterer
+                \item Normalien, double master de mathématiques
+                \item Concepteur de HGP-Clusterer
                 \item Médaille d'excellence de l'Université Côte d'Azur, 2\textsuperscript{e} prix ACM SIGMETRICS, finaliste du prix Pierre \textsc{Laffitte}
             \end{itemize}
         \end{column}
 
-        \begin{column}{0.43\textwidth}
+        \begin{column}{0.46\textwidth}
             \textbf{\bleu \href{https://www.linkedin.com/in/alban-hauseux-9577b6118/}{Alban Hauseux}}
             \begin{itemize}
-                \item Ingénieur IMT Atlantique, master en ingénierie financière à Paris-Dauphine
-                \item Expérience en finance quantitative, audit et contrôle de modèles
+                \item Ingénieur IMT Atlantique, master d'ingénierie financière à Paris-Dauphine
+                \item Finance quantitative, audit et contrôle de modèles
                 \item Industrialisation, intégration client et développement commercial
             \end{itemize}
         \end{column}
     \end{columns}
 
-    \begin{block}{\normalsize Conseil scientifique et réseau}
-        \begin{itemize}
-            \item \textbf{\href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}} (directrice de recherche Inria, équipe \textsc{Ayana})
-        \end{itemize}
-    \end{block}
+    \vspace{0.3cm}
+    \textbf{\bleu Conseil scientifique et réseau}
+    \begin{itemize}
+        \item \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}, directrice de recherche Inria, équipe \textsc{Ayana}
+    \end{itemize}
 \end{frame}
 
 % Slide 3 : Genèse du projet (frise chronologique)
@@ -127,143 +121,142 @@
       \draw[-{Latex[length=2.5mm]}, thick, inria-2024-gris-bleu] (0,0) -- (1,0);
       \foreach \j/\x in {1/0.12, 2/0.37, 3/0.62, 4/0.87} \node[jalon] (j\j) at (\x,0) {};
       \node[annee] at (j1) {2017};
-      \node[etape] at (j1) {\textbf{Origine}\\ Stage de master~2 de Louis à Inria Paris sur les complexes simpliciaux};
+      \node[etape] at (j1) {\textbf{Origine}\\ Stage de master~2 à Inria Paris sur les complexes simpliciaux};
       \node[annee] at (j2) {2023};
-      \node[etape] at (j2) {Ingénieur de recherche à Inria Sophia Antipolis\\ Estimation de densité, graphes géométriques, \emph{clustering}};
+      \node[etape] at (j2) {\textbf{Ingénieur de recherche}\\ Inria Sophia Antipolis\\ Graphes géométriques et \emph{clustering}};
       \node[annee] at (j3) {2023--2026};
-      \node[etape] at (j3) {Thèse avec \href{https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html}{K.~\textsc{Avrachenkov}} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}}\\ Conception d'HGP-Clusterer\\ Soutenance le 8~septembre~2026};
+      \node[etape] at (j3) {\textbf{Thèse}\\ Encadrée par \href{https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html}{K.~\textsc{Avrachenkov}} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}}\\ Conception de HGP-Clusterer\\ Soutenue le 8~septembre~2026};
       \node[annee, text=inria-2024-orange] at (j4) {2025--2026};
-      \node[etape] at (j4) {\textbf{Percolia}\\ Contacts avec Greehill et Exwayz, collaboration avec AI Detech\\ Starthèse, VivaTech et DeepTech Forum 2026\\ Entrée à l'Inria Startup Studio le 1\textsuperscript{er}~octobre~2026};
+      \node[etape] at (j4) {\textbf{Percolia}\\ Échanges avec Greehill, Exwayz et AI Detech\\ Starthèse, VivaTech, DeepTech Forum\\ Inria Startup Studio depuis octobre~2026};
     \end{tikzpicture}
 
     \vfill
     \raggedright
-    \textbf{\orange Fil conducteur}\\ Passer des interactions entre paires de points à des interactions d'ordre supérieur pour un \emph{clustering} robuste au bruit
+    \textbf{\orange Fil conducteur} Des paires de points aux interactions d'ordre supérieur, pour un \emph{clustering} robuste au bruit
 
     \vspace{0.2cm}
-    {\scriptsize \textbf{Publications}\quad EUSIPCO 2024, \emph{Complex Networks} 2025, \emph{ACM SIGMETRICS PER} 2025, \emph{Applied Network Science} 2026\par}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Publications EUSIPCO 2024, \emph{Complex Networks} 2025, \emph{ACM SIGMETRICS PER} 2025, \emph{Applied Network Science} 2026}\par}
 \end{frame}
 
 % Slide 4 : La limite des méthodes actuelles de clustering
 \begin{frame}{La limite des méthodes actuelles de \emph{clustering}}
     \textbf{\bleu Les standards DBSCAN et HDBSCAN}
     \begin{itemize}
-        \item Ces méthodes repèrent les zones denses puis relient les points deux à deux
-        \item Elles sont rapides, disponibles dans les bibliothèques standards et très largement utilisées
+        \item Repèrent les zones denses puis relient les points deux à deux
+        \item Rapides, disponibles partout et très utilisés
     \end{itemize}
 
     \vspace{0.25cm}
     \textbf{\bleu Le problème dans les scènes LiDAR réelles}
     \begin{itemize}
-        \item Le bruit peut former un pont entre deux structures distinctes
-        \item L'algorithme finit alors par fusionner des objets qui devraient rester séparés (effet de chaînage)
+        \item Le bruit crée des ponts entre objets voisins
+        \item Ces objets fusionnent alors (effet de chaînage)
     \end{itemize}
 
     \vspace{0.25cm}
-    \textbf{\orange Conséquence opérationnelle} Mauvaise segmentation, anomalies mal isolées, résultats difficiles à exploiter, corrections manuelles
+    \textbf{\orange Conséquence} Mauvaise segmentation, anomalies mal isolées, corrections manuelles
 \end{frame}
 
 % Slide 5 : La rupture technique de Percolia
 \begin{frame}{La rupture technique de Percolia}
-    \textbf{\bleu HGP-Clusterer généralise le principe du \emph{Single-Linkage}}
+    \textbf{\bleu HGP-Clusterer généralise le \emph{Single-Linkage}}
     \begin{itemize}
-        \item Passage à l'ordre supérieur avec des connexions évaluées à l'échelle d'un groupe et non plus entre deux points
-        \item L'algorithme construit une hiérarchie de groupes à plusieurs échelles et retarde les fusions provoquées par le bruit
+        \item Des connexions évaluées entre groupes de points, et non plus entre deux points
+        \item Une hiérarchie de groupes à toutes les échelles, qui retarde les fusions dues au bruit
     \end{itemize}
 
     \vspace{0.2cm}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{\orange Propriétés du moteur}
+            \textbf{\bleu Propriétés du moteur}
             \begin{itemize}
-                \item Sans entraînement ni données labellisées
-                \item Compatible avec des changements de capteur ou de domaine
+                \item Sans entraînement ni annotation
+                \item Compatible avec un changement de capteur ou de domaine
                 \item Conçu pour de grands nuages de points
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \textbf{\orange Spécificité industrielle}
+            \textbf{\bleu Spécificité industrielle}
             \begin{itemize}
-                \item Des volumes, dimensions physiques ou modèles 3D peuvent guider la sélection des groupes
-                \item Le même moteur s'insère dans un \emph{pipeline} existant sans réentraîner un modèle
+                \item Volumes, dimensions ou modèles 3D guident le choix des groupes
+                \item S'insère dans un \emph{pipeline} existant
             \end{itemize}
         \end{column}
     \end{columns}
 
     \vfill
-    {\scriptsize L.~\textsc{Hauseux}, K.~\textsc{Avrachenkov}, J.~\textsc{Zerubia}, «~Generalization of Single-Linkage with Higher-Order Interactions~», \emph{Applied Network Science}, 2026}
+    {\tiny \textcolor{inria-2024-gris-bleu}{L.~\textsc{Hauseux}, K.~\textsc{Avrachenkov}, J.~\textsc{Zerubia}, «~\href{https://doi.org/10.1007/s41109-025-00756-1}{\foreignlanguage{english}{Generalization of Single-Linkage with Higher-Order Interactions}}~», \emph{Applied Network Science}, 2026}\par}
 \end{frame}
 
 % Slide 6 : Le LiDAR comme premier marché
 \begin{frame}{Le LiDAR comme premier marché}
-    \begin{columns}[T,onlytextwidth]
-        \begin{column}{0.8\textwidth}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
             \textbf{\bleu Point d'entrée commercial}
             \begin{itemize}
-                \item Jumeaux numériques, suivi d'actifs et inspection industrielle
-                \item Entreprises qui disposent déjà de scanners et d'un \emph{pipeline} de traitement 3D
-                \item Scènes où le bruit et les objets imbriqués empêchent une séparation fiable
+                \item Jumeaux numériques, suivi d'actifs, inspection industrielle
+                \item Clients déjà équipés de scanners et d'un \emph{pipeline} 3D
+                \item Scènes bruitées aux objets imbriqués
             \end{itemize}
-
-            \vspace{0.2cm}
+        \end{column}
+        \begin{column}{0.48\textwidth}
             \textbf{\bleu Valeur mesurable}
             \begin{itemize}
                 \item Moins de fusions erronées
-                \item Moins de correction manuelle
-                \item Une étape de traitement plus facilement automatisable
+                \item Moins de corrections manuelles
+                \item Une étape plus facile à automatiser
             \end{itemize}
         \end{column}
     \end{columns}
 \end{frame}
 
-% Slide 7 : Exemple 1 : Détection d'anomalies de chantier (AI Detech)
-\begin{frame}{\large Exemple 1 : Détection d'anomalies de chantier (AI Detech)}
-    \small
+% Slide 7 : Exemple 1 : chantiers navals (AI Detech)
+\begin{frame}{Exemple 1 : chantiers navals (AI Detech)}
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.53\textwidth}
-            \textbf{\bleu Projet ISS de Marie Aspro avec Naval Group}
+            \textbf{\bleu Projet ISS avec Naval Group}
             \begin{itemize}
-                \item \textbf{Objectif} Détection automatique d'anomalies sur chantiers navals
-                \item \textbf{Données} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR} (chantier réel -- synthétique pour des besoins de confidentialité)
-                \item \textbf{Collaboration Percolia} Isoler les anomalies qui ne font pas partie du modèle théorique (casques de chantier, tuteurs, bâches)
+                \item \textbf{Objectif} Détecter les anomalies de chantier
+                \item \textbf{Données} Modèle 3D attendu face aux captations LiDAR (synthétiques par confidentialité)
+                \item \textbf{Percolia} Isoler ce qui n'est pas dans le modèle (casques, tuteurs, bâches)
             \end{itemize}
             \textbf{\bleu Le verrou}
             \begin{itemize}
-                \item Un \emph{clustering} assez fin, guidé par le modèle 3D, pour isoler proprement les anomalies
+                \item Un \emph{clustering} fin, guidé par le modèle 3D
             \end{itemize}
         \end{column}
 
         \begin{column}{0.43\textwidth}
             \centering
             \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
-            \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le \emph{benchmark} de Marie \textsc{Aspro}\\ © Marie \textsc{Aspro} et Naval Group}
+            \tiny \textcolor{inria-2024-gris-bleu}{Modèle 3D en rouge, anomalies en orange, vert et bleu\\ © Marie \textsc{Aspro} et Naval Group}
         \end{column}
     \end{columns}
 
     \vfill
-    \textbf{\orange Interlocutrice} \href{https://www.linkedin.com/in/m-aspro/}{Marie \textsc{Aspro}}, rencontrée à la Fête des start-ups de l'ISS en novembre 2025
+    \textbf{\orange Interlocutrice} \href{https://www.linkedin.com/in/m-aspro/}{Marie \textsc{Aspro}}, depuis la Fête des start-ups de l'ISS en novembre 2025
 \end{frame}
 
-% Slide 8 : Exemple 2 : Segmentation panoptique 3D (Valeo AI)
+% Slide 8 : Exemple 2 : conduite autonome (Valeo AI)
 % D'après la slide de soutenance « Panoptique 3D : l'état de l'art est un clustering » (image imgs/Alpine.png).
 % Références : Sautier et al. 2025 (arXiv:2503.13203), Oh et al. 2025 (arXiv:2512.18991).
 % Lien avec la thèse (annexe « Colloques & formations ») : séminaire donné chez Valeo AI le 24 novembre 2025,
 % « Méthodes de clustering avec graphes. Ou "Comment hacker (H)DBSCAN ?" » ; contact avec Renaud Marlet,
 % Principal Scientist à Valeo.ai et coauteur d'ALPINE.
-\begin{frame}{\large Exemple 2 : Segmentation panoptique 3D (Valeo AI)}
+\begin{frame}{Exemple 2 : conduite autonome (Valeo AI)}
     \small
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.56\textwidth}
             \textbf{\bleu ALPINE, l'état de l'art sur LiDAR extérieur}
             \begin{itemize}
                 \item \textbf{Panoptique} La classe de chaque point et son instance
-                \item \textbf{Avant} L'instance s'apprenait de bout en bout, au prix d'annotations coûteuses
-                \item \textbf{ALPINE} Une bonne sémantique puis, classe par classe, un \emph{clustering} classique sans apprentissage, repris en 4D par Geo-4D
+                \item \textbf{Avant} Des instances apprises, au prix d'annotations coûteuses
+                \item \textbf{ALPINE} La sémantique puis un \emph{clustering} classique sans apprentissage, repris en 4D par Geo-4D
             \end{itemize}
             \textbf{\bleu Le verrou}
             \begin{itemize}
-                \item Ce \emph{clustering} (graphe à rayon fixe, composantes connexes) peut fusionner des objets proches
+                \item Un graphe à rayon fixe, qui peut fusionner des objets proches
             \end{itemize}
         \end{column}
 
@@ -282,7 +275,7 @@
     G.~\textsc{Oh} \emph{et al.}, «~\href{https://arxiv.org/abs/2512.18991}{\foreignlanguage{english}{Training-free global geometric association for 4D LiDAR panoptic segmentation}}~» (Geo-4D), 2025}\par}
 \end{frame}
 
-% Slide 9 : Exemple 3 : Détection d'obstacles du véhicule autonome (Milla)
+% Slide 9 : Exemple 3 : navette autonome (Milla), détection d'obstacles
 % Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par Milla
 % aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
 \definecolor{milla-radar}{HTML}{8BAA4A}
@@ -290,7 +283,7 @@
 \definecolor{milla-camera}{HTML}{D7B9A8}
 \definecolor{milla-violet}{HTML}{9F4DBE}
 \definecolor{milla-gris}{HTML}{8DA8BD}
-\begin{frame}{\large Exemple 3 : Détection d'obstacles d'un véhicule autonome (Milla)}
+\begin{frame}{Exemple 3 : navette autonome (Milla)}
     \centering
     \begin{tikzpicture}[x=0.9cm, y=-0.76cm, font=\scriptsize, >={Latex[length=1.3mm]},
         mbx/.style={draw=gray!70, fill=white, align=center, inner sep=1pt, text=black!75},
@@ -341,23 +334,23 @@
     \end{tikzpicture}
 
     \vspace{0.1cm}
-    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis\quad © Milla}\par}
+    {\tiny \textcolor{inria-2024-gris-bleu}{D'après la présentation de \href{https://www.milla-group.com/}{Milla} aux Scientific Days (Sophia Antipolis, septembre 2026)\quad © Milla}\par}
 \end{frame}
 
-% Slide 10 : Exemple 4 : Jumeaux numériques urbains (Greehill)
+% Slide 10 : Exemple 4 : arbres urbains (Greehill)
 % Repris de l'exemple 2 de Presentation_Inria_Startup_Studio_2026-07-28 (comité ISS du 28 juillet 2026).
 % Étapes et images d'après la présentation de Greehill (documents/GreeHill.pdf, p. 25, « How do we extract
 % insights from the point cloud? ») : Semantic Segmentation et Wood-leaf separation, Instance Segmentation,
 % 3D representation. imgs/Greehill_Tree_Instances.png et imgs/Greehill_Tree_3D.png sont des copies de
 % Greehill_Wood_Leaf_After.png et de Greehill_Instance_Segmentation.png (présentation de juillet), renommées
 % d'après leur contenu.
-\begin{frame}{\large Exemple 4 : Jumeaux numériques urbains (\href{https://www.greehill.com/}{Greehill})}
+\begin{frame}{Exemple 4 : arbres urbains (\href{https://www.greehill.com/}{Greehill})}
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.52\textwidth}
             \textbf{\bleu Inventaire intelligent des arbres}
             \begin{itemize}
-                \item Jumeaux numériques d'arbres urbains par LiDAR mobile
-                \item Santé des arbres, chutes de branches, obstacles (lignes électriques, voies)
+                \item Jumeaux numériques par LiDAR mobile
+                \item Santé, chutes de branches, obstacles proches
             \end{itemize}
         \end{column}
         \begin{column}{0.44\textwidth}
@@ -367,9 +360,6 @@
             \end{itemize}
         \end{column}
     \end{columns}
-
-    \vspace{0.1cm}
-    \textbf{\orange Interlocuteur} \href{https://www.linkedin.com/in/benjamin-berta/}{Benjamin \textsc{Berta}}, échanges en 2025 sur leur brique DBSCAN
 
     \vfill
     \centering
@@ -389,16 +379,20 @@
     \end{tikzpicture}
 
     \vfill
+    \raggedright
+    \textbf{\orange Interlocuteur} \href{https://www.linkedin.com/in/benjamin-berta/}{Benjamin \textsc{Berta}}, échanges en 2025 sur leur brique DBSCAN
+
+    \vspace{0.1cm}
     {\tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de \href{https://www.linkedin.com/in/gyula-szabolcs-fekete-6a029112/}{Gyula \textsc{Fekete}} (Greehill), rencontré à l'école d'été SSRM 2024 à Veszprém}\par}
 \end{frame}
 
-% Slide 11 : Exemple 5 : Rétroconception (reverse engineering)
+% Slide 11 : Exemple 5 : rétroconception (reverse engineering)
 % Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
 % Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
 \definecolor{gaoli-peche}{HTML}{F8CBAD}
-\begin{frame}{\large Exemple 5 : Rétroconception (\emph{reverse engineering})}
-    La rétroconception consiste à recréer le modèle numérique d'un objet existant à partir de sa numérisation 3D
+\begin{frame}{Exemple 5 : rétroconception}
+    La rétroconception (\emph{reverse engineering}) recrée le modèle numérique d'un objet existant à partir de sa numérisation 3D
 
     \vfill
     \centering
@@ -475,7 +469,7 @@
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
-            \textbf{\orange 1. Intégration}
+            \textbf{\bleu 1. Intégration}
             \begin{itemize}
                 \item \emph{Benchmark}, intégration puis licence ou API
                 \item \href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}
@@ -485,7 +479,7 @@
         \begin{column}{0.31\textwidth}
             \textbf{\bleu 2. Constructeurs LiDAR}
             \begin{itemize}
-                \item Notre moteur intégré au logiciel livré avec leurs scanners
+                \item Notre moteur dans le logiciel de leurs scanners
                 \item \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}
             \end{itemize}
         \end{column}
@@ -493,8 +487,8 @@
         \begin{column}{0.31\textwidth}
             \textbf{\bleu 3. Verticale complète}
             \begin{itemize}
-                \item Percolia propose elle-même le service complet, de la donnée brute au résultat final
-                \item \textbf{Limite possible} Les constructeurs préfèrent en général garder la technologie en interne
+                \item Le service complet, de la donnée brute au résultat
+                \item \textbf{Limite} Les constructeurs gardent souvent la technologie en interne
             \end{itemize}
         \end{column}
     \end{columns}
@@ -510,7 +504,7 @@
 
     \vfill
     \begin{itemize}
-        \item Un modèle de fondation est entraîné une seule fois sur des données massives sans annotation, puis réutilisé pour quantité de tâches
+        \item Entraîné une fois sur des données massives sans annotation, puis réutilisé partout
         \item Le texte a GPT, l'image a SAM, la 3D cherche encore le sien
     \end{itemize}
 \end{frame}
@@ -518,26 +512,26 @@
 % Slide 15 : Le nuage est un artefact du capteur
 % Reprise de la soutenance de thèse (« La raison de fond : le nuage est un artefact du capteur »),
 % figure figs/verrou_portee.tex.
-\begin{frame}{Le nuage est un \emph{artefact du capteur}}
+\begin{frame}{Le nuage est un artefact du capteur}
     \begin{center}
-        \resizebox{0.72\textwidth}{!}{\input{figs/verrou_portee}}
+        \resizebox{0.66\textwidth}{!}{\input{figs/verrou_portee}}
     \end{center}
 
-    \vspace{0.15cm}
-    \small
+    \vfill
     \begin{itemize}
-        \setlength{\itemsep}{5pt}
-        \item La \textbf{densité} décroît avec la portée, s'y ajoutent les nappes de balayage et les \textbf{occultations}
-        \item Un modèle point par point apprend donc \emph{en même temps} la géométrie, le capteur, la densité, l'occultation et la sémantique
-        \item \textbf{Hypothèse} C'est \emph{une} raison centrale de la difficulté
+        \item Densité décroissante avec la portée, nappes de balayage, occultations
+        \item Un modèle point par point apprend à la fois la géométrie, le capteur, la densité, l'occultation et la sémantique
     \end{itemize}
+
+    \vfill
+    \textbf{\orange Hypothèse} C'est \emph{une} raison centrale de la difficulté
 \end{frame}
 
 % Slide 16 : Sémantique et instances, inverser l'ordre
 % Dans les exemples (Greehill) comme dans l'état de l'art ALPINE (Sautier et al., Valeo AI, 2025, présenté
 % à la soutenance) : sémantique apprise d'abord, puis clustering classe par classe pour les instances.
 \begin{frame}{Sémantique et instances : inverser l'ordre}
-    Dans les exemples vus, comme dans l'état de l'art (ALPINE de Valeo AI), la sémantique vient d'abord et le \emph{clustering} sépare ensuite les objets
+    Dans nos exemples comme dans l'état de l'art, la sémantique vient d'abord et le \emph{clustering} ensuite
 
     \vfill
     \centering
@@ -565,11 +559,11 @@
     \textbf{\orange Hypothèse} Le \emph{clustering} hiérarchique HGP est assez bon pour aider la sémantique
 \end{frame}
 
-% Slide 17 : Un modèle de fondation guidé par la hiérarchie HGP
+% Slide 17 : Un modèle de fondation guidé par HGP
 % Figure figs/hierarchie_surfaces.tex de la soutenance (« Remplacer les points par une hiérarchie de
 % polyèdres ? »). Projet HGP-FM : dépôt E-HGP, dossier Zoltan/, collaboration Inria et université de Szeged
 % (Louis Hauseux, Zoltán Kató, Josiane Zerubia), en conception, aucun résultat revendiqué.
-\begin{frame}{\large Un modèle de fondation guidé par la hiérarchie HGP}
+\begin{frame}{Un modèle de fondation guidé par HGP}
     \begin{columns}[c,onlytextwidth]
         \begin{column}{0.44\textwidth}
             \centering
@@ -578,9 +572,9 @@
         \begin{column}{0.52\textwidth}
             \begin{itemize}
                 \setlength{\itemsep}{6pt}
-                \item Les unités du modèle ne sont plus les points du capteur mais les polyèdres de la hiérarchie HGP
-                \item Même recette que pour le texte, le polyèdre comme alphabet et la hiérarchie comme grammaire
-                \item Hypothèse à tester, projet en conception avec \href{https://www.inf.u-szeged.hu/~kato/}{Zoltán \textsc{Kató}} (université de Szeged) et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}
+                \item Les polyèdres de la hiérarchie HGP remplacent les points du capteur
+                \item Même recette que le texte, le polyèdre pour alphabet, la hiérarchie pour grammaire
+                \item Projet en conception avec \href{https://www.inf.u-szeged.hu/~kato/}{Zoltán \textsc{Kató}} (université de Szeged) et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}
             \end{itemize}
         \end{column}
     \end{columns}
