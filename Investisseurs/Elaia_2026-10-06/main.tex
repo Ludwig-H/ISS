@@ -4,11 +4,12 @@
 %                Louis Hauseux, Alban Hauseux.
 % Demande d'Arturo Ancira García : présenter la genèse du projet, la technologie et les applications
 %                                  à Anne-Sophie Carrese, partner des fonds deep tech d'Elaia.
-% Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec une slide
-%           « Genèse du projet » en plus (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse).
+% Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec deux slides en plus :
+%           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse) et
+%           « Exemple 3 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277).
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
-%                  Josiane Zerubia : sa page personnelle Inria (version française).
+%                  Josiane Zerubia et Konstantin Avrachenkov : leur page personnelle Inria.
 % Logo Elaia : imgs/Elaia-logo.svg, logo officiel du site elaia.com (icône et wordmark, couleur
 %              « green-dark » #143334 du site), rendu en imgs/Elaia-logo.png.
 % Thème : thème Inria du Board meeting #1 (dossier theme/ copié à l'identique).
@@ -114,7 +115,7 @@
       \node[annee] at (j2) {2023};
       \node[etape] at (j2) {Ingénieur de recherche à Inria Sophia Antipolis : estimation de densité, graphes géométriques, clustering.};
       \node[annee] at (j3) {2023--2026};
-      \node[etape] at (j3) {Thèse avec K.~\textsc{Avrachenkov} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}} : conception de HGP-Clusterer. Soutenance le 8~septembre~2026.};
+      \node[etape] at (j3) {Thèse avec \href{https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html}{K.~\textsc{Avrachenkov}} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}} : conception de HGP-Clusterer. Soutenance le 8~septembre~2026.};
       \node[annee, text=inria-2024-orange] at (j4) {2025--2026};
       \node[etape] at (j4) {\textbf{Percolia :} premiers contacts industriels (Greehill, Exwayz), collaboration avec AI Detech. Entrée à l'Inria Startup Studio le 1\textsuperscript{er}~octobre~2026.};
     \end{tikzpicture}
@@ -287,7 +288,45 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la slide « Détection obstacles » présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis. © Milla.}\par}
 \end{frame}
 
-% Slide 9 : Du benchmark à la licence logicielle
+% Slide 9 : Exemple 3 : Rétroconception (reverse engineering)
+% Schéma reproduit d'après la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
+% Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
+% Applications of 3D Point Clouds », p. 277 ; descriptions des étapes d'après le texte de la même page.
+\definecolor{gaoli-peche}{HTML}{F8CBAD}
+\begin{frame}{\large Exemple 3 : Rétroconception (\emph{reverse engineering})}
+    \textbf{\bleu Principe :} numériser un objet physique, reconstruire son modèle numérique à partir du nuage de points, puis le fabriquer de nouveau.
+
+    \vspace{0.6cm}
+    \centering
+    \begin{tikzpicture}[x=0.99\textwidth, y=1cm, >={Latex[length=1.6mm]},
+        etape/.style={fill=gaoli-peche, rounded corners=3pt, minimum width=0.2\textwidth, minimum height=0.8cm,
+            font=\footnotesize, text=black},
+        descr/.style={anchor=north, yshift=-0.45cm, text width=0.215\textwidth, align=center, inner sep=0pt,
+            font=\scriptsize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
+      \node[etape] (collecte) at (0.12,0) {Data Collection};
+      \node[etape] (traitement) at (0.37,0) {Data Processing};
+      \node[etape] (modele) at (0.62,0) {Model Refactoring};
+      \node[etape] (production) at (0.87,0) {Rapid Production};
+      \draw[->, thick] (collecte) -- (traitement);
+      \draw[->, thick] (traitement) -- (modele);
+      \draw[->, thick] (modele) -- (production);
+      % Cadre pointillé de la figure d'origine
+      \draw[gray!60, dashed, rounded corners=4pt] ([shift={(-6pt,6pt)}]collecte.north west) rectangle ([shift={(6pt,-6pt)}]production.south east);
+      % Étapes décrites p. 277
+      \node[descr] at (collecte.south) {Numérisation 3D de l'objet : nuage de points brut, qui peut contenir un peu de bruit et des trous.};
+      \node[descr] at (traitement.south) {Amélioration du nuage brut par des algorithmes de traitement (débruitage, simplification\dots).};
+      \node[descr] at (modele.south) {Conversion du nuage traité en représentation surfacique numérique du produit.};
+      \node[descr] at (production.south) {Fabrication du produit d'après son modèle numérique : tours numériques, impression 3D.};
+      % Partie concernée par Percolia
+      \draw[inria-rouge, very thick, rounded corners=2pt] ([shift={(-3pt,3pt)}]traitement.north west) rectangle ([shift={(3pt,-3pt)}]traitement.south east);
+      \node[text=inria-rouge, font=\scriptsize\bfseries, anchor=south] at ([yshift=9pt]traitement.north) {Clustering Percolia};
+    \end{tikzpicture}
+
+    \vfill
+    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la Fig. 10.1 de W. \textsc{Gao} et G. \textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p. 277.}\par}
+\end{frame}
+
+% Slide 10 : Du benchmark à la licence logicielle
 \begin{frame}{Du benchmark à la licence logicielle}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -315,7 +354,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 10 : Trois voies d'accès au marché
+% Slide 11 : Trois voies d'accès au marché
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
@@ -344,7 +383,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 11 : Au-delà du LiDAR
+% Slide 12 : Au-delà du LiDAR
 \begin{frame}{Au-delà du LiDAR}
     \textbf{\bleu Un moteur de clustering pour plusieurs familles de données}
     \begin{itemize}
