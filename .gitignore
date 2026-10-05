@@ -36,6 +36,9 @@
 # Track the compiled board meeting decks (one subfolder per meeting)
 !/Boards/*/*.pdf
 
+# Track the compiled investor meeting decks (one subfolder per meeting)
+!/Investisseurs/*/*.pdf
+
 # Track the generated French CV delivered to Inria
 !/CV/CV_Louis_Hauseux_Inria_Startup_Studio_2026.pdf
 !/CV/Alban/CV_Alban_Hauseux_Inria_Startup_Studio_2026.pdf

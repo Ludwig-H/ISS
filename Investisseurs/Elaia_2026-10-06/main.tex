@@ -1,0 +1,362 @@
+% !TEX program = xelatex
+% Rencontre Elaia -- mardi 6 octobre 2026
+% Participants : Anne-Sophie Carrese (Managing Partner, Elaia), Arturo Ancira García (Associate, Elaia),
+%                Louis Hauseux, Alban Hauseux.
+% Demande d'Arturo Ancira García : présenter la genèse du projet, la technologie et les applications
+%                                  à Anne-Sophie Carrese, partner des fonds deep tech d'Elaia.
+% Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec une slide
+%           « Genèse du projet » en plus (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse).
+% Liens LinkedIn : ceux de la fiche équipe de chaque participant sur elaia.com.
+% Logo Elaia : imgs/Elaia-logo.svg, logo officiel du site elaia.com (icône et wordmark, couleur
+%              « green-dark » #143334 du site), rendu en imgs/Elaia-logo.png.
+% Thème : thème Inria du Board meeting #1 (dossier theme/ copié à l'identique).
+% Compilation : make (XeLaTeX, comme le Board meeting #1).
+\documentclass[A4,svgnames,10pt,aspectratio=169,usepdftitle=false]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+
+\title[Percolia]{\huge \textbf{PERCOLIA}}
+\subtitle{\large Structuration automatique de données}
+\date[6 octobre 2026]{Mardi 6 octobre 2026}
+\author[L. \& A. \textsc{Hauseux}]{%
+   Louis \textsc{Hauseux} \& Alban \textsc{Hauseux} \\[4pt]
+   \footnotesize Rencontre avec \href{https://www.linkedin.com/in/anne-sophie-carrese-566990a6/}{Anne-Sophie \textsc{Carrese}} et \href{https://www.linkedin.com/in/ancirarturo/}{Arturo \textsc{Ancira García}} (Elaia)%
+}
+\institute{Inria Startup Studio}
+
+% XeTeX ne fournit pas la primitive \draftmode (pdfTeX/LuaTeX), testée par le fond de page du thème
+\ifdefined\draftmode\else\chardef\draftmode=0 \fi
+
+\usetheme{inria}
+
+\usetikzlibrary{arrows.meta}
+% Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
+\newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
+
+% Logos de la page de titre : Inria Startup Studio à droite du bloc-marque RF-Inria, Elaia sur la marge droite
+\newlength{\isslogowidth}
+\newlength{\elaialogowidth}
+
+\hypersetup{
+   allcolors   = rouge_inria,
+   pdfauthor   = {Louis Hauseux \& Alban Hauseux},
+   pdftitle    = {PERCOLIA - Rencontre Elaia},
+   pdfsubject  = {Présentation de Percolia à Elaia (Anne-Sophie Carrese, Arturo Ancira García) - 6 octobre 2026},
+   pdfkeywords = {Percolia, clustering, LiDAR, Inria, HGP-Clusterer, Elaia, deep tech}
+}
+
+\begin{document}
+
+% Slide 1 : Page de titre
+\begin{frame}
+    \titlepage
+    \setlength{\isslogowidth}{0.2\textwidth}%
+    \begin{textblock*}{\isslogowidth}(\hmargin+\titlelogowidth+3.5mm,\vmargin-\titlelogovoffset)
+        \includegraphics[width=\isslogowidth]{imgs/Inria-StartupStudio-logo.png}
+    \end{textblock*}
+    % Logo Elaia (342 x 94) centré verticalement sur le logo Inria Startup Studio (480 x 202)
+    \setlength{\elaialogowidth}{0.17\textwidth}%
+    \begin{textblock*}{\elaialogowidth}[1,0.5](\paperwidth-\hmargin,\vmargin-\titlelogovoffset+\isslogowidth*101/480)
+        \href{https://elaia.com/}{\includegraphics[width=\elaialogowidth]{imgs/Elaia-logo.png}}
+    \end{textblock*}
+\end{frame}
+
+% Slide 2 : Équipe fondatrice
+\begin{frame}{Équipe fondatrice}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Louis Hauseux}
+            \begin{itemize}
+                \item Doctorat en informatique à Inria Sophia Antipolis.
+                \item Normalien, double master en mathématiques fondamentales et appliquées.
+                \item Conception et développement du noyau HGP-Clusterer.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \textbf{\bleu Alban Hauseux}
+            \begin{itemize}
+                \item Ingénieur IMT Atlantique, master en ingénierie financière à Paris-Dauphine.
+                \item Expérience en finance quantitative, audit et contrôle de modèles.
+                \item Industrialisation, intégration client et développement commercial.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \begin{block}{\normalsize Conseil scientifique \& réseau}
+        \begin{itemize}
+            \item \textbf{Josiane \textsc{Zerubia}} (Directrice de Recherche Inria, équipe \textsc{Ayana}).
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+% Slide 3 : Genèse du projet (frise chronologique)
+% Sources : CV de Louis (stage de M2 2016-2017 à Inria Paris sur les complexes simpliciaux ; ingénieur de
+% recherche Inria févr.-sept. 2023 ; thèse oct. 2023-sept. 2026 ; projet Percolia 2025-2026 ; publications
+% « socle de Percolia »), dossier de candidature ISS (« l'origine remonte à un stage de Master 2 fait à l'Inria
+% de Paris » ; contacts Greehill et Exwayz ; collaboration avec le projet ISS de Marie Aspro), jury du manuscrit
+% de thèse (direction K. Avrachenkov, co-encadrement J. Zerubia).
+\begin{frame}{Genèse du projet}
+    \centering
+    \begin{tikzpicture}[x=0.99\textwidth, y=1cm,
+        jalon/.style={circle, fill=inria-rouge, inner sep=0pt, minimum size=2.4mm},
+        annee/.style={anchor=south, yshift=2.5mm, font=\small\bfseries, text=inria-2024-bleu-azur},
+        etape/.style={anchor=north, yshift=-3.5mm, text width=0.235\textwidth, align=center, inner sep=0pt,
+            font=\footnotesize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
+      \draw[-{Latex[length=2.5mm]}, thick, inria-2024-gris-bleu] (0,0) -- (1,0);
+      \foreach \j/\x in {1/0.12, 2/0.37, 3/0.62, 4/0.87} \node[jalon] (j\j) at (\x,0) {};
+      \node[annee] at (j1) {2017};
+      \node[etape] at (j1) {\textbf{Origine :} stage de master~2 de Louis à Inria Paris, sur les complexes simpliciaux.};
+      \node[annee] at (j2) {2023};
+      \node[etape] at (j2) {Ingénieur de recherche à Inria Sophia Antipolis : estimation de densité, graphes géométriques, clustering.};
+      \node[annee] at (j3) {2023--2026};
+      \node[etape] at (j3) {Thèse avec K.~\textsc{Avrachenkov} et J.~\textsc{Zerubia} : conception de HGP-Clusterer. Soutenance le 8~septembre~2026.};
+      \node[annee, text=inria-2024-orange] at (j4) {2025--2026};
+      \node[etape] at (j4) {\textbf{Percolia :} premiers contacts industriels (Greehill, Exwayz), collaboration avec AI Detech. Entrée à l'Inria Startup Studio le 1\textsuperscript{er}~octobre~2026.};
+    \end{tikzpicture}
+
+    \vfill
+    \raggedright
+    \textbf{\orange Fil conducteur :} passer des interactions entre paires de points à des interactions d'ordre supérieur, pour un clustering robuste au bruit.
+
+    \vspace{0.2cm}
+    {\scriptsize Publications : EUSIPCO 2024 ; \emph{Complex Networks} 2025 ; ACM SIGMETRICS PER 2025 ; \emph{Applied Network Science} 2026.\par}
+\end{frame}
+
+% Slide 4 : La limite des méthodes actuelles de clustering
+\begin{frame}{La limite des méthodes actuelles de clustering}
+    \textbf{\bleu Le standard : DBSCAN et HDBSCAN}
+    \begin{itemize}
+        \item Ces méthodes repèrent les zones denses, puis relient les points deux à deux.
+        \item Elles sont rapides, disponibles dans les bibliothèques standards et très largement utilisées.
+    \end{itemize}
+
+    \vspace{0.25cm}
+    \textbf{\bleu Le problème dans les scènes LiDAR réelles}
+    \begin{itemize}
+        \item Le bruit peut former un pont entre deux structures distinctes.
+        \item L'algorithme finit alors par fusionner des objets qui devraient rester séparés. C'est l'effet de chaînage.
+    \end{itemize}
+
+    \vspace{0.25cm}
+    \textbf{\orange Conséquence opérationnelle :} Mauvaise segmentation, anomalies mal isolées, résultats difficiles à exploiter, corrections manuelles.
+\end{frame}
+
+% Slide 5 : La rupture technique de Percolia
+\begin{frame}{La rupture technique de Percolia}
+    \textbf{\bleu HGP-Clusterer généralise le principe du Single-Linkage}
+    \begin{itemize}
+        \item Passage à l'ordre supérieur : les connexions ne sont plus évaluées entre deux points, mais à l'échelle d'un groupe.
+        \item L'algorithme construit une hiérarchie de groupes à plusieurs échelles et retarde les fusions provoquées par le bruit.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{\orange Propriétés du moteur}
+            \begin{itemize}
+                \item Sans entraînement ni données labellisées.
+                \item Compatible avec des changements de capteur ou de domaine.
+                \item Conçu pour de grands nuages de points.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \textbf{\orange Spécificité industrielle}
+            \begin{itemize}
+                \item Des volumes, dimensions physiques ou modèles 3D peuvent guider la sélection des groupes.
+                \item Le même moteur s'insère dans un pipeline existant sans réentraîner un modèle.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vfill
+    {\scriptsize L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, «~Generalization of Single-Linkage with higher-order interactions~», \emph{Applied Network Science}, 2026.}
+\end{frame}
+
+% Slide 6 : Le LiDAR comme premier marché
+\begin{frame}{Le LiDAR comme premier marché}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.8\textwidth}
+            \textbf{\bleu Point d'entrée commercial}
+            \begin{itemize}
+                \item Jumeaux numériques, suivi d'actifs et inspection industrielle.
+                \item Entreprises qui disposent déjà de scanners et d'un pipeline de traitement 3D.
+                \item Scènes où le bruit et les objets imbriqués empêchent une séparation fiable.
+            \end{itemize}
+
+            \vspace{0.2cm}
+            \textbf{\bleu Valeur mesurable}
+            \begin{itemize}
+                \item Moins de fusions erronées.
+                \item Moins de correction manuelle.
+                \item Une étape de traitement plus facilement automatisable.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 7 : Exemple 1 : Détection d'anomalies de chantier (AIDetech)
+\begin{frame}{\large Exemple 1 : Détection d'anomalies de chantier (AIDetech)}
+    \small
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.53\textwidth}
+            \textbf{\bleu Projet ISS de Marie Aspro avec Naval Group}
+            \begin{itemize}
+                \item \textbf{Objectif :} Détection automatique d'anomalies sur chantiers navals.
+                \item \textbf{Données :} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR} (chantier réel -- synthétique pour des besoins de confidentialité).
+                \item \textbf{Collaboration Percolia :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex. : casques de chantier, tuteurs, bâches).
+            \end{itemize}
+            \textbf{\bleu Le verrou}
+            \begin{itemize}
+                \item Nécessite un clustering assez fin prenant en compte le modèle 3D pour isoler proprement les anomalies de chantier.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.43\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
+            \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le benchmark de Marie \textsc{Aspro}. © Marie \textsc{Aspro} / Naval Group.}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 8 : Exemple 2 : Détection d'obstacles du véhicule autonome (Milla)
+% Schéma reproduit d'après la slide « Détection obstacles » présentée par Milla
+% aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
+\definecolor{milla-radar}{HTML}{8BAA4A}
+\definecolor{milla-lidar}{HTML}{8FD14F}
+\definecolor{milla-camera}{HTML}{D7B9A8}
+\definecolor{milla-violet}{HTML}{9F4DBE}
+\definecolor{milla-gris}{HTML}{8DA8BD}
+\begin{frame}{\large Exemple 2 : Détection d'obstacles d'un véhicule autonome (Milla)}
+    \centering
+    \begin{tikzpicture}[x=0.9cm, y=-0.76cm, font=\scriptsize, >={Latex[length=1.3mm]},
+        mbx/.style={draw=gray!70, fill=white, align=center, inner sep=1pt, text=black!75},
+        mcap/.style={draw=gray!60, align=center, inner sep=1pt, text=white},
+        ln/.style={draw=gray!70, ->, thin}]
+      % Capteurs
+      \bx[mcap]{radar}{2.84}{2.79}{2.9}{0.48}{milla-radar}{Radar};
+      \bx[mcap]{lidar}{7.45}{2.85}{2.85}{0.48}{milla-lidar}{Lidar};
+      \bx[mcap]{camera}{13.57}{2.84}{2.88}{0.46}{milla-camera}{Camera};
+      % Chaîne radar
+      \bx{radardet}{2.81}{4.17}{2.9}{1.28}{white}{Radar Object Detection};
+      % Chaîne lidar
+      \bx[mcap]{prefilt}{7.45}{3.63}{2.85}{0.42}{milla-violet}{Lidar pre-filtering};
+      \bx{cluster}{6.73}{4.47}{1.43}{0.9}{white}{\tiny 3D Object Detection Cluster};
+      \bx{ia}{8.24}{4.47}{1.43}{0.9}{white}{\tiny 3D Object Detection IA};
+      \bx[mcap]{pretrack}{7.42}{5.85}{3.05}{0.62}{milla-gris}{Pretracker\_Fusion};
+      \bx[mcap]{map}{7.42}{6.74}{3.05}{0.6}{milla-gris}{Map filter};
+      \bx[mcap]{mot}{7.42}{7.63}{3.05}{0.62}{milla-gris}{Multi object tracker};
+      \bx[mcap]{pred}{7.42}{8.55}{3.05}{0.6}{milla-gris}{Prediction map filtering};
+      \bx[mcap]{occ}{7.42}{9.43}{3.05}{0.6}{milla-gris}{Occupancy Grid Map};
+      % Chaîne caméra
+      \bx{person}{12.33}{3.77}{2.3}{0.98}{white}{2D Person Detection (Yolo)};
+      \bx{traffic}{14.75}{3.80}{2.16}{0.98}{white}{2D Traffic Light Detection (Yolo)};
+      \bx{frustum}{12.57}{5.06}{2.3}{0.98}{white}{frustrum};
+      % Légende
+      \bx[mcap]{sensor}{14.71}{9.43}{2.9}{0.42}{milla-violet}{Sensor dependant};
+      % Flèches
+      \draw[ln] (radar) -- (radardet);
+      \draw[ln] (radardet.south) -- (radardet.south |- mot.west) -- node[above, font=\tiny\itshape, text=black!70, pos=0.6] {Object velocity} (mot.west);
+      \draw[ln] (lidar) -- (prefilt);
+      \draw[ln] (cluster.north |- prefilt.south) -- (cluster);
+      \draw[ln] (ia.north |- prefilt.south) -- (ia);
+      \draw[ln] (cluster) -- (cluster |- pretrack.north);
+      \draw[ln] (ia) -- (ia |- pretrack.north);
+      \draw[ln] (pretrack) -- (map);
+      \draw[ln] (map) -- (mot);
+      \draw[ln] (mot) -- (pred);
+      \draw[ln] (pred) -- (occ);
+      \draw[ln] (prefilt.east) -- (10.15,3.63) -- (10.15,5.06) -- (frustum.west);
+      \draw[ln] (camera.south) -- (person.north);
+      \draw[ln] (camera.south) -- (traffic.north);
+      \draw[ln] (person) -- (frustum);
+      \draw[ln] (frustum.south) -- (frustum.south |- mot.east) -- (mot.east);
+      \draw[ln] ([yshift=-1.5pt]mot.east) -- ++(0.3,0) |- (pretrack.east);
+      % Partie concernée par Percolia
+      \draw[inria-rouge, very thick, rounded corners=2pt] ([shift={(-2pt,2pt)}]cluster.north west) rectangle ([shift={(2pt,-2pt)}]cluster.south east);
+      \node[text=inria-rouge, font=\scriptsize\bfseries, anchor=east, align=right] at ([xshift=-5pt]cluster.west) {Clustering\\Percolia};
+    \end{tikzpicture}
+
+    \vspace{0.1cm}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la slide « Détection obstacles » présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis. © Milla.}\par}
+\end{frame}
+
+% Slide 9 : Du benchmark à la licence logicielle
+\begin{frame}{Du benchmark à la licence logicielle}
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
+            \textbf{\bleu 1. Benchmark ou pilote}
+            \begin{itemize}
+                \item Le client fournit quelques scans représentatifs.
+                \item Percolia compare la qualité des groupes et le temps de calcul au pipeline existant.
+            \end{itemize}
+
+            \vspace{0.25cm}
+            \textbf{\bleu 2. Intégration}
+            \begin{itemize}
+                \item Connexion aux formats du client.
+                \item Configuration des contraintes géométriques ou du modèle 3D.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.46\textwidth}
+            \textbf{\orange 3. Revenu logiciel récurrent}
+            \begin{itemize}
+                \item Licence annuelle installée chez le client.
+                \item API lorsque le cloud convient aux données et aux contraintes de sécurité.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 10 : Trois voies d'accès au marché
+\begin{frame}{Trois voies d'accès au marché}
+    \begin{columns}[T]
+        \begin{column}{0.31\textwidth}
+            \textbf{\orange 1. Intégration}
+            \begin{itemize}
+                \item Benchmark, intégration, puis licence ou API.
+                \item \href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.31\textwidth}
+            \textbf{\bleu 2. Constructeurs LiDAR}
+            \begin{itemize}
+                \item Notre moteur intégré au logiciel livré avec leurs scanners.
+                \item \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.31\textwidth}
+            \textbf{\bleu 3. Verticale complète}
+            \begin{itemize}
+                \item Percolia propose elle-même le service complet, de la donnée brute au résultat final.
+                \item Limite possible : les constructeurs préfèrent en général garder la techno' en interne.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 11 : Au-delà du LiDAR
+\begin{frame}{Au-delà du LiDAR}
+    \textbf{\bleu Un moteur de clustering pour plusieurs familles de données}
+    \begin{itemize}
+        \item Le coeur mathématique travaille sur des données euclidiennes.
+        \item Le nuage de points LiDAR constitue le premier produit commercial, avec un besoin industriel concret et observable.
+    \end{itemize}
+
+    \vspace{0.25cm}
+    \textbf{\orange Applications possibles}
+    \begin{itemize}
+        \item Nuages de points et autres données euclidiennes.
+        \item Vecteurs, embeddings et matrices de distances.
+        \item Détection de communautés dans des graphes.
+    \end{itemize}
+\end{frame}
+
+\end{document}
