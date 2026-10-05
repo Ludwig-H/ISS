@@ -7,7 +7,8 @@
 % Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec trois slides en plus :
 %           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse),
 %           « Exemple 3 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
-%           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277).
+%           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
+%           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
 %                  Josiane Zerubia et Konstantin Avrachenkov : leur page personnelle Inria.
@@ -22,6 +23,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{graphicx}
+\usepackage{booktabs}
 
 \title[Percolia]{\huge \textbf{PERCOLIA}}
 \subtitle{\large Structuration automatique de données}
@@ -370,7 +372,44 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma adapté de la fig.~10.1 de W.~\textsc{Gao} et G.~\textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p.~277}\par}
 \end{frame}
 
-% Slide 11 : Du benchmark à la licence logicielle
+% Slide 11 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
+% Vidéos du dépôt E-HGP (dossier Zoltan/), copiées dans videos/ ; chaque nom de scène ouvre sa vidéo.
+% Meilleur IoU de chaque objet, relevé sur la dernière image de chaque vidéo (objet retrouvé si un groupe
+% de la hiérarchie le recouvre à plus de 50 %) :
+%   08/002852, k = 5 : HGP A 0,77 B 0,88 ; HDBSCAN A 0,68 B 0,44
+%   08/001170, k = 5 : HGP A 0,93 B 0,72 ; HDBSCAN A 0,71 B 0,44
+%   06/000800, k = 10 : HGP A 0,99 B 0,74 C 0,74 ; HDBSCAN A 0,97 B 0,44 C 0,50
+%   00/002140, k = 10 : HGP A 0,94 B 0,87 ; HDBSCAN A 0,76 B 0,49
+\begin{frame}{HGP-Clusterer face à HDBSCAN}
+    Mêmes scènes LiDAR réelles et même paramètre $k$ pour les deux hiérarchies
+
+    \vfill
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+        & & \multicolumn{2}{c}{Objets retrouvés} \\
+        \cmidrule(l){3-4}
+        Scène (SemanticKITTI) & $k$ & \textbf{HGP} & HDBSCAN \\
+        \midrule
+        \href{run:videos/08_002852_deux_velos_6_51_sans_sol_k5_clair.mp4}{Deux vélos (08/002852)} & 5 & \textbf{2 sur 2} & 1 sur 2 \\
+        \href{run:videos/08_001170_deux_velos_43_57_sans_sol_k5_clair.mp4}{Deux vélos (08/001170)} & 5 & \textbf{2 sur 2} & 1 sur 2 \\
+        \href{run:videos/06_000800_pieton_deux_velos_2_8_12_sans_sol_k10_clair.mp4}{Un piéton et deux vélos (06/000800)} & 10 & \textbf{3 sur 3} & 1 sur 3 \\
+        \href{run:videos/00_002140_pieton_velo_1_6_instances_k10_clair.mp4}{Un piéton et un vélo (00/002140)} & 10 & \textbf{2 sur 2} & 1 sur 2 \\
+        \midrule
+        Total & & \textbf{9 sur 9} & 4 sur 9 \\
+        \bottomrule
+    \end{tabular}
+
+    \vfill
+    \raggedright
+    \textbf{\orange À retenir} HDBSCAN réunit les objets proches avant de les avoir isolés, HGP retrouve chaque objet dans sa hiérarchie
+
+    \vspace{0.15cm}
+    {\scriptsize Objet retrouvé quand un groupe de la hiérarchie le recouvre à plus de 50~\%\par}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Données SemanticKITTI (CC BY-NC-SA), HDBSCAN de scikit-learn}\par}
+\end{frame}
+
+% Slide 12 : Du benchmark à la licence logicielle
 \begin{frame}{Du \emph{benchmark} à la licence logicielle}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -398,7 +437,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 12 : Trois voies d'accès au marché
+% Slide 13 : Trois voies d'accès au marché
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
@@ -427,7 +466,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 13 : Au-delà du LiDAR
+% Slide 14 : Au-delà du LiDAR
 \begin{frame}{Au-delà du LiDAR}
     \textbf{\bleu Un moteur de \emph{clustering} pour plusieurs familles de données}
     \begin{itemize}
