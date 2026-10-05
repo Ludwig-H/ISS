@@ -4,12 +4,15 @@
 %                Louis Hauseux, Alban Hauseux.
 % Demande d'Arturo Ancira García : présenter la genèse du projet, la technologie et les applications
 %                                  à Anne-Sophie Carrese, partner des fonds deep tech d'Elaia.
-% Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec deux slides en plus :
-%           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse) et
-%           « Exemple 3 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277).
+% Contenu : transposition du Board meeting #1 (Boards/Board_meeting_1_2026-10-02), avec trois slides en plus :
+%           « Genèse du projet » (sources : CV de Louis, dossier de candidature ISS, manuscrit de thèse),
+%           « Exemple 3 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
+%           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277).
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
 %                  Josiane Zerubia et Konstantin Avrachenkov : leur page personnelle Inria.
+%                  Gyula Fekete (Greehill) : l'URL fournie par Louis ; Benjamin Berta (Greehill) : celle de la
+%                  présentation au comité ISS du 28 juillet 2026.
 % Logo Elaia : imgs/Elaia-logo.svg, logo officiel du site elaia.com (icône et wordmark, couleur
 %              « green-dark » #143334 du site), rendu en imgs/Elaia-logo.png.
 % Thème : thème Inria du Board meeting #1 (dossier theme/ copié à l'identique).
@@ -34,7 +37,7 @@
 
 \usetheme{inria}
 
-\usetikzlibrary{arrows.meta}
+\usetikzlibrary{arrows.meta, positioning}
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
 
@@ -288,12 +291,62 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis\quad © Milla}\par}
 \end{frame}
 
-% Slide 9 : Exemple 3 : Rétroconception (reverse engineering)
+% Slide 9 : Exemple 3 : Jumeaux numériques urbains (Greehill)
+% Repris de l'exemple 2 de Presentation_Inria_Startup_Studio_2026-07-28 (comité ISS du 28 juillet 2026).
+% Étapes et images d'après la présentation de Greehill (documents/GreeHill.pdf, p. 25, « How do we extract
+% insights from the point cloud? ») : Semantic Segmentation et Wood-leaf separation, Instance Segmentation,
+% 3D representation. imgs/Greehill_Tree_Instances.png et imgs/Greehill_Tree_3D.png sont des copies de
+% Greehill_Wood_Leaf_After.png et de Greehill_Instance_Segmentation.png (présentation de juillet), renommées
+% d'après leur contenu.
+\begin{frame}{\large Exemple 3 : Jumeaux numériques urbains (\href{https://www.greehill.com/}{Greehill})}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \textbf{\bleu Inventaire intelligent des arbres}
+            \begin{itemize}
+                \item Jumeaux numériques d'arbres urbains par LiDAR mobile
+                \item Santé des arbres, chutes de branches, obstacles (lignes électriques, voies)
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \textbf{\bleu Le verrou}
+            \begin{itemize}
+                \item Le feuillage se mêle aux lignes électriques, aux panneaux et aux façades
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.1cm}
+    \textbf{\orange Interlocuteur} \href{https://www.linkedin.com/in/benjamin-berta/}{Benjamin \textsc{Berta}}, responsable \emph{machine learning} de Greehill
+
+    \vfill
+    \centering
+    \begin{tikzpicture}[>={Latex[length=1.6mm]}, image/.style={inner sep=0pt},
+        legende/.style={anchor=north, yshift=-1.5mm, align=center, font=\scriptsize}]
+      \node[image] (semantique) {\includegraphics[height=1.6cm]{imgs/Greehill_Semantic_Segmentation.png}};
+      \node[image, right=1.2cm of semantique] (instances) {\includegraphics[height=1.6cm]{imgs/Greehill_Tree_Instances.png}};
+      \node[image, right=1.2cm of instances] (arbre) {\includegraphics[height=1.6cm]{imgs/Greehill_Tree_3D.png}};
+      \draw[->, thick] (semantique) -- (instances);
+      \draw[->, thick] (instances) -- (arbre);
+      \node[legende] at (semantique.south) {Segmentation sémantique\\ (sol, bois, feuilles)};
+      \node[legende] at (instances.south) {Séparation\\ des arbres};
+      \node[legende] at (arbre.south) {Modèle 3D\\ de chaque arbre};
+      % Partie concernée par Percolia
+      \draw[inria-rouge, very thick, rounded corners=2pt] ([shift={(-3pt,3pt)}]instances.north west) rectangle ([shift={(3pt,-3pt)}]instances.south east);
+      \node[text=inria-rouge, font=\small\bfseries, anchor=south] at ([yshift=5pt]instances.north) {\emph{Clustering} Percolia};
+    \end{tikzpicture}
+
+    \vfill
+    {\tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de \href{https://www.linkedin.com/in/gyula-szabolcs-fekete-6a029112/}{Gyula \textsc{Fekete}}, directeur technique de Greehill}\par}
+\end{frame}
+
+% Slide 10 : Exemple 4 : Rétroconception (reverse engineering)
 % Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
 % Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
 \definecolor{gaoli-peche}{HTML}{F8CBAD}
-\begin{frame}{\large Exemple 3 : Rétroconception (\emph{reverse engineering})}
+\begin{frame}{\large Exemple 4 : Rétroconception (\emph{reverse engineering})}
+    La rétroconception consiste à recréer le modèle numérique d'un objet existant à partir de sa numérisation 3D
+
     \vfill
     \centering
     \begin{tikzpicture}[x=0.99\textwidth, y=1cm, >={Latex[length=1.6mm]},
@@ -317,7 +370,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma adapté de la fig.~10.1 de W.~\textsc{Gao} et G.~\textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p.~277}\par}
 \end{frame}
 
-% Slide 10 : Du benchmark à la licence logicielle
+% Slide 11 : Du benchmark à la licence logicielle
 \begin{frame}{Du \emph{benchmark} à la licence logicielle}
     \begin{columns}[T]
         \begin{column}{0.5\textwidth}
@@ -345,7 +398,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 11 : Trois voies d'accès au marché
+% Slide 12 : Trois voies d'accès au marché
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
@@ -374,7 +427,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 12 : Au-delà du LiDAR
+% Slide 13 : Au-delà du LiDAR
 \begin{frame}{Au-delà du LiDAR}
     \textbf{\bleu Un moteur de \emph{clustering} pour plusieurs familles de données}
     \begin{itemize}
