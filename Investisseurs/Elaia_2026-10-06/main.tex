@@ -10,6 +10,7 @@
 %           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 %           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
+%           Slide « Panoptique 3D : l'état de l'art est un clustering » (ALPINE) reprise de la soutenance, après l'exemple 1.
 %           En fin de deck, quatre slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
 %           GPT/SAM, nuage artefact du capteur et figures reprises de la soutenance (dépôt Manuscrit-de-th-se,
 %           Soutenance/soutenance), projet décrit dans le dépôt E-HGP, dossier Zoltan/ (en conception).
@@ -25,7 +26,7 @@
 \documentclass[A4,svgnames,10pt,aspectratio=169,usepdftitle=false]{beamer}
 
 \usepackage[utf8]{inputenc}
-\usepackage[french]{babel}
+\usepackage[english,french]{babel}
 \usepackage{graphicx}
 
 \title[Percolia]{\huge \textbf{PERCOLIA}}
@@ -45,6 +46,11 @@
 \usetikzlibrary{arrows.meta, positioning, calc}
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
+
+% Encadré repris de la soutenance de thèse
+\newcommand{\formulebox}[1]{%
+  {\setlength{\fboxsep}{8pt}\setlength{\fboxrule}{0.8pt}%
+   \fcolorbox{inria-rouge}{gray!4}{#1}}}
 
 % Logos de la page de titre : Inria Startup Studio à droite du bloc-marque RF-Inria, Elaia sur la marge droite
 \newlength{\isslogowidth}
@@ -234,7 +240,42 @@
     \end{columns}
 \end{frame}
 
-% Slide 8 : Exemple 2 : Détection d'obstacles du véhicule autonome (Milla)
+% Slide 8 : Panoptique 3D, l'état de l'art est un clustering (ALPINE)
+% Reprise de la soutenance de thèse (« Panoptique 3D : l'état de l'art est un clustering »), image imgs/Alpine.png.
+% Références : Sautier et al. 2025 (arXiv:2503.13203), Oh et al. 2025 (arXiv:2512.18991).
+\begin{frame}{\large Panoptique 3D : l'état de l'art \emph{est} un \emph{clustering}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.60\textwidth}
+            \small
+            Panoptique $=$ la \emph{classe} de chaque point $+$ son \emph{instance}
+
+            \vspace{0.15cm}
+            \begin{itemize}
+                \setlength{\itemsep}{4pt}
+                \item L'instance s'apprenait de bout en bout, au prix d'annotations coûteuses
+                \item \textbf{ALPINE} Une bonne sémantique puis, classe par classe, un \textbf{\emph{clustering} classique} (graphe des $k$ plus proches voisins, seuil, \textbf{composantes connexes})
+                \item \textbf{Geo-4D} Garde le schéma en 4D et y ajoute une \textbf{association géométrique} entre trames, elle aussi sans apprentissage
+            \end{itemize}
+
+            \vspace{0.15cm}
+            \begin{center}
+                \formulebox{\parbox{0.88\textwidth}{\centering\small
+                \textbf{État de l'art en segmentation panoptique sur LiDAR extérieur}}}
+            \end{center}
+        \end{column}
+        \begin{column}{0.38\textwidth}
+            \begin{center}
+                \includegraphics[height=0.54\textheight]{imgs/Alpine.png}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \vfill
+    {\tiny \textcolor{inria-2024-gris-bleu}{C.~\textsc{Sautier} \emph{et al.}, «~\href{https://arxiv.org/abs/2503.13203}{\foreignlanguage{english}{Is clustering enough for LiDAR instance segmentation? A state-of-the-art training-free baseline}}~» (ALPINE), 2025\\
+    G.~\textsc{Oh} \emph{et al.}, «~\href{https://arxiv.org/abs/2512.18991}{\foreignlanguage{english}{Training-free global geometric association for 4D LiDAR panoptic segmentation}}~» (Geo-4D), 2025}\par}
+\end{frame}
+
+% Slide 9 : Exemple 2 : Détection d'obstacles du véhicule autonome (Milla)
 % Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par Milla
 % aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
 \definecolor{milla-radar}{HTML}{8BAA4A}
@@ -296,7 +337,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis\quad © Milla}\par}
 \end{frame}
 
-% Slide 9 : Exemple 3 : Jumeaux numériques urbains (Greehill)
+% Slide 10 : Exemple 3 : Jumeaux numériques urbains (Greehill)
 % Repris de l'exemple 2 de Presentation_Inria_Startup_Studio_2026-07-28 (comité ISS du 28 juillet 2026).
 % Étapes et images d'après la présentation de Greehill (documents/GreeHill.pdf, p. 25, « How do we extract
 % insights from the point cloud? ») : Semantic Segmentation et Wood-leaf separation, Instance Segmentation,
@@ -344,7 +385,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de \href{https://www.linkedin.com/in/gyula-szabolcs-fekete-6a029112/}{Gyula \textsc{Fekete}}, directeur technique de Greehill}\par}
 \end{frame}
 
-% Slide 10 : Exemple 4 : Rétroconception (reverse engineering)
+% Slide 11 : Exemple 4 : Rétroconception (reverse engineering)
 % Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
 % Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
@@ -375,7 +416,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma adapté de la fig.~10.1 de W.~\textsc{Gao} et G.~\textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p.~277}\par}
 \end{frame}
 
-% Slide 11 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
+% Slide 12 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
 % Vidéos du dépôt E-HGP (dossier Zoltan/), copiées dans videos/ ; chaque scène ouvre sa vidéo.
 % Ce que montrent les vidéos (même k pour les deux hiérarchies, r = rayon des boules d'ordre k, et pour
 % HDBSCAN distance d'atteignabilité mutuelle / 2) :
@@ -423,7 +464,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Données SemanticKITTI, HDBSCAN de scikit-learn}\par}
 \end{frame}
 
-% Slide 12 : Trois voies d'accès au marché
+% Slide 13 : Trois voies d'accès au marché
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
@@ -452,7 +493,7 @@
     \end{columns}
 \end{frame}
 
-% Slide 13 : Vers un modèle de fondation pour la 3D
+% Slide 14 : Vers un modèle de fondation pour la 3D
 % Analogie de la soutenance de thèse du 8 septembre 2026 (« Les modèles de fondation : le texte, et
 % désormais l'image » et « Vers un modèle de fondation pour la 3D ? »), figure figs/alphabet_fondation.tex.
 \begin{frame}{Vers un modèle de fondation pour la 3D ?}
@@ -467,7 +508,7 @@
     \end{itemize}
 \end{frame}
 
-% Slide 14 : Le nuage est un artefact du capteur
+% Slide 15 : Le nuage est un artefact du capteur
 % Reprise de la soutenance de thèse (« La raison de fond : le nuage est un artefact du capteur »),
 % figure figs/verrou_portee.tex.
 \begin{frame}{Le nuage est un \emph{artefact du capteur}}
@@ -485,7 +526,7 @@
     \end{itemize}
 \end{frame}
 
-% Slide 15 : Sémantique et instances, inverser l'ordre
+% Slide 16 : Sémantique et instances, inverser l'ordre
 % Dans les exemples (Greehill) comme dans l'état de l'art ALPINE (Sautier et al., Valeo AI, 2025, présenté
 % à la soutenance) : sémantique apprise d'abord, puis clustering classe par classe pour les instances.
 \begin{frame}{Sémantique et instances : inverser l'ordre}
@@ -517,7 +558,7 @@
     \textbf{\orange Hypothèse} Le \emph{clustering} hiérarchique HGP est assez bon pour aider la sémantique
 \end{frame}
 
-% Slide 16 : Un modèle de fondation guidé par la hiérarchie HGP
+% Slide 17 : Un modèle de fondation guidé par la hiérarchie HGP
 % Figure figs/hierarchie_surfaces.tex de la soutenance (« Remplacer les points par une hiérarchie de
 % polyèdres ? »). Projet HGP-FM : dépôt E-HGP, dossier Zoltan/, collaboration Inria et université de Szeged
 % (Louis Hauseux, Zoltán Kató, Josiane Zerubia), en conception, aucun résultat revendiqué.
