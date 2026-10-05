@@ -9,7 +9,8 @@
 %           « Exemple 4 : arbres urbains (Greehill) » (repris de la présentation au comité ISS du 28 juillet 2026) et
 %           « Exemple 5 : rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
-%           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
+%           Slide « Au-delà du LiDAR » du Board meeting #1 retirée ; « Du benchmark à la licence logicielle » et
+%           « Trois voies d'accès au marché » fusionnées en « Deux voies d'accès au marché », placée avant les exemples.
 %           « Exemple 2 : conduite autonome (Valeo AI) », d'après la slide ALPINE de la soutenance.
 %           En fin de deck, quatre slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
 %           GPT/SAM, nuage artefact du capteur et figures reprises de la soutenance (dépôt Manuscrit-de-th-se,
@@ -43,7 +44,7 @@
 
 \usetheme{inria}
 
-\usetikzlibrary{arrows.meta, positioning, calc}
+\usetikzlibrary{arrows.meta, positioning, calc, decorations.pathreplacing}
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
 
@@ -211,7 +212,50 @@
     \end{columns}
 \end{frame}
 
-% Slide 7 : Exemple 1 : chantiers navals (AI Detech)
+% Slide 7 : Deux voies d'accès au marché
+% D'après « Du benchmark à la licence logicielle » et « Trois voies d'accès au marché » du Board meeting #1,
+% regroupées en deux axes : roadmap produit (benchmark, intégration, licence ou API, puis logiciel des
+% constructeurs LiDAR) et verticale complète.
+\begin{frame}{Deux voies d'accès au marché}
+    \textbf{\bleu \emph{Roadmap} produit}
+
+    \vspace{0.2cm}
+    \centering
+    \begin{tikzpicture}[x=0.99\textwidth, y=1cm,
+        jalon/.style={circle, fill=inria-rouge, inner sep=0pt, minimum size=2.4mm},
+        etape/.style={anchor=south, yshift=2.5mm, text width=0.235\textwidth, align=center, inner sep=0pt,
+            font=\small\bfseries, text=inria-2024-bleu-azur, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000},
+            execute at end node={\strut}},
+        detail/.style={anchor=north, yshift=-3.5mm, text width=0.235\textwidth, align=center, inner sep=0pt,
+            font=\footnotesize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
+        accolade/.style={decorate, decoration={brace, mirror, amplitude=4pt}, gray},
+        noms/.style={below=6pt, align=center, font=\small, text=black}]
+      \draw[-{Latex[length=2.5mm]}, thick, inria-2024-gris-bleu] (0,0) -- (1,0);
+      \foreach \j/\x in {1/0.12, 2/0.37, 3/0.62, 4/0.87} \node[jalon] (j\j) at (\x,0) {};
+      \node[etape] at (j1) {\emph{Benchmark} ou pilote};
+      \node[detail] at (j1) {Sur quelques scans du client};
+      \node[etape] at (j2) {Intégration};
+      \node[detail] at (j2) {Dans le \emph{pipeline} du client};
+      \node[etape] at (j3) {Licence ou API};
+      \node[detail] at (j3) {Revenu logiciel récurrent};
+      \node[etape] at (j4) {Constructeurs LiDAR};
+      \node[detail] at (j4) {Notre moteur dans le logiciel de leurs scanners};
+      \draw[accolade] (0.005,-1.25) -- (0.735,-1.25)
+        node[midway, noms] {\href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}};
+      \draw[accolade] (0.755,-1.25) -- (0.985,-1.25)
+        node[midway, noms] {\href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}};
+    \end{tikzpicture}
+
+    \vfill
+    \raggedright
+    \textbf{\bleu Verticale complète}
+    \begin{itemize}
+        \item Le service complet, de la donnée brute au résultat
+        \item \textbf{Limite} Les constructeurs gardent souvent la technologie en interne
+    \end{itemize}
+\end{frame}
+
+% Slide 8 : Exemple 1 : chantiers navals (AI Detech)
 \begin{frame}{Exemple 1 : chantiers navals (AI Detech)}
     \begin{columns}[T,onlytextwidth]
         \begin{column}{0.53\textwidth}
@@ -238,7 +282,7 @@
     \textbf{\orange Interlocutrice} \href{https://www.linkedin.com/in/m-aspro/}{Marie \textsc{Aspro}}, depuis la Fête des start-ups de l'ISS en novembre 2025
 \end{frame}
 
-% Slide 8 : Exemple 2 : conduite autonome (Valeo AI)
+% Slide 9 : Exemple 2 : conduite autonome (Valeo AI)
 % D'après la slide de soutenance « Panoptique 3D : l'état de l'art est un clustering » (image imgs/Alpine.png).
 % Références : Sautier et al. 2025 (arXiv:2503.13203), Oh et al. 2025 (arXiv:2512.18991).
 % Lien avec la thèse (annexe « Colloques & formations ») : séminaire donné chez Valeo AI le 24 novembre 2025,
@@ -275,7 +319,7 @@
     G.~\textsc{Oh} \emph{et al.}, «~\href{https://arxiv.org/abs/2512.18991}{\foreignlanguage{english}{Training-free global geometric association for 4D LiDAR panoptic segmentation}}~» (Geo-4D), 2025}\par}
 \end{frame}
 
-% Slide 9 : Exemple 3 : navette autonome (Milla), détection d'obstacles
+% Slide 10 : Exemple 3 : navette autonome (Milla), détection d'obstacles
 % Schéma reproduit d'après la diapositive «~Détection obstacles~» présentée par Milla
 % aux Scientific Days (25 septembre 2026, Pôle Alpha, Sophia Antipolis).
 \definecolor{milla-radar}{HTML}{8BAA4A}
@@ -337,7 +381,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{D'après la présentation de \href{https://www.milla-group.com/}{Milla} aux Scientific Days (Sophia Antipolis, septembre 2026)\quad © Milla}\par}
 \end{frame}
 
-% Slide 10 : Exemple 4 : arbres urbains (Greehill)
+% Slide 11 : Exemple 4 : arbres urbains (Greehill)
 % Repris de l'exemple 2 de Presentation_Inria_Startup_Studio_2026-07-28 (comité ISS du 28 juillet 2026).
 % Étapes et images d'après la présentation de Greehill (documents/GreeHill.pdf, p. 25, « How do we extract
 % insights from the point cloud? ») : Semantic Segmentation et Wood-leaf separation, Instance Segmentation,
@@ -386,7 +430,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Images extraites d'une présentation de \href{https://www.linkedin.com/in/gyula-szabolcs-fekete-6a029112/}{Gyula \textsc{Fekete}} (Greehill), rencontré à l'école d'été SSRM 2024 à Veszprém}\par}
 \end{frame}
 
-% Slide 11 : Exemple 5 : rétroconception (reverse engineering)
+% Slide 12 : Exemple 5 : rétroconception (reverse engineering)
 % Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
 % Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
@@ -417,7 +461,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Schéma adapté de la fig.~10.1 de W.~\textsc{Gao} et G.~\textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p.~277}\par}
 \end{frame}
 
-% Slide 12 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
+% Slide 13 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
 % Vidéos du dépôt E-HGP (dossier Zoltan/), copiées dans videos/ ; chaque scène ouvre sa vidéo.
 % Ce que montrent les vidéos (même k pour les deux hiérarchies, r = rayon des boules d'ordre k, et pour
 % HDBSCAN distance d'atteignabilité mutuelle / 2) :
@@ -463,35 +507,6 @@
 
     \vspace{0.1cm}
     {\tiny \textcolor{inria-2024-gris-bleu}{Données SemanticKITTI, HDBSCAN de scikit-learn}\par}
-\end{frame}
-
-% Slide 13 : Trois voies d'accès au marché
-\begin{frame}{Trois voies d'accès au marché}
-    \begin{columns}[T]
-        \begin{column}{0.31\textwidth}
-            \textbf{\bleu 1. Intégration}
-            \begin{itemize}
-                \item \emph{Benchmark}, intégration puis licence ou API
-                \item \href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}
-            \end{itemize}
-        \end{column}
-
-        \begin{column}{0.31\textwidth}
-            \textbf{\bleu 2. Constructeurs LiDAR}
-            \begin{itemize}
-                \item Notre moteur dans le logiciel de leurs scanners
-                \item \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}
-            \end{itemize}
-        \end{column}
-
-        \begin{column}{0.31\textwidth}
-            \textbf{\bleu 3. Verticale complète}
-            \begin{itemize}
-                \item Le service complet, de la donnée brute au résultat
-                \item \textbf{Limite} Les constructeurs gardent souvent la technologie en interne
-            \end{itemize}
-        \end{column}
-    \end{columns}
 \end{frame}
 
 % Slide 14 : Vers un modèle de fondation pour la 3D
