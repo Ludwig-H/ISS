@@ -10,6 +10,9 @@
 %           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 %           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
+%           En fin de deck, trois slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
+%           GPT/SAM et figures reprises de la soutenance de thèse (dépôt Manuscrit-de-th-se,
+%           Soutenance/soutenance), projet décrit dans le dépôt E-HGP, dossier Zoltan/ (en conception).
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
 %                  Josiane Zerubia et Konstantin Avrachenkov : leur page personnelle Inria.
@@ -39,7 +42,7 @@
 
 \usetheme{inria}
 
-\usetikzlibrary{arrows.meta, positioning}
+\usetikzlibrary{arrows.meta, positioning, calc}
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
 
@@ -444,6 +447,74 @@
             \begin{itemize}
                 \item Percolia propose elle-même le service complet, de la donnée brute au résultat final
                 \item \textbf{Limite possible} Les constructeurs préfèrent en général garder la technologie en interne
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Slide 13 : Vers un modèle de fondation pour la 3D
+% Analogie de la soutenance de thèse du 8 septembre 2026 (« Les modèles de fondation : le texte, et
+% désormais l'image » et « Vers un modèle de fondation pour la 3D ? »), figure figs/alphabet_fondation.tex.
+\begin{frame}{Vers un modèle de fondation pour la 3D ?}
+    \begin{center}
+        \resizebox{0.86\textwidth}{!}{\input{figs/alphabet_fondation}}
+    \end{center}
+
+    \vfill
+    \begin{itemize}
+        \item Un modèle de fondation est entraîné une seule fois sur des données massives sans annotation, puis réutilisé pour quantité de tâches
+        \item Le texte a GPT, l'image a SAM, la 3D cherche encore le sien
+    \end{itemize}
+\end{frame}
+
+% Slide 14 : Sémantique et instances, inverser l'ordre
+% Dans les exemples (Greehill) comme dans l'état de l'art ALPINE (Sautier et al., Valeo AI, 2025, présenté
+% à la soutenance) : sémantique apprise d'abord, puis clustering classe par classe pour les instances.
+\begin{frame}{Sémantique et instances : inverser l'ordre}
+    Dans les exemples vus, comme dans l'état de l'art (ALPINE de Valeo AI), la sémantique vient d'abord et le \emph{clustering} sépare ensuite les objets
+
+    \vfill
+    \centering
+    \begin{tikzpicture}[>={Latex[length=1.8mm]},
+        etape/.style={draw=gris_fonce_inria, line width=0.8pt, rounded corners=3pt, fill=gray!8,
+            minimum width=3cm, text width=2.8cm, minimum height=1.1cm, align=center, font=\small},
+        hgp/.style={etape, draw=inria-rouge, fill=inria-rouge!6, line width=1.2pt},
+        ligne/.style={font=\small\bfseries, anchor=east}]
+      \node[ligne, text=gris_fonce_inria] at (0,0) {Aujourd'hui};
+      \node[etape] (p1) at (1.7,0) {Points LiDAR};
+      \node[etape] (s1) at (5.4,0) {Sémantique\\ {\scriptsize réseau appris}};
+      \node[etape] (i1) at (9.1,0) {Instances\\ {\scriptsize \emph{clustering}}};
+      \draw[->, thick] (p1) -- (s1);
+      \draw[->, thick] (s1) -- (i1);
+      \node[ligne, text=inria-rouge] at (0,-1.7) {Notre piste};
+      \node[etape] (p2) at (1.7,-1.7) {Points LiDAR};
+      \node[hgp] (h2) at (5.4,-1.7) {Hiérarchie HGP\\ {\scriptsize sans apprentissage}};
+      \node[etape] (s2) at (9.1,-1.7) {Sémantique et instances\\ {\scriptsize guidées par la hiérarchie}};
+      \draw[->, thick] (p2) -- (h2);
+      \draw[->, thick] (h2) -- (s2);
+    \end{tikzpicture}
+
+    \vfill
+    \raggedright
+    \textbf{\orange Hypothèse} Le \emph{clustering} hiérarchique HGP est assez bon pour aider la sémantique
+\end{frame}
+
+% Slide 15 : Un modèle de fondation guidé par la hiérarchie HGP
+% Figure figs/hierarchie_surfaces.tex de la soutenance (« Remplacer les points par une hiérarchie de
+% polyèdres ? »). Projet HGP-FM : dépôt E-HGP, dossier Zoltan/, collaboration Inria et université de Szeged
+% (Louis Hauseux, Zoltán Kató, Josiane Zerubia), en conception, aucun résultat revendiqué.
+\begin{frame}{\large Un modèle de fondation guidé par la hiérarchie HGP}
+    \begin{columns}[c,onlytextwidth]
+        \begin{column}{0.44\textwidth}
+            \centering
+            \resizebox{\textwidth}{!}{\input{figs/hierarchie_surfaces}}
+        \end{column}
+        \begin{column}{0.52\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{6pt}
+                \item Les unités du modèle ne sont plus les points du capteur mais les polyèdres de la hiérarchie HGP
+                \item Même recette que pour le texte, le polyèdre comme alphabet et la hiérarchie comme grammaire
+                \item Hypothèse à tester, projet en conception avec \href{https://www.inf.u-szeged.hu/~kato/}{Zoltán \textsc{Kató}} (université de Szeged) et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}
             \end{itemize}
         \end{column}
     \end{columns}
