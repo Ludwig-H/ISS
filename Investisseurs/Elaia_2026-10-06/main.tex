@@ -23,7 +23,6 @@
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel}
 \usepackage{graphicx}
-\usepackage{booktabs}
 
 \title[Percolia]{\huge \textbf{PERCOLIA}}
 \subtitle{\large Structuration automatique de données}
@@ -373,39 +372,48 @@
 \end{frame}
 
 % Slide 11 : HGP-Clusterer face à HDBSCAN (slide d'appui pour lancer les vidéos)
-% Vidéos du dépôt E-HGP (dossier Zoltan/), copiées dans videos/ ; chaque nom de scène ouvre sa vidéo.
-% Meilleur IoU de chaque objet, relevé sur la dernière image de chaque vidéo (objet retrouvé si un groupe
-% de la hiérarchie le recouvre à plus de 50 %) :
-%   08/002852, k = 5 : HGP A 0,77 B 0,88 ; HDBSCAN A 0,68 B 0,44
-%   08/001170, k = 5 : HGP A 0,93 B 0,72 ; HDBSCAN A 0,71 B 0,44
-%   06/000800, k = 10 : HGP A 0,99 B 0,74 C 0,74 ; HDBSCAN A 0,97 B 0,44 C 0,50
-%   00/002140, k = 10 : HGP A 0,94 B 0,87 ; HDBSCAN A 0,76 B 0,49
+% Vidéos du dépôt E-HGP (dossier Zoltan/), copiées dans videos/ ; chaque scène ouvre sa vidéo.
+% Ce que montrent les vidéos (même k pour les deux hiérarchies, r = rayon des boules d'ordre k, et pour
+% HDBSCAN distance d'atteignabilité mutuelle / 2) :
+%   08/002852, k = 5, deux vélos garés côte à côte près d'un bâtiment : HDBSCAN fusionne A avec le bâtiment
+%     (r = 7,1 cm) puis réunit A et B (7,6 cm), B jamais retrouvé ; HGP retrouve A (IoU 0,77) et B (0,88)
+%   08/001170, k = 5, deux vélos imbriqués : HDBSCAN réunit A et B à 8,7 cm (B jamais retrouvé) ;
+%     HGP A 0,93 et B 0,72
+%   06/000800, k = 10, un piéton et deux vélos près d'un bâtiment : HDBSCAN réunit B et C à 11,4 cm
+%     (jamais retrouvés) ; HGP A 0,99, B 0,74, C 0,74
+%   00/002140, k = 10, un piéton tout près d'un vélo : HDBSCAN réunit A et B à 8,3 cm (B jamais retrouvé) ;
+%     HGP A 0,94 et B 0,87
 \begin{frame}{HGP-Clusterer face à HDBSCAN}
-    Mêmes scènes LiDAR réelles et même paramètre $k$ pour les deux hiérarchies
+    \small
+    \textbf{\bleu Le principe}
+    \begin{itemize}
+        \item \textbf{Hiérarchie} Le rayon $r$ grandit, les groupes se forment puis fusionnent
+        \item \textbf{IoU} Intersection sur union d'un groupe et d'un objet réel, de 0 à 1
+        \item \textbf{Objet retrouvé} Un groupe de la hiérarchie dépasse un IoU de 0,5
+        \item \textbf{Lecture} HGP à gauche, HDBSCAN à droite, même $k$, objets réunis en rouge
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \textbf{\bleu Des endroits difficiles}
+    \begin{columns}[T,onlytextwidth]
+        \begin{column}{0.5\textwidth}
+            \begin{itemize}
+                \item \href{run:videos/08_002852_deux_velos_6_51_sans_sol_k5_clair.mp4}{Deux vélos près d'un bâtiment} {\scriptsize\textcolor{inria-2024-gris-bleu}{2852}}
+                \item \href{run:videos/08_001170_deux_velos_43_57_sans_sol_k5_clair.mp4}{Deux vélos imbriqués} {\scriptsize\textcolor{inria-2024-gris-bleu}{1170}}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \item \href{run:videos/06_000800_pieton_deux_velos_2_8_12_sans_sol_k10_clair.mp4}{Un piéton et deux vélos} {\scriptsize\textcolor{inria-2024-gris-bleu}{0800}}
+                \item \href{run:videos/00_002140_pieton_velo_1_6_instances_k10_clair.mp4}{Un piéton tout près d'un vélo} {\scriptsize\textcolor{inria-2024-gris-bleu}{2140}}
+            \end{itemize}
+        \end{column}
+    \end{columns}
 
     \vfill
-    \centering
-    \begin{tabular}{lccc}
-        \toprule
-        & & \multicolumn{2}{c}{Objets retrouvés} \\
-        \cmidrule(l){3-4}
-        Scène (SemanticKITTI) & $k$ & \textbf{HGP} & HDBSCAN \\
-        \midrule
-        \href{run:videos/08_002852_deux_velos_6_51_sans_sol_k5_clair.mp4}{Deux vélos (08/002852)} & 5 & \textbf{2 sur 2} & 1 sur 2 \\
-        \href{run:videos/08_001170_deux_velos_43_57_sans_sol_k5_clair.mp4}{Deux vélos (08/001170)} & 5 & \textbf{2 sur 2} & 1 sur 2 \\
-        \href{run:videos/06_000800_pieton_deux_velos_2_8_12_sans_sol_k10_clair.mp4}{Un piéton et deux vélos (06/000800)} & 10 & \textbf{3 sur 3} & 1 sur 3 \\
-        \href{run:videos/00_002140_pieton_velo_1_6_instances_k10_clair.mp4}{Un piéton et un vélo (00/002140)} & 10 & \textbf{2 sur 2} & 1 sur 2 \\
-        \midrule
-        Total & & \textbf{9 sur 9} & 4 sur 9 \\
-        \bottomrule
-    \end{tabular}
+    \textbf{\orange À retenir} HDBSCAN réunit trop tôt les objets voisins, HGP les retrouve tous
 
-    \vfill
-    \raggedright
-    \textbf{\orange À retenir} HDBSCAN réunit les objets proches avant de les avoir isolés, HGP retrouve chaque objet dans sa hiérarchie
-
-    \vspace{0.15cm}
-    {\scriptsize Objet retrouvé quand un groupe de la hiérarchie le recouvre à plus de 50~\%\par}
+    \vspace{0.1cm}
     {\tiny \textcolor{inria-2024-gris-bleu}{Données SemanticKITTI (CC BY-NC-SA), HDBSCAN de scikit-learn}\par}
 \end{frame}
 
