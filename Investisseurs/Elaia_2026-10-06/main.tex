@@ -72,25 +72,25 @@
         \begin{column}{0.48\textwidth}
             \textbf{\bleu \href{https://www.linkedin.com/in/louis-hauseux-b80804434}{Louis Hauseux}}
             \begin{itemize}
-                \item Doctorat en informatique à Inria Sophia Antipolis.
-                \item Normalien, double master en mathématiques fondamentales et appliquées.
-                \item Conception et développement du noyau HGP-Clusterer.
+                \item Doctorat en informatique à Inria Sophia Antipolis
+                \item Normalien, double master en mathématiques fondamentales et appliquées
+                \item Conception et développement du noyau HGP-Clusterer
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
             \textbf{\bleu \href{https://www.linkedin.com/in/alban-hauseux-9577b6118/}{Alban Hauseux}}
             \begin{itemize}
-                \item Ingénieur IMT Atlantique, master en ingénierie financière à Paris-Dauphine.
-                \item Expérience en finance quantitative, audit et contrôle de modèles.
-                \item Industrialisation, intégration client et développement commercial.
+                \item Ingénieur IMT Atlantique, master en ingénierie financière à Paris-Dauphine
+                \item Expérience en finance quantitative, audit et contrôle de modèles
+                \item Industrialisation, intégration client et développement commercial
             \end{itemize}
         \end{column}
     \end{columns}
 
     \begin{block}{\normalsize Conseil scientifique \& réseau}
         \begin{itemize}
-            \item \textbf{\href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}} (Directrice de Recherche Inria, équipe \textsc{Ayana}).
+            \item \textbf{\href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{Josiane \textsc{Zerubia}}} (Directrice de Recherche Inria, équipe \textsc{Ayana})
         \end{itemize}
     \end{block}
 \end{frame}
@@ -111,48 +111,48 @@
       \draw[-{Latex[length=2.5mm]}, thick, inria-2024-gris-bleu] (0,0) -- (1,0);
       \foreach \j/\x in {1/0.12, 2/0.37, 3/0.62, 4/0.87} \node[jalon] (j\j) at (\x,0) {};
       \node[annee] at (j1) {2017};
-      \node[etape] at (j1) {\textbf{Origine :} stage de master~2 de Louis à Inria Paris, sur les complexes simpliciaux.};
+      \node[etape] at (j1) {\textbf{Origine}\\ Stage de master~2 de Louis à Inria Paris sur les complexes simpliciaux};
       \node[annee] at (j2) {2023};
-      \node[etape] at (j2) {Ingénieur de recherche à Inria Sophia Antipolis : estimation de densité, graphes géométriques, clustering.};
+      \node[etape] at (j2) {Ingénieur de recherche à Inria Sophia Antipolis\\ Estimation de densité, graphes géométriques, clustering};
       \node[annee] at (j3) {2023--2026};
-      \node[etape] at (j3) {Thèse avec \href{https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html}{K.~\textsc{Avrachenkov}} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}} : conception de HGP-Clusterer. Soutenance le 8~septembre~2026.};
+      \node[etape] at (j3) {Thèse avec \href{https://www-sop.inria.fr/members/Konstantin.Avratchenkov/me.html}{K.~\textsc{Avrachenkov}} et \href{https://www-sop.inria.fr/members/Josiane.Zerubia/index.html}{J.~\textsc{Zerubia}}\\ Conception de HGP-Clusterer\\ Soutenance le 8~septembre~2026};
       \node[annee, text=inria-2024-orange] at (j4) {2025--2026};
-      \node[etape] at (j4) {\textbf{Percolia :} premiers contacts industriels (Greehill, Exwayz), collaboration avec AI Detech. Entrée à l'Inria Startup Studio le 1\textsuperscript{er}~octobre~2026.};
+      \node[etape] at (j4) {\textbf{Percolia}\\ Premiers contacts industriels (Greehill, Exwayz) et collaboration avec AI Detech\\ Entrée à l'Inria Startup Studio le 1\textsuperscript{er}~octobre~2026};
     \end{tikzpicture}
 
     \vfill
     \raggedright
-    \textbf{\orange Fil conducteur :} passer des interactions entre paires de points à des interactions d'ordre supérieur, pour un clustering robuste au bruit.
+    \textbf{\orange Fil conducteur}\\ Passer des interactions entre paires de points à des interactions d'ordre supérieur pour un clustering robuste au bruit
 
     \vspace{0.2cm}
-    {\scriptsize Publications : EUSIPCO 2024 ; \emph{Complex Networks} 2025 ; ACM SIGMETRICS PER 2025 ; \emph{Applied Network Science} 2026.\par}
+    {\scriptsize \textbf{Publications}\quad EUSIPCO 2024, \emph{Complex Networks} 2025, ACM SIGMETRICS PER 2025, \emph{Applied Network Science} 2026\par}
 \end{frame}
 
 % Slide 4 : La limite des méthodes actuelles de clustering
 \begin{frame}{La limite des méthodes actuelles de clustering}
-    \textbf{\bleu Le standard : DBSCAN et HDBSCAN}
+    \textbf{\bleu Les standards DBSCAN et HDBSCAN}
     \begin{itemize}
-        \item Ces méthodes repèrent les zones denses, puis relient les points deux à deux.
-        \item Elles sont rapides, disponibles dans les bibliothèques standards et très largement utilisées.
+        \item Ces méthodes repèrent les zones denses puis relient les points deux à deux
+        \item Elles sont rapides, disponibles dans les bibliothèques standards et très largement utilisées
     \end{itemize}
 
     \vspace{0.25cm}
     \textbf{\bleu Le problème dans les scènes LiDAR réelles}
     \begin{itemize}
-        \item Le bruit peut former un pont entre deux structures distinctes.
-        \item L'algorithme finit alors par fusionner des objets qui devraient rester séparés. C'est l'effet de chaînage.
+        \item Le bruit peut former un pont entre deux structures distinctes
+        \item L'algorithme finit alors par fusionner des objets qui devraient rester séparés (effet de chaînage)
     \end{itemize}
 
     \vspace{0.25cm}
-    \textbf{\orange Conséquence opérationnelle :} Mauvaise segmentation, anomalies mal isolées, résultats difficiles à exploiter, corrections manuelles.
+    \textbf{\orange Conséquence opérationnelle} Mauvaise segmentation, anomalies mal isolées, résultats difficiles à exploiter, corrections manuelles
 \end{frame}
 
 % Slide 5 : La rupture technique de Percolia
 \begin{frame}{La rupture technique de Percolia}
     \textbf{\bleu HGP-Clusterer généralise le principe du Single-Linkage}
     \begin{itemize}
-        \item Passage à l'ordre supérieur : les connexions ne sont plus évaluées entre deux points, mais à l'échelle d'un groupe.
-        \item L'algorithme construit une hiérarchie de groupes à plusieurs échelles et retarde les fusions provoquées par le bruit.
+        \item Passage à l'ordre supérieur avec des connexions évaluées à l'échelle d'un groupe et non plus entre deux points
+        \item L'algorithme construit une hiérarchie de groupes à plusieurs échelles et retarde les fusions provoquées par le bruit
     \end{itemize}
 
     \vspace{0.2cm}
@@ -160,23 +160,23 @@
         \begin{column}{0.48\textwidth}
             \textbf{\orange Propriétés du moteur}
             \begin{itemize}
-                \item Sans entraînement ni données labellisées.
-                \item Compatible avec des changements de capteur ou de domaine.
-                \item Conçu pour de grands nuages de points.
+                \item Sans entraînement ni données labellisées
+                \item Compatible avec des changements de capteur ou de domaine
+                \item Conçu pour de grands nuages de points
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
             \textbf{\orange Spécificité industrielle}
             \begin{itemize}
-                \item Des volumes, dimensions physiques ou modèles 3D peuvent guider la sélection des groupes.
-                \item Le même moteur s'insère dans un pipeline existant sans réentraîner un modèle.
+                \item Des volumes, dimensions physiques ou modèles 3D peuvent guider la sélection des groupes
+                \item Le même moteur s'insère dans un pipeline existant sans réentraîner un modèle
             \end{itemize}
         \end{column}
     \end{columns}
 
     \vfill
-    {\scriptsize L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, «~Generalization of Single-Linkage with higher-order interactions~», \emph{Applied Network Science}, 2026.}
+    {\scriptsize L. \textsc{Hauseux}, K. \textsc{Avrachenkov}, J. \textsc{Zerubia}, «~Generalization of Single-Linkage with higher-order interactions~», \emph{Applied Network Science}, 2026}
 \end{frame}
 
 % Slide 6 : Le LiDAR comme premier marché
@@ -185,17 +185,17 @@
         \begin{column}{0.8\textwidth}
             \textbf{\bleu Point d'entrée commercial}
             \begin{itemize}
-                \item Jumeaux numériques, suivi d'actifs et inspection industrielle.
-                \item Entreprises qui disposent déjà de scanners et d'un pipeline de traitement 3D.
-                \item Scènes où le bruit et les objets imbriqués empêchent une séparation fiable.
+                \item Jumeaux numériques, suivi d'actifs et inspection industrielle
+                \item Entreprises qui disposent déjà de scanners et d'un pipeline de traitement 3D
+                \item Scènes où le bruit et les objets imbriqués empêchent une séparation fiable
             \end{itemize}
 
             \vspace{0.2cm}
             \textbf{\bleu Valeur mesurable}
             \begin{itemize}
-                \item Moins de fusions erronées.
-                \item Moins de correction manuelle.
-                \item Une étape de traitement plus facilement automatisable.
+                \item Moins de fusions erronées
+                \item Moins de correction manuelle
+                \item Une étape de traitement plus facilement automatisable
             \end{itemize}
         \end{column}
     \end{columns}
@@ -208,20 +208,20 @@
         \begin{column}{0.53\textwidth}
             \textbf{\bleu Projet ISS de Marie Aspro avec Naval Group}
             \begin{itemize}
-                \item \textbf{Objectif :} Détection automatique d'anomalies sur chantiers navals.
-                \item \textbf{Données :} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR} (chantier réel -- synthétique pour des besoins de confidentialité).
-                \item \textbf{Collaboration Percolia :} Isoler les anomalies qui ne font pas partie du modèle théorique (ex. : casques de chantier, tuteurs, bâches).
+                \item \textbf{Objectif} Détection automatique d'anomalies sur chantiers navals
+                \item \textbf{Données} Confrontation entre un \textbf{modèle 3D théorique} (chantier attendu) et des \textbf{captations LiDAR} (chantier réel -- synthétique pour des besoins de confidentialité)
+                \item \textbf{Collaboration Percolia} Isoler les anomalies qui ne font pas partie du modèle théorique (casques de chantier, tuteurs, bâches)
             \end{itemize}
             \textbf{\bleu Le verrou}
             \begin{itemize}
-                \item Nécessite un clustering assez fin prenant en compte le modèle 3D pour isoler proprement les anomalies de chantier.
+                \item Nécessite un clustering assez fin prenant en compte le modèle 3D pour isoler proprement les anomalies de chantier
             \end{itemize}
         \end{column}
 
         \begin{column}{0.43\textwidth}
             \centering
             \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}\\
-            \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le benchmark de Marie \textsc{Aspro}. © Marie \textsc{Aspro} / Naval Group.}
+            \tiny \textcolor{inria-2024-gris-bleu}{Détection des anomalies (cubes et tuteurs colorés) par rapport au modèle 3D (en rouge) sur le benchmark de Marie \textsc{Aspro}\\ © Marie \textsc{Aspro} / Naval Group}
         \end{column}
     \end{columns}
 \end{frame}
@@ -285,45 +285,36 @@
     \end{tikzpicture}
 
     \vspace{0.1cm}
-    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la slide « Détection obstacles » présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis. © Milla.}\par}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la slide « Détection obstacles » présentée par \href{https://www.milla-group.com/}{Milla} aux Scientific Days, 25 septembre 2026, Pôle Alpha, Sophia Antipolis\quad © Milla}\par}
 \end{frame}
 
 % Slide 9 : Exemple 3 : Rétroconception (reverse engineering)
-% Schéma reproduit d'après la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
+% Schéma adapté (intitulés traduits) de la Fig. 10.1 « Pipeline of reverse engineering » de W. Gao et G. Li,
 % Deep Learning for 3D Point Clouds, Springer Nature Singapore, 2025, chap. 10 « Typical Engineering
-% Applications of 3D Point Clouds », p. 277 ; descriptions des étapes d'après le texte de la même page.
+% Applications of 3D Point Clouds », p. 277 : Data Collection, Data Processing, Model Refactoring, Rapid Production.
 \definecolor{gaoli-peche}{HTML}{F8CBAD}
 \begin{frame}{\large Exemple 3 : Rétroconception (\emph{reverse engineering})}
-    \textbf{\bleu Principe :} numériser un objet physique, reconstruire son modèle numérique à partir du nuage de points, puis le fabriquer de nouveau.
-
-    \vspace{0.6cm}
+    \vfill
     \centering
     \begin{tikzpicture}[x=0.99\textwidth, y=1cm, >={Latex[length=1.6mm]},
-        etape/.style={fill=gaoli-peche, rounded corners=3pt, minimum width=0.2\textwidth, minimum height=0.8cm,
-            font=\footnotesize, text=black},
-        descr/.style={anchor=north, yshift=-0.45cm, text width=0.215\textwidth, align=center, inner sep=0pt,
-            font=\scriptsize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
-      \node[etape] (collecte) at (0.12,0) {Data Collection};
-      \node[etape] (traitement) at (0.37,0) {Data Processing};
-      \node[etape] (modele) at (0.62,0) {Model Refactoring};
-      \node[etape] (production) at (0.87,0) {Rapid Production};
-      \draw[->, thick] (collecte) -- (traitement);
+        etape/.style={fill=gaoli-peche, rounded corners=3pt, minimum width=0.2\textwidth, minimum height=1.3cm,
+            text width=0.17\textwidth, align=center, font=\normalsize, text=black}]
+      \node[etape] (scan) at (0.12,0) {Scan 3D};
+      \node[etape] (traitement) at (0.37,0) {Traitement des données};
+      \node[etape] (modele) at (0.62,0) {Modèle 3D};
+      \node[etape] (fabrication) at (0.87,0) {Fabrication};
+      \draw[->, thick] (scan) -- (traitement);
       \draw[->, thick] (traitement) -- (modele);
-      \draw[->, thick] (modele) -- (production);
+      \draw[->, thick] (modele) -- (fabrication);
       % Cadre pointillé de la figure d'origine
-      \draw[gray!60, dashed, rounded corners=4pt] ([shift={(-6pt,6pt)}]collecte.north west) rectangle ([shift={(6pt,-6pt)}]production.south east);
-      % Étapes décrites p. 277
-      \node[descr] at (collecte.south) {Numérisation 3D de l'objet : nuage de points brut, qui peut contenir un peu de bruit et des trous.};
-      \node[descr] at (traitement.south) {Amélioration du nuage brut par des algorithmes de traitement (débruitage, simplification\dots).};
-      \node[descr] at (modele.south) {Conversion du nuage traité en représentation surfacique numérique du produit.};
-      \node[descr] at (production.south) {Fabrication du produit d'après son modèle numérique : tours numériques, impression 3D.};
+      \draw[gray!60, dashed, rounded corners=4pt] ([shift={(-6pt,6pt)}]scan.north west) rectangle ([shift={(6pt,-6pt)}]fabrication.south east);
       % Partie concernée par Percolia
       \draw[inria-rouge, very thick, rounded corners=2pt] ([shift={(-3pt,3pt)}]traitement.north west) rectangle ([shift={(3pt,-3pt)}]traitement.south east);
-      \node[text=inria-rouge, font=\scriptsize\bfseries, anchor=south] at ([yshift=9pt]traitement.north) {Clustering Percolia};
+      \node[text=inria-rouge, font=\small\bfseries, anchor=south] at ([yshift=9pt]traitement.north) {Clustering Percolia};
     \end{tikzpicture}
 
     \vfill
-    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma reproduit d'après la Fig. 10.1 de W. \textsc{Gao} et G. \textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p. 277.}\par}
+    {\tiny \textcolor{inria-2024-gris-bleu}{Schéma adapté de la Fig. 10.1 de W. \textsc{Gao} et G. \textsc{Li}, \href{https://doi.org/10.1007/978-981-97-9570-3}{\emph{Deep Learning for 3D Point Clouds}}, Springer, 2025, p. 277}\par}
 \end{frame}
 
 % Slide 10 : Du benchmark à la licence logicielle
@@ -332,23 +323,23 @@
         \begin{column}{0.5\textwidth}
             \textbf{\bleu 1. Benchmark ou pilote}
             \begin{itemize}
-                \item Le client fournit quelques scans représentatifs.
-                \item Percolia compare la qualité des groupes et le temps de calcul au pipeline existant.
+                \item Le client fournit quelques scans représentatifs
+                \item Percolia compare la qualité des groupes et le temps de calcul au pipeline existant
             \end{itemize}
 
             \vspace{0.25cm}
             \textbf{\bleu 2. Intégration}
             \begin{itemize}
-                \item Connexion aux formats du client.
-                \item Configuration des contraintes géométriques ou du modèle 3D.
+                \item Connexion aux formats du client
+                \item Configuration des contraintes géométriques ou du modèle 3D
             \end{itemize}
         \end{column}
 
         \begin{column}{0.46\textwidth}
             \textbf{\orange 3. Revenu logiciel récurrent}
             \begin{itemize}
-                \item Licence annuelle installée chez le client.
-                \item API lorsque le cloud convient aux données et aux contraintes de sécurité.
+                \item Licence annuelle installée chez le client
+                \item API lorsque le cloud convient aux données et aux contraintes de sécurité
             \end{itemize}
         \end{column}
     \end{columns}
@@ -360,24 +351,24 @@
         \begin{column}{0.31\textwidth}
             \textbf{\orange 1. Intégration}
             \begin{itemize}
-                \item Benchmark, intégration, puis licence ou API.
-                \item \href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}.
+                \item Benchmark, intégration puis licence ou API
+                \item \href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}
             \end{itemize}
         \end{column}
 
         \begin{column}{0.31\textwidth}
             \textbf{\bleu 2. Constructeurs LiDAR}
             \begin{itemize}
-                \item Notre moteur intégré au logiciel livré avec leurs scanners.
-                \item \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}.
+                \item Notre moteur intégré au logiciel livré avec leurs scanners
+                \item \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}
             \end{itemize}
         \end{column}
 
         \begin{column}{0.31\textwidth}
             \textbf{\bleu 3. Verticale complète}
             \begin{itemize}
-                \item Percolia propose elle-même le service complet, de la donnée brute au résultat final.
-                \item Limite possible : les constructeurs préfèrent en général garder la techno' en interne.
+                \item Percolia propose elle-même le service complet, de la donnée brute au résultat final
+                \item \textbf{Limite possible} Les constructeurs préfèrent en général garder la techno' en interne
             \end{itemize}
         \end{column}
     \end{columns}
@@ -387,16 +378,16 @@
 \begin{frame}{Au-delà du LiDAR}
     \textbf{\bleu Un moteur de clustering pour plusieurs familles de données}
     \begin{itemize}
-        \item Le coeur mathématique travaille sur des données euclidiennes.
-        \item Le nuage de points LiDAR constitue le premier produit commercial, avec un besoin industriel concret et observable.
+        \item Le coeur mathématique travaille sur des données euclidiennes
+        \item Le nuage de points LiDAR constitue le premier produit commercial, avec un besoin industriel concret et observable
     \end{itemize}
 
     \vspace{0.25cm}
     \textbf{\orange Applications possibles}
     \begin{itemize}
-        \item Nuages de points et autres données euclidiennes.
-        \item Vecteurs, embeddings et matrices de distances.
-        \item Détection de communautés dans des graphes.
+        \item Nuages de points et autres données euclidiennes
+        \item Vecteurs, embeddings et matrices de distances
+        \item Détection de communautés dans des graphes
     \end{itemize}
 \end{frame}
 
