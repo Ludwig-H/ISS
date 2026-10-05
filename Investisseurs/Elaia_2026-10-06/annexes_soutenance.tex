@@ -1,0 +1,1783 @@
+% Annexes : slides de la soutenance de thèse du 8 septembre 2026, reprises de
+% ludwig-h/manuscrit-de-th-se, Soutenance/soutenance/main.tex (figures dans figs/, images dans imgs/).
+% Les annexes de la soutenance sont rangées avec la partie qu'elles complètent.
+% Slides écartées car redondantes avec le deck : « Panoptique 3D : l'état de l'art est un clustering »
+% (exemple 2), « Les modèles de fondation : le texte, et désormais l'image », « Vers un modèle de fondation
+% pour la 3D ? », « La raison de fond : le nuage est un artefact du capteur », « Remplacer les points par
+% une hiérarchie de polyèdres ? » (slides 14 à 17), la première version de la slide Kleinberg (la seconde
+% la complète), « Travaux de l'auteur présentés aujourd'hui » (mêmes travaux que « Publications »).
+% Slides de structure écartées : page de titre, « Pourquoi cela marche-t-il si bien ? », « Plan »,
+% « Merci », séparateur « Diapositives de secours ».
+% Retouches : « clustering » et « Single-Linkage » en italique (slide Kleinberg) ; mise en page resserrée sur
+% quelques slides, car XeLaTeX place le contenu quelques points plus bas que LuaLaTeX, moteur de la soutenance
+% (Cameron-Martin, Swendsen-Wang signé et généralisé, GSBM, Retourner un amas, Quelle coupe, Sans entraînement),
+% et images ou tableaux ramenés à la largeur de leur colonne (SIPU, résultats 3D, K-arbre couvrant, arbre minimum).
+
+% ============================================================
+\section{Prologue : une ancienne énigme}
+\begin{frame}[label=bk-prologue]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{Une ancienne énigme\ldots}
+    \begin{center}
+        \fbox{\includegraphics[width=0.62\textwidth]{imgs/RapportStage2017_Titre.png}}
+
+        \vspace{0.5cm}
+        \normalsize Stage à l'Inria Paris, équipe \textsc{Dyogene}-\textsc{MathNet} \citb{hal17}
+    \end{center}
+    \reffoot{hal17}
+\end{frame}
+
+\begin{frame}{Le sujet à la mode : l'homologie \emph{persistante}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/Ghrist_Cech_anneau.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.40\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/Barcodes_HomologiePersistante.png}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \normalsize Faire croître un rayon $r$ ; regarder les structures \textbf{naître}, \textbf{vivre}, \textbf{mourir} \citb{ghrist08} \citb{chazal13}
+    \end{center}
+    \reffoot{ghrist08,chazal13}
+\end{frame}
+
+\begin{frame}{\ldots avec une application à la \emph{stylométrie}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.46\textwidth}
+            \begin{center}
+                \includegraphics[width=0.92\textwidth]{imgs/GramMatrix_Stylometrie.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.50\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item Une matrice de \textbf{\textsc{Gram}} : similarité $500 \times 500$ entre articles de presse \citb{hal17}
+                \item \textbf{5 auteurs} anonymes, 100 articles chacun\\
+                {\small (statistiques de style : vocabulaire, catégories grammaticales, ponctuation, \emph{etc.})}
+                \item \textbf{But (non supervisé)} : rendre à chaque auteur ses 100 articles
+            \end{itemize}
+            \vspace{0.4cm}
+            {\small Ici, les articles sont \emph{triés} par auteur ; l'algorithme, lui, ne voit qu'une matrice mélangée}
+        \end{column}
+    \end{columns}
+    \reffoot{hal17}
+\end{frame}
+
+\begin{frame}{Une heuristique inspirée de la persistance}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \includegraphics[width=0.9\textwidth]{imgs/Polyedres_2017.png}
+
+                \vspace{0.2cm}
+                {\scriptsize Les « polyèdres » retournés ($k = 2$) \citb{hal17}}
+            \end{center}
+        \end{column}
+        \begin{column}{0.52\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item Faire croître le seuil de similarité
+                \item Observer les composantes \textbf{« triangles-connexes »}\\
+                {\small (des $k$-simplexes recollés par facettes)}
+                \item Les voir \textbf{naître}, \textbf{grandir}, \textbf{fusionner}
+                \item S'arrêter : une proportion $P$ est couverte
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{hal17}
+\end{frame}
+
+\begin{frame}{Et\ldots\ cela marche bien}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \includegraphics[width=0.86\textwidth]{imgs/ACP_2auteurs_2017.png}
+
+                \vspace{0.2cm}
+                {\scriptsize Analyse en composantes principales : deux auteurs sur cinq}
+            \end{center}
+        \end{column}
+        \begin{column}{0.52\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{2 auteurs} : 1 erreur, 1 article non classé (sur 100)
+                \item Mieux que l'algorithme des $k$-moyennes\ldots
+                \item \ldots\ et que des mélanges gaussiens \emph{semi-supervisés}
+                \item Et sur \textbf{5 auteurs} : 4 amas retrouvés
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Stylométrie 2017 : le cas à 5 auteurs}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \includegraphics[width=0.9\textwidth]{imgs/ACP_5auteurs_2017.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.52\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{9pt}
+                \item 5 auteurs $\times$ 40 textes ($P = 70\,\%$, $k = 5$)
+                \item 4 classes correctement identifiées\ldots
+                \item \ldots\ mais la 4\up{e} (textes 120--159) est manquée
+                \item Ronds noirs : non classés ; étoiles : affectés à plusieurs classes
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% ============================================================
+\section{Du \emph{Single-Linkage} à ses fondements}
+\begin{frame}[label=bk-single-linkage]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{Le \emph{clustering} sur données euclidiennes $\mathcal X \subset \mathbb R^p$}
+    \begin{center}
+        \large
+        \textbf{Modèle de \textsc{Hartigan}} \citb{hartigan81} : \textbf{les amas de forte densité}
+    \end{center}
+
+    \vspace{0.4cm}
+
+    \begin{center}
+        \begin{tikzpicture}[every node/.style={inner sep=0}]
+            \node (raw) [draw=gray!30, line width=1.5pt, inner sep=2pt, label={[label distance=8pt]below:{\small Données brutes $\mathcal{X}$}}]
+                {\includegraphics[width=0.22\textwidth]{imgs/Nuage2D.png}};
+            \node (clustered) at (6.8, 0) [draw=inria-rouge, line width=1.5pt, inner sep=2pt, label={[label distance=8pt]below:{\small Résultat obtenu}}]
+                {\includegraphics[width=0.22\textwidth]{imgs/Nuage2D_HDBSCAN.png}};
+            \draw[-{Latex[length=10pt, width=10pt]}, line width=5pt, color=gray!40] (2.0, 0) -- (4.8, 0);
+            \node (gears) at (3.4, 0.75) {\includegraphics[width=0.07\textwidth]{imgs/roues_dentee.jpeg}};
+            \node (algo) at (3.4, -0.9) [align=center] {\small \textbf{HDBSCAN} \citb{campello13}};
+        \end{tikzpicture}
+    \end{center}
+    \reffoot{hartigan81,campello13}
+\end{frame}
+
+\begin{frame}{Deux exemples issus de la thèse}
+    \begin{columns}[T, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \vspace{0pt}
+            \begin{center}
+                \begin{minipage}[c][4.2cm][c]{\linewidth}
+                    \centering
+                    \includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{imgs/FilamentsGalaxie.png}
+                \end{minipage}
+
+                \vspace{0.3cm}
+                \small \textbf{Cosmologie 3D} : filaments de galaxies \citb{cn23}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \vspace{0pt}
+            \begin{center}
+                \begin{minipage}[c][4.2cm][c]{\linewidth}
+                    \centering
+                    \includegraphics[width=\linewidth,height=4.2cm,keepaspectratio]{imgs/CondenseTree_OliveOil_HGP.png}
+                \end{minipage}
+
+                \vspace{0.3cm}
+                \small \textbf{Huiles d'olive} ($\mathbb R^8$) : hiérarchie obtenue
+                \citb{eusipco24} \citb{ans26}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \reffoot{cn23,eusipco24,ans26}
+\end{frame}
+
+\begin{frame}{Le modèle de \textsc{Hartigan} : la hiérarchie des amas}
+    \begin{columns}[onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textbf{Ensemble de niveau} $\{f \ge \lambda\}$
+
+                \vspace{0.3cm}
+                \input{figs/hartigan_gauche}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Arbre hiérarchique}}
+
+                \vspace{0.3cm}
+                \input{figs/hartigan_droite}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{En pratique : estimer la densité}
+    \begin{center}
+        \formulebox{\Large\mathversion{bold} $\widehat{f} \leftarrow \widehat{f}_{K\text{-NN}}$} \\[4pt]
+        \normalsize \textbf{Estimateur des $K$ plus proches voisins} \citb{biau15}
+    \end{center}
+
+    \vspace{0.4cm}
+
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \begin{center}
+                {\large\mathversion{bold} $\forall y \in \mathbb{R}^p, \quad \widehat{f}_{K\text{-NN}}(y) = \dfrac{K}{n \, \omega_p \, r_K(y)^p}$}
+
+                \vspace{1.0cm}
+
+                \formulebox{\small\mathversion{bold} $r_K(y) = \min \left\{ r \ge 0 \;\middle|\; |B(y,r) \cap (\mathcal{X}\setminus\{y\})| \ge K \right\}$}
+            \end{center}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{8pt}
+                \item \textbf{$y$} : un point de l'\textbf{espace}, du nuage ou non
+                \item \textbf{$n$} : nombre de points de $\mathcal{X}$
+                \item \textbf{$\omega_p$} : volume de la boule unité de $\mathbb{R}^p$
+                \item \textbf{$r_K(y)$} : distance de $y$ à son $K$\up{e} plus proche voisin ; si $y\in\mathcal X$, on exclut $y$ lui-même
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{biau15}
+\end{frame}
+
+\begin{frame}{Le cas $K = 1$ : un « miracle » géométrique}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \input{figs/k1_nuage}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.40\textwidth}
+            \only<2>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(y) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(y) \le r_0$}
+
+                    \vspace{0.8cm}
+
+                    Ensembles de niveau \\
+                    = \textbf{modèle booléen} \citb{meesterroy96}
+                \end{center}
+            }
+            \only<3>{
+                \begin{center}
+                    {\Large\mathversion{bold} $\widehat{\lambda}(y) \ge \lambda_0$} \\[6pt]
+                    {\Large\mathversion{bold} $\Leftrightarrow r_1(y) \le r_0$}
+
+                    \vspace{0.8cm}
+
+                    Amas de forte densité\\
+                    = \textbf{composantes connexes}\\ d'un \textbf{graphe géométrique} \citb{penrose03}
+                \end{center}
+            }
+            \only<4>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(y) \le r_0$}
+
+                    \vspace{1.0cm}
+
+                    Amas de forte densité\\
+                    = \textbf{composantes connexes}\\ d'un \textbf{graphe géométrique} \citb{penrose03}
+                \end{center}
+            }
+            \only<5>{
+                \begin{center}
+                    {\Large\mathversion{bold} $r_1(y) \le r_0$}
+
+                    \vspace{1.0cm}
+
+                    Amas de forte densité\\
+                    = \textbf{composantes connexes}\\ de l'\textbf{arbre minimum couvrant} élagué
+                \end{center}
+            }
+        \end{column}
+    \end{columns}
+    \only<2>{\reffoot{meesterroy96}}
+    \only<3-4>{\reffoot{penrose03}}
+\end{frame}
+
+\begin{frame}{L'arbre minimum couvrant et la triangulation de \textsc{Delaunay}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \input{figs/mst_delaunay}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.40\textwidth}
+            Cette hiérarchie a un nom :\\ le \textbf{\emph{Single-Linkage}} \citb{florek51} \citb{gowerross69}
+
+            \vspace{0.40cm}
+            L'arbre minimum couvrant euclidien est un \textbf{sous-graphe} de \textsc{Gabriel},
+            lui-même sous-graphe de \textsc{Delaunay} \citb{boissonnat18} :
+            \begin{center}
+                \formulebox{\parbox{0.86\linewidth}{\centering\small
+                arbre minimum couvrant\\ $\subseteq$ \textsc{Gabriel} $\subseteq$ \textsc{Delaunay}}}
+            \end{center}
+
+            \vspace{0.30cm}
+            Dans le plan $\mathbb{R}^2$ : $\mathcal{O}(n \log n)$
+        \end{column}
+    \end{columns}
+    \reffoot{florek51,gowerross69,boissonnat18}
+\end{frame}
+
+\begin{frame}{L'effet de chaînage et le \emph{Robust Single-Linkage}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \input{figs/rsl_mreach}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{Effet de chaînage} : une chaîne de points suffit à fusionner deux amas
+
+            \vspace{0.4cm}
+            \textbf{\emph{Robust Single-Linkage}} \citb{chaudhuri10} :
+            \begin{itemize}
+                \setlength{\itemsep}{6pt}
+                \item La \emph{core distance} $r_K(x)$ estime la densité locale
+                \item La distance devient la \emph{mutual reachability}
+                \item Les points isolés sont repoussés
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{chaudhuri10}
+\end{frame}
+
+\begin{frame}{Les descendants : DBSCAN, puis HDBSCAN}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.60\textwidth}
+            \begin{center}
+                \input{figs/eom_courbes}
+            \end{center}
+        \end{column}
+        \begin{column}{0.38\textwidth}
+            \small
+            \textbf{DBSCAN} \citb{ester96} : points \emph{cœurs} ($r_K(x)\le r$) \emph{vs.} points \emph{accessibles} :\\ \textbf{réintègre la frontière des amas}
+
+            \vspace{0.3cm}
+            \textbf{HDBSCAN} \citb{campello13} : fait varier le seuil $r$ continûment et extrait les amas par \textbf{excès de masse}
+
+            \begin{center}
+                \formulebox{$E(C) = \displaystyle\int_C \bigl(f(x) - \lambda\bigr)\, \mathrm{d}x$}
+            \end{center}
+
+        \end{column}
+    \end{columns}
+    \reffoot{ester96,campello13}
+\end{frame}
+
+% ============================================================
+\section{\texorpdfstring{Monter à l'\textcolor{inria-rouge}{ordre supérieur} : la hiérarchie $K$-NN exacte}{Monter à l'ordre supérieur : la hiérarchie K-NN exacte}}
+\begin{frame}[label=bk-ordre]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{Que font Robust SL et (H)DBSCAN pour $K = 2$ ?}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Nuage de points et boules de rayon $r$}
+
+                \vspace{0.4cm}
+                \input{figs/sixpts_boules}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Arbre hiérarchique obtenu}}
+
+                \vspace{0.4cm}
+                \input{figs/sixpts_dendro_plat}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small Un dendrogramme \textbf{plat} : toute l'information hiérarchique fine est perdue
+    \end{center}
+\end{frame}
+
+\begin{frame}{La vraie hiérarchie $2$-NN : échelle $r$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Les $2$-intersections de boules au niveau $r$}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_r_boules}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Arbre hiérarchique}}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_r_dendro}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Étape 1} : les 7 segments fusionnent au seuil $r$
+    \end{center}
+\end{frame}
+
+\begin{frame}{La vraie hiérarchie $2$-NN : échelle $r'$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Triangles et $3$-intersections à $r'$}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_rp_boules}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Arbre hiérarchique}}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_rp_dendro}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Étape 2} : fusion des triangles à $r'$ \emph{via} les $3$-intersections. L'arête $CD$ reste isolée
+    \end{center}
+\end{frame}
+
+\begin{frame}{La vraie hiérarchie $2$-NN : échelle $r''$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \textbf{Connexité globale à $r''$}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_rs_boules}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Arbre hiérarchique}}
+
+                \vspace{0.4cm}
+                \input{figs/deuxnn_rs_dendro}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.3cm}
+    \begin{center}
+        \small \textbf{Étape 3} : connexité globale à $r''$ par les points de tangence
+    \end{center}
+\end{frame}
+
+\begin{frame}{Le diagnostic}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{black}{\textbf{Robust SL ($K=2$)}}
+
+                \vspace{0.4cm}
+                \input{figs/comp_dendro_rsl}
+            \end{center}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \textcolor{inria-rouge}{\textbf{Vraie hiérarchie $2$-NN}}
+
+                \vspace{0.4cm}
+                \input{figs/comp_dendro_2nn}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.25cm}
+    \begin{center}
+        \normalsize Une asymétrie : condition d'ordre $K$ sur les \textbf{points}, mais connexité d'ordre $1$ par les \textbf{arêtes}
+    \end{center}
+\end{frame}
+
+\begin{frame}{La réparation : le complexe de \v{C}ech et les $K$-polyèdres}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.63\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{Graphe géométrique} $\longrightarrow$ \textbf{complexe de \v{C}ech} :\\
+                un $K$-simplexe $\Longleftrightarrow$ $K+1$ boules d'intersection non vide
+                \item \textbf{Composantes connexes} $\longrightarrow$ \textbf{$K$-polyèdres} :\\
+                des $(K-1)$-simplexes recollés par des $K$-simplexes
+                \item Pour $K \ge 2$, les amas peuvent \textbf{se recouvrir}
+            \end{itemize}
+
+            \vspace{0.5cm}
+            \begin{beamercolorbox}[rounded=true,sep=6pt]{block body}
+                \small\textbf{Théorème} \citb{ans26} \citb{eusipco24} : à tout niveau, les $K$-polyèdres identifient \emph{exactement} les amas discrets de forte densité de l'estimateur $\widehat f_{K\text{-NN}}$. Pour $K=1$ : le \emph{Single-Linkage}
+            \end{beamercolorbox}
+
+        \end{column}
+
+        \begin{column}{0.35\textwidth}
+            \begin{center}
+                \input{figs/cech_complexe}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \reffoot{ans26,eusipco24}
+\end{frame}
+
+\begin{frame}{Qui provoque les fusions ? La condition de \textsc{Gabriel}}
+    \begin{center}
+        \large \textbf{Arête de l'arbre minimum couvrant} $\longrightarrow$ \textbf{simplexe $K$-séparant}
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{12pt}
+                \item \textbf{Définition} \citb{ans26} : un simplexe est dit \textbf{$K$-séparant} s'il
+                provoque une fusion $K$-NN
+                \item \textbf{Cas $K=1$} : les $1$-séparants sont exactement les arêtes de l'arbre minimum couvrant
+                \item \textbf{Définition} \citb{ans26} : un $K$-simplexe est dit de \textbf{\textsc{Gabriel}}
+                si sa miniboule ne contient aucun autre point
+                \item \textbf{Théorème} \citb{ans26} : tout simplexe $K$-séparant est de \textsc{Gabriel}
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \input{figs/gabriel_simplexes}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \reffoot{ans26}
+\end{frame}
+
+\begin{frame}{$K$-arbre couvrant et mosaïque de \textsc{Delaunay} d'ordre $K$}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item \textbf{Fusions critiques} : les simplexes $K$-séparants,\\
+                tous $K$-\textsc{Gabriel} (boule minimale vide)
+                \item \textbf{Arbre couvrant} $\longrightarrow$ \textbf{$K$-arbre couvrant} :\\
+                élagué à $r$, il redonne les $K$-polyèdres \citb{ans26}
+                \item \textbf{\textsc{Delaunay}} $\longrightarrow$ \textbf{mosaïque d'ordre $K$} :\\
+                elle porte tous les simplexes $K$-\textsc{Gabriel} \citb{edelsbrunner23}
+                \item Pour $K=2$ : tout se lit dans \textsc{Delaunay},\\
+                en $\mathcal O(n\log n)$ dans le plan
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.44\textwidth}
+            \begin{center}
+                \textbf{Analogie ordre $1$ \emph{vs.} ordre $K$}
+
+                \vspace{0.4cm}
+                \small
+                \renewcommand{\arraystretch}{1.5}
+                \setlength{\tabcolsep}{3pt}
+                \begin{tabular}{lcc}
+                    \toprule
+                    & \textbf{$K = 1$} & \textbf{$K \ge 2$} \\
+                    \midrule
+                    \textbf{Sommets} & points & $(K-1)$-simplexes \\
+                    \textbf{Fusions} & arêtes & $K$-simplexes \\
+                    \textbf{Condition} & arête \textsc{Gabriel} & $K$-\textsc{Gabriel} \\
+                    \textbf{Domaine} & \textsc{Delaunay} & \textsc{Delaunay} d'ordre $K$ \\
+                    \bottomrule
+                \end{tabular}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \reffoot{edelsbrunner23,ans26}
+\end{frame}
+
+\begin{frame}{Pourquoi \textsc{Gabriel} plutôt que la mosaïque de \textsc{Delaunay} d'ordre supérieur ?}
+    \vspace{-0.10cm}
+    \begin{center}
+        \resizebox{0.50\textwidth}{!}{\input{figs/miniball_circumball}}\\[6pt]
+        \begin{minipage}{0.50\textwidth}\small
+            \makebox[0.50\linewidth]{\begin{tabular}[t]{@{}c@{}}\textbf{\textsc{Delaunay}}\\[1pt]
+                (sphère circonscrite)\end{tabular}}%
+            \makebox[0.50\linewidth]{\begin{tabular}[t]{@{}c@{}}\textbf{\textsc{Gabriel}}\\[1pt]
+                (\emph{miniball})\end{tabular}}
+        \end{minipage}
+    \end{center}
+
+    \vspace{0.22cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{6pt}
+        \item Quasi dégénérée, la sphère circonscrite admet des témoins \textbf{arbitrairement lointains} ;
+        ceux de la \emph{miniball} sont \textbf{localisables}
+        \item Une décomposition en \textbf{paires bien séparées} \citb{callahan95} élimine alors des
+        \textbf{blocs} de candidats \textbf{en parallèle} ; \textsc{Delaunay} reste séquentiel
+    \end{itemize}
+    \reffoot{callahan95}
+\end{frame}
+
+\begin{frame}{Banc d'essai SIPU : toutes choses égales par ailleurs}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.52\textwidth}
+            \begin{center}
+                \includegraphics[width=\linewidth,height=0.72\textheight,keepaspectratio]{imgs/SIPU_s1s3_clair.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.44\textwidth}
+            \small
+            Même \texttt{min\_cluster\_size} $= \sqrt n$, même excès de masse :\\
+            la seule différence est la \textbf{connexité triangulaire}
+
+            \vspace{0.3cm}
+            \renewcommand{\arraystretch}{1.25}
+            \begin{tabular}{lcc}
+                \toprule
+                Jeu & HDBSCAN & $2$-polyèdres \\
+                \midrule
+                a2 & 0,762 & \textbf{0,834} \\
+                a3 & 0,696 & \textbf{0,831} \\
+                d31 & 0,660 & \textbf{0,835} \\
+                s2 & 0,780 & \textbf{0,842} \\
+                s3 & 0,251 & \textbf{0,418} \\
+                birch2 & 0,996 & \textbf{0,998} \\
+                \bottomrule
+            \end{tabular}
+
+            \vspace{0.2cm}
+            {\scriptsize ARI ; grille : vérité, HDBSCAN, notre algorithme}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{En pratique ($K=2$) : les huiles d'olive italiennes \citb{forina83}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.40\textwidth}
+            \begin{center}
+                \includegraphics[width=0.74\textwidth]{imgs/OliveOil_HDBSCAN.png}
+
+                \vspace{0.2cm}
+                {\small HDBSCAN : 3 macrorégions}
+            \end{center}
+        \end{column}
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \includegraphics[width=0.84\textwidth]{imgs/OliveOil_KPoly_dendro.png}
+
+                \vspace{0.2cm}
+                {\small $2$-polyèdres : \textbf{8 provinces identifiées}\\[-1pt]
+                parmi les $72\,\%$ de points classés}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \vspace{0.25cm}
+    \begin{center}
+        \small Au-delà de l'état de l'art \citb{rolle23} \citb{ans26}
+    \end{center}
+    \reffoot{forina83,rolle23,ans26}
+\end{frame}
+
+\begin{frame}{Huiles d'olive : la matrice de confusion}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.54\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/OliveOil_confusion.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{9pt}
+                \item $412/572$ points classés ($72\,\%$), dont $96{,}1\,\%$ correctement
+                \item Persistable \citb{rolle23} : $49\,\%$ classés seulement
+                \item En partition exhaustive : ARI $0{,}890$ contre $0{,}848$
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{rolle23}
+\end{frame}
+
+% ============================================================
+\section{\texorpdfstring{La \textcolor{inria-rouge}{percolation} comme mesure de performance}{La percolation comme mesure de performance}}
+\begin{frame}[label=bk-percolation]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{Le phénomène au cœur de tout : la percolation continue}
+    \begin{center}
+        \includegraphics[width=0.78\textwidth]{imgs/PercolationContinue.png}
+
+        \vspace{0.4cm}
+        \normalsize $r < r_c$ \hspace{2.4cm} $r = r_c$ \hspace{2.4cm} $r > r_c$
+
+        \vspace{0.3cm}
+        \small Au-delà d'un seuil critique, une \textbf{composante géante} (en rouge) émerge \citb{penrose03}
+    \end{center}
+    \reffoot{penrose03}
+\end{frame}
+
+\begin{frame}{Pourquoi le \emph{Single-Linkage} échoue en dimension $\ge 2$}
+    \begin{center}
+        \resizebox{0.60\textwidth}{!}{\input{figs/perco_carres}}
+
+        \vspace{0.3cm}
+        \only<1>{\small Deux amas denses, $A$ et $B$ (les carrés), sur un fond de faible densité}%
+        \only<2>{\small Arbre couvrant élagué au rayon $r_1$ : la percolation a lieu dans chaque carré, pas sur le fond}%
+        \only<3>{\small Au rayon $r_2 > r_1$, \textbf{le fond percole aussi} : $A$ et $B$ fusionnent \emph{avant} d'avoir été entièrement récupérés}
+    \end{center}
+\end{frame}
+
+\begin{frame}{La fraction récupérable}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.56\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/vitesse_percolation_HGP_d2.png}
+
+                \vspace{0.15cm}
+                {\small Fraction de points dans la composante géante \citb{ans26}}
+            \end{center}
+        \end{column}
+        \begin{column}{0.42\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{11pt}
+                \item En abscisse : l'intensité $\lambda$ ; en ordonnée : la fraction des points dans la \textbf{composante géante}
+                \item Sous le seuil critique $\lambda_c$ : rien
+                \item La \textbf{fraction récupérable} d'un amas\\ se lit sur la courbe
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{ans26}
+\end{frame}
+
+\begin{frame}{Quantifier : la \emph{vitesse de percolation}}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.58\textwidth}
+            \begin{center}
+                \begin{tikzpicture}
+                    \node[anchor=south west, inner sep=0] (img) at (0,0) {\includegraphics[width=0.96\textwidth]{imgs/vitesse_percolation_HGP_d2.png}};
+                    \begin{scope}[x={(img.south east)}, y={(img.north west)}]
+                        % Niveau supérieur : 1-epsilon = 97 % dans le protocole expérimental.
+                        \draw[gris_fonce_inria, densely dashed, line width=0.65pt]
+                            (0.050, 0.916) -- (0.979, 0.916);
+                        \node[gris_fonce_inria, font=\scriptsize\bfseries, anchor=south west,
+                              fill=white, fill opacity=0.90, text opacity=1, inner sep=1pt]
+                            at (0.055, 0.918) {$1-\varepsilon$};
+                        % Décollage des courbes : intersections avec le niveau 1 %.
+                        \foreach \xc/\couleur/\k in {0.160/mplC0/1, 0.260/mplC1/2, 0.360/mplC2/3, 0.461/mplC3/4, 0.564/mplC4/5} {
+                            \fill[white] (\xc, 0.116) circle (2.4pt);
+                            \fill[\couleur] (\xc, 0.116) circle (1.7pt);
+                            \node[\couleur, font=\scriptsize, anchor=south east, inner sep=1pt]
+                                at (\xc, 0.128) {$\lambda_c^{\k}$};
+                        }
+                        % Quantiles 1-epsilon : ronds à l'épaule de saturation.
+                        \foreach \xs/\couleur/\k in {0.213/mplC0/1, 0.344/mplC1/2, 0.471/mplC2/3, 0.596/mplC3/4, 0.722/mplC4/5} {
+                            \fill[\couleur] (\xs, 0.916) circle (2.1pt);
+                            \node[\couleur, font=\scriptsize, anchor=south] at (\xs, 0.960) {$\lambda_{1-\varepsilon}^{\k}$};
+                        }
+                    \end{scope}
+                \end{tikzpicture}
+
+                \vspace{0.1cm}
+                {\small Probabilité de percolation des $K$-polyèdres \citb{ans26}}
+            \end{center}
+        \end{column}
+        \begin{column}{0.40\textwidth}
+            \begin{center}
+                \formulebox{$\displaystyle v \;=\; \frac{\lambda_{c}}{\lambda_{1-\varepsilon}}$}
+            \end{center}
+
+            \vspace{0.25cm}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item $\lambda_{1-\varepsilon}$ : l'amas est presque \textbf{entier}
+                \item Plus $v$ est \textbf{proche de $1$},\\ meilleur est l'algorithme \citb{src24} \citb{cn24}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \reffoot{src24,cn24,ans26}
+\end{frame}
+
+\begin{frame}{Vitesses de percolation mesurées}
+    \begin{center}
+        \footnotesize
+        \renewcommand{\arraystretch}{1.3}
+        \setlength{\tabcolsep}{4pt}
+        \begin{tabular}{@{} l ccc c ccc c ccc @{}}
+            \toprule
+            & \multicolumn{3}{c}{$p=2$} & \phantom{a} & \multicolumn{3}{c}{$p=3$} & \phantom{a} & \multicolumn{3}{c}{$p=4$} \\
+            \cmidrule{2-4} \cmidrule{6-8} \cmidrule{10-12}
+            $K$ & HGP & Robust SL & DBSCAN && HGP & Robust SL & DBSCAN && HGP & Robust SL & DBSCAN \\
+            \midrule
+            1 & \textbf{0,735} & \textbf{0,735} & \textbf{0,735} && \textbf{0,563} & \textbf{0,563} & \textbf{0,563} && \textbf{0,362} & \textbf{0,362} & \textbf{0,362} \\
+            2 & \textbf{0,779} & 0,689 & 0,735 && \textbf{0,646} & 0,462 & 0,563 && \textbf{0,451} & 0,271 & 0,362 \\
+            3 & \textbf{0,800} & 0,632 & 0,753 && \textbf{0,690} & 0,412 & 0,582 && \textbf{0,497} & 0,247 & 0,378 \\
+            4 & \textbf{0,817} & 0,598 & 0,767 && \textbf{0,714} & 0,400 & 0,605 && \textbf{0,500} & 0,246 & 0,409 \\
+            5 & \textbf{0,826} & 0,584 & 0,779 && \textbf{0,732} & 0,399 & 0,625 && \textbf{0,534} & 0,236 & 0,415 \\
+            \bottomrule
+        \end{tabular}
+
+        \vspace{0.12cm}
+        {\small Mesures des vitesses de percolation \citb{ans26}}
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{itemize}
+        \setlength{\itemsep}{6pt}
+        \item \textbf{$K$-polyèdres} : la vitesse \textbf{croît} avec $K$, en dimension $2$, $3$ et $4$
+        \item \textbf{Robust SL} : elle \textbf{décroît} ; élaguer la frontière, c'est jeter une part de l'amas
+        \item \textbf{DBSCAN} : il réintègre cette frontière élaguée, mais ses cœurs percolent trop tôt
+    \end{itemize}
+    \reffoot{ans26}
+\end{frame}
+
+\begin{frame}{Vitesses de percolation : \emph{Robust Single-Linkage} et DBSCAN}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/vitesse_percolation_RSL_d2.png}
+
+                {\scriptsize \emph{Robust SL} : la percolation converge trop lentement vers $1$}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/vitesse_percolation_DBSCAN_d2.png}
+
+                {\scriptsize DBSCAN : frontière réintégrée, mais les cœurs percolent trop tôt}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.25cm}
+    \begin{center}
+        {\footnotesize $n = 100\,000$ points uniformes, $100$ tirages ;
+        $\widehat v = \widehat\lambda_{\varepsilon} / \widehat\lambda_{1-\varepsilon}$, $\varepsilon = 3\,\%$ ;
+        repère 2D, $K=1$ : $\lambda_c \approx 1{,}44$}
+    \end{center}
+\end{frame}
+
+\begin{frame}{Quand $K \to +\infty$ : la fenêtre gaussienne}
+    \begin{itemize}
+        \setlength{\itemsep}{10pt}
+        \item Dans la fenêtre $\mu = K + a\sqrt K$, les niveaux $K$-NN convergent vers les \textbf{excursions} $E_a = \{G_p \ge -a\}$ d'un champ gaussien
+        \item Covariance du champ : le volume d'intersection de deux boules
+        \item Les trois algorithmes ne diffèrent que par l'\textbf{ordre des opérations} : dilater puis connecter (cœurs, DBSCAN) \emph{vs.} connecter puis dilater (polyèdres)
+        \item Seuils de bruit : $a_c^{\mathrm{poly}} \ge a_c^{\mathrm{core}}$, vitesse asymptotiquement meilleure pour les $K$-polyèdres
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]{\textsc{Schilder} dans l'espace de \textsc{Cameron}--\textsc{Martin}}
+    \small
+    L'espace de \textsc{Cameron}--\textsc{Martin} $\mathcal H_p$ \citb{cameron44} : les déformations $h$ du champ
+    $G_p$ d'\textbf{énergie finie} $\Vert h\Vert^2_{\mathcal H_p}$ --- le \textbf{RKHS} de sa covariance \citb{berlinet04}
+
+    \vspace{0.10cm}
+    \begin{center}
+        \formulebox{\parbox{0.80\textwidth}{\centering\small
+        \textsc{Schilder} \citb{schilder66} : \quad
+        $\mathbb P\bigl(G_p \approx a\,h\bigr) \;\approx\; \exp\!\bigl(-\tfrac{a^2}{2}\,\Vert h\Vert^2_{\mathcal H_p}\bigr)$}}
+    \end{center}
+
+    \vspace{0.08cm}
+    \begin{center}
+        \resizebox{0.46\textwidth}{!}{\input{figs/schilder_obstruction}}
+    \end{center}
+
+    \vspace{0.04cm}
+    \begin{center}
+        Un point qui plonge coûte $1$ ; la boule entière coûte $1/U_p$, l'inverse de sa \textbf{capacité}
+        ($1/U_2 \approx 3{,}4$)\\[2pt]
+        {\color{inria-rouge}Ébauche : la borne globale (lemme de Peierls) reste à écrire}
+    \end{center}
+    \reffoot{cameron44,berlinet04,schilder66}
+\end{frame}
+
+\begin{frame}[t]{Le théorème de \textsc{Schilder}, énoncé}
+    \small
+    $G_p$ : le champ gaussien limite, centré, de covariance
+    $\rho_p(x - y) = \bigl|B(x,\tfrac12) \cap B(y,\tfrac12)\bigr| \,/\, \bigl|B(0,\tfrac12)\bigr|$, à trajectoires
+    continues sur un compact $\Gamma \subset \mathbb R^p$ ; \; $\mathcal H_p$ son espace de
+    \textsc{Cameron}--\textsc{Martin}, de norme $\Vert\cdot\Vert_{\mathcal H_p}$
+
+    \vspace{0.16cm}
+    \begin{center}
+        \formulebox{\parbox{0.93\textwidth}{\small
+        \textbf{Théorème} (\textsc{Schilder} \citb{schilder66} ; forme gaussienne \citb{dembozeitouni10}).
+        Pour tout borélien $A \subseteq \mathcal C(\Gamma, \mathbb R)$, d'intérieur $\mathring A$ et
+        d'adhérence $\overline A$, quand $a \to +\infty$ :
+        \[
+        \begin{aligned}
+            \liminf_{a \to +\infty} \frac{1}{a^2} \log \mathbb P\bigl(G_p \in a\,A\bigr)
+            &\;\ge\; -\inf_{h \in \mathring A} \tfrac12\,\Vert h\Vert^2_{\mathcal H_p}, \\[2pt]
+            \limsup_{a \to +\infty} \frac{1}{a^2} \log \mathbb P\bigl(G_p \in a\,A\bigr)
+            &\;\le\; -\inf_{h \in \overline A} \tfrac12\,\Vert h\Vert^2_{\mathcal H_p}.
+        \end{aligned}
+        \]}}
+    \end{center}
+
+    \vspace{0.16cm}
+    \begin{itemize}
+        \item Autrement dit : $\{G_p / a\}_{a > 0}$ satisfait un \textbf{principe de grandes déviations}
+        de vitesse $a^2$ et de fonction de taux $I(h) = \tfrac12 \Vert h\Vert^2_{\mathcal H_p}$,
+        valant $+\infty$ hors de $\mathcal H_p$
+    \end{itemize}
+    \reffoot{schilder66,dembozeitouni10}
+\end{frame}
+
+% ============================================================
+\section{Applications : LiDAR 3D et 4D, sans apprentissage}
+\begin{frame}[label=bk-lidar]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{La hiérarchie devient un espace de résolution}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{10pt}
+                \item L'arbre hiérarchique n'est pas qu'une sortie : on peut y \textbf{injecter des \emph{a priori}} géométriques
+                \item \textbf{Détection d'anomalies 3D} : comparaison\\ au modèle théorique du navire
+                \item Banc d'essai sur $2\,000\,000$ points : objets étrangers \textbf{parfaitement isolés}, sans aucun apprentissage
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/Resultat_MarieBenchmark.png}
+
+                \vspace{0.3cm}
+                \scriptsize Modèle de référence en rouge, anomalies en couleurs \citb{ayana25}\\[-1pt]
+                {\tiny \copyright~Naval Group}
+            \end{center}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.20cm}
+    \begin{center}
+        {\small En collaboration avec Marie \textsc{Aspro} (Inria Startup Studio)}
+    \end{center}
+    \reffoot{ayana25}
+\end{frame}
+
+\begin{frame}{Nos premiers résultats : \textcolor{inria-rouge}{3D}}
+    \vspace{0.35cm}
+    \begin{center}
+        \begin{tabular}{@{}c@{\hspace{8pt}}c@{\hspace{8pt}}c@{}}
+            \includegraphics[height=3.0cm]{imgs/kitti_3d_prior_2.jpg} &
+            \includegraphics[height=3.0cm]{imgs/kitti_3d_prior_3.png} &
+            \includegraphics[height=3.0cm]{imgs/kitti_3d_prior_1.jpg}
+        \end{tabular}
+
+        \vspace{0.55cm}
+        {\small \emph{A priori} géométriques appliqués aux volumes des instances,
+        sur SemanticKITTI \citb{semantickitti19}}
+    \end{center}
+    \reffoot{semantickitti19}
+\end{frame}
+
+\begin{frame}{Nos premiers résultats : \textcolor{inria-rouge}{4D}}
+    \vspace{0.10cm}
+    \begin{center}
+        \begin{tabular}{cc}
+            \textbf{Vérité terrain} & \textbf{Notre algorithme} \\
+            \includegraphics[width=0.30\textwidth]{imgs/SemanticKITTI_200frames_GT.png} &
+            \includegraphics[width=0.30\textwidth]{imgs/SemanticKITTI_200frames_HGP.png}
+        \end{tabular}
+    \end{center}
+
+    \vspace{0.28cm}
+    \begin{center}
+        {\small SemanticKITTI \citb{semantickitti19}, 200 trames\\[3pt]
+        suivi par \textbf{transport optimal} $+$ filtre de \textsc{Kalman},
+        \textbf{sans apprentissage}}
+    \end{center}
+    \reffoot{semantickitti19}
+\end{frame}
+
+% ============================================================
+\section{Vers des données davantage structurées}
+\begin{frame}[label=bk-structure]
+    \sectionpage
+\end{frame}
+
+\begin{frame}{Quand la structure n'est plus (seulement) la géométrie}
+    \begin{center}
+        \large Les deux idées de la thèse appliquées à des données davantage structurées\\[4pt]
+        \normalsize \textbf{1)} les interactions d'ordre supérieur apportent la robustesse\\
+        \textbf{2)} la percolation gouverne les performances
+    \end{center}
+
+    \vspace{0.05cm}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \input{figs/graphe_signe}
+
+                \vspace{0.05cm}
+                {\scriptsize trait plein : attraction \quad pointillés : répulsion\\
+                trait gras : arête satisfaite (trait fin : non satisfaite)}
+
+                \vspace{0.05cm}
+                \footnotesize \textbf{Graphes signés} : les liens \emph{créent} les communautés \citb{asilomar25}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[height=2.55cm]{imgs/PalaisDesPapes.png}
+
+                \footnotesize \textbf{Images} : extraire des réseaux de fissures \citb{euvip26}\\[-1pt]
+                {\tiny \copyright~Cerema}
+            \end{center}
+        \end{column}
+    \end{columns}
+    \reffoot{asilomar25,euvip26}
+\end{frame}
+
+\begin{frame}[t]{Détection de communautés sur graphes signés : un cadre bayésien}
+    \begin{center}
+        {\small \textbf{Détection de communautés} \citb{avrachenkov22} : retrouver les communautés cachées $\Sigma$ d'un graphe dont les liens sont \emph{signés}}
+
+        \vspace{0.06cm}
+        \begin{tikzpicture}[node distance=0.6cm and 0.75cm, scale=0.78, every node/.style={scale=0.78}]
+            \node[chapbox] (prior) {\emph{A priori}\\$\mu_{0}$};
+            \node[chapbox,right=of prior] (truth) {Communautés\\cachées $\Sigma$};
+            \node[chapbox,right=of truth] (chan) {Canal bruité\\$Q$};
+            \node[chapboxdark,right=of chan] (obs) {Observation\\$(X,W)$};
+            \node[chapbox,right=of obs] (post) {\emph{A posteriori}\\$\mu$};
+            \draw[chaparr] (prior) -- (truth);
+            \draw[chaparr] (truth) -- (chan);
+            \draw[chaparr] (chan) -- (obs);
+            \draw[chaparr] (obs) -- (post);
+        \end{tikzpicture}
+    \end{center}
+
+    \vspace{0.35cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{7pt}
+        \item $W_e>0$ encode une \textbf{attraction} ; $W_e<0$, une \textbf{répulsion} ; $|W_e|$ mesure la force de l'interaction
+        \item Dans le cas étudié, le canal calibré donne une loi \emph{a posteriori} de \textsc{Gibbs} signée \citb{ii26} :
+    \end{itemize}
+
+    \vspace{0.15cm}
+    \begin{center}
+        \formulebox{$\displaystyle
+        U(\sigma)=-\log\mu_0(\sigma\mid X)
+        +\sum_{\substack{e=\{i,j\}\\ W_e>0}}W_e\ind{\sigma_i\neq\sigma_j}
+        +\sum_{\substack{e=\{i,j\}\\ W_e<0}}|W_e|\ind{\sigma_i=\sigma_j},
+        \qquad \mu(\sigma)=\frac{e^{-U(\sigma)}}{Z}$}
+    \end{center}
+    \reffoot{avrachenkov22,ii26}
+\end{frame}
+
+\begin{frame}[t]{Un pas de \textsc{Swendsen}--\textsc{Wang} signé}
+    \begin{center}
+        \scalebox{0.9}{\input{figs/sw_pas}}
+    \end{center}
+
+    \vspace{0.02cm}
+    \begin{center}
+        \formulebox{$\displaystyle
+        \mathbb P(e\text{ gelée}\mid\sigma)=
+        \begin{cases}
+            1-e^{-|W_e|}, & e\text{ satisfaite}\\
+            0, & e\text{ non satisfaite}
+        \end{cases}$}
+    \end{center}
+
+    \vspace{0.05cm}
+    \footnotesize
+    \begin{itemize}
+        \setlength{\itemsep}{2pt}
+        \item Pour deux classes et un \emph{a priori} uniforme, chaque composante gelée est
+        \textbf{retournée en bloc} avec probabilité $1/2$ : la transition est réversible et préserve $\mu$ \citb{sw87}
+        \item Dans la preuve, un pas depuis $\Sigma$ produit une
+        \textbf{réplique couplée de la loi \emph{a posteriori}} $\Sigma^{(1)}$
+    \end{itemize}
+    \reffoot{sw87}
+\end{frame}
+
+\begin{frame}{Généraliser \textsc{Swendsen}--\textsc{Wang} aux interactions d'ordre supérieur}
+    \begin{center}
+        \formulebox{$\displaystyle
+        U(\sigma)=U_0(\sigma)+\sum_{b\in\mathcal B}U_b(\sigma),
+        \qquad b=\text{arête, triangle, clique\ldots}$}
+    \end{center}
+
+    \vspace{0.12cm}
+    \begin{center}
+        \scalebox{0.9}{\input{figs/sw_motifs}}
+    \end{center}
+
+    \vspace{0.08cm}
+    \footnotesize
+    \begin{itemize}
+        \item Un \textbf{seul tirage par motif} : on introduit de la \textbf{corrélation}
+        dans le processus de gel \citb{asilomar25} \citb{ii26}
+    \end{itemize}
+    \reffoot{asilomar25,ii26}
+\end{frame}
+
+\begin{frame}[t]{La percolation borne le recouvrement des communautés}
+    \vspace{0.10cm}
+    \begin{center}
+        \begin{tikzpicture}[x=1cm,y=1cm, every node/.style={font=\small}]
+            \node[chapbox, text width=10.8cm] (sb)
+                {\textbf{Le point de départ} \citb{sb18}\\[3pt]
+                la \textbf{percolation} est une condition \textbf{nécessaire} au recouvrement faible,\\
+                et la masse $\theta$ de la composante géante \textbf{borne} la fraction recouvrable};
+
+            \node[chapbox, draw=inria-rouge, text width=10.8cm, below=0.82cm of sb] (nous)
+                {\textbf{Notre cadre bayésien} \citb{ii26}\\[3pt]
+                le graphe gelé d'un pas de \textsc{Swendsen}--\textsc{Wang} \emph{est} leur graphe\\
+                de percolation : leur théorème est \textbf{retrouvé exactement}};
+
+            \node[chapbox, draw=inria-rouge, text width=10.8cm, below=0.82cm of nous] (tri)
+                {\textbf{Dynamique triangulaire} \citb{ii26}\\[3pt]
+                le gel corrélé par triangles percole \textbf{plus tard} :\\
+                des bornes de recouvrement \textbf{strictement meilleures}};
+
+            \draw[chaparr] ($(sb.south)+(-3.4,0)$) -- ($(nous.north)+(-3.4,0)$)
+                node[midway, right=6pt, font=\footnotesize]
+                {couplage : \emph{un} pas de \textsc{Swendsen}--\textsc{Wang} depuis la vérité $\Sigma$};
+            \draw[chaparr] ($(nous.south)+(-3.4,0)$) -- ($(tri.north)+(-3.4,0)$)
+                node[midway, right=6pt, font=\footnotesize]
+                {on change de motif : les triangles au lieu des arêtes};
+        \end{tikzpicture}
+    \end{center}
+    \reffoot{sb18,ii26}
+\end{frame}
+
+\begin{frame}{L'échelle des seuils du GSBM triangulaire}
+    \begin{center}
+        \includegraphics[width=0.8\textwidth]{imgs/GSBM_echelle_seuils.png}
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{itemize}
+        \item Gel SW $0{,}6736$ $<$ triangles $0{,}7192$ $<$ percolation de l'information $0{,}7947$ $<$ \textbf{record rigoureux $0{,}8094$}
+        \item Point multicritique de Nishimori $0{,}8358$ : conjecture
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Validation à $10^6$ nœuds : les trois régimes}
+    \begin{center}
+        \only<1>{\includegraphics[width=0.62\textwidth]{imgs/LargestComp0.7.png}}%
+        \only<2>{\includegraphics[width=0.62\textwidth]{imgs/LargestComp0.72.png}}%
+        \only<3>{\includegraphics[width=0.62\textwidth]{imgs/LargestComp0.80.png}}
+
+        \vspace{0.3cm}
+        \only<1>{\small $p = 0{,}70$ : seules les arêtes standard percolent ; l'\emph{overlap} reste au bruit}%
+        \only<2>{\small $p = 0{,}72$ : toutes les dynamiques percolent\ldots\ mais l'\emph{overlap} reste au bruit (nécessaire $\neq$ suffisant)}%
+        \only<3>{\small $p = 0{,}80$ : composantes géantes stables et \textbf{recouvrement effectif}}
+    \end{center}
+\end{frame}
+
+\begin{frame}[t]{Extraction de réseaux de fissures sur images}
+    \begin{center}
+        \begin{tabular}{cccc}
+            \includegraphics[width=0.18\textwidth]{imgs/Intensity_1FIND.png} &
+            \includegraphics[width=0.18\textwidth]{imgs/Range_1FIND.png} &
+            \includegraphics[width=0.18\textwidth]{imgs/FrangiSim_1FIND.png} &
+            \includegraphics[width=0.18\textwidth]{imgs/Resultat_1FIND.png} \\
+            {\scriptsize intensité} & {\scriptsize profondeur} & {\scriptsize similarité d'arête} & {\scriptsize squelette extrait} \\
+        \end{tabular}
+    \end{center}
+
+    \vspace{0.10cm}
+    \begin{itemize}
+        \setlength{\itemsep}{6pt}
+        \item Du \textbf{pixel} (filtre de \textsc{Frangi} \citb{frangi98}, qui juge chaque pixel seul et se fragmente sous le bruit) à la \textbf{paire de pixels} (graphe de \textsc{Frangi} \citb{gretsi25})
+        \item \textbf{Multimodal} au niveau de l'\textbf{opérateur} : on somme les hessiennes normalisées, jamais les réponses \citb{euvip26}
+        \item Transferts exploratoires sans réentraînement ; sortie sous forme de \textbf{graphe éditable}
+    \end{itemize}
+    \reffoot{frangi98,gretsi25,euvip26}
+\end{frame}
+
+\begin{frame}[t]{La hessienne : l'information sur les structures \emph{tubulaires}}
+    \vspace{0.10cm}
+    \begin{center}
+        {\small $\mathcal H_\sigma(x)=\nabla^{2}\!\left(G_\sigma * I\right)\!(x)$, symétrique réelle :
+        axes propres $e_1,e_2$, demi-axes $1/\sqrt{|\lambda_1|}$ et $1/\sqrt{|\lambda_2|}$}
+    \end{center}
+
+    \vspace{0.06cm}
+    \begin{columns}[c,onlytextwidth]
+        \begin{column}{0.42\textwidth}
+            \begin{center}
+                \resizebox{0.80\linewidth}{!}{\input{figs/frangi_hessienne}}
+            \end{center}
+        \end{column}
+        \begin{column}{0.56\textwidth}
+            \small
+            Le filtre de \textsc{Frangi} \citb{frangi98} en tire \textbf{deux} nombres :
+            \vspace{0.14cm}
+            \begin{itemize}
+                \setlength{\itemsep}{7pt}
+                \item $R_B=\dfrac{|\lambda_1|}{|\lambda_2|}$ : la \textbf{forme}\\[1pt]
+                {\footnotesize $0$ pour une crête très allongée, $1$ pour un disque}
+                \item $S=\sqrt{\lambda_1^{2}+\lambda_2^{2}}$ : le \textbf{contraste}\\[1pt]
+                {\footnotesize la force des courbures}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.04cm}
+    \begin{center}
+        \formulebox{\parbox{0.84\textwidth}{\centering\small
+        $\displaystyle \exp\!\left(-\frac{R_B^{2}}{2\beta^{2}}\right)
+        \left(1-\exp\!\left(-\frac{S^{2}}{2c^{2}}\right)\right)$
+        \quad si $\lambda_2>0$, \; $0$ sinon\\[2pt]
+        {\footnotesize la réponse de \textsc{Frangi} : une crête sombre et contrastée}}}
+    \end{center}
+    \reffoot{frangi98}
+\end{frame}
+
+\begin{frame}[t]{Ce que le graphe ajoute : l'\emph{alignement}}
+    \vspace{0.15cm}
+    \begin{center}
+        {\small Le filtre juge chaque pixel \textbf{seul} ; le graphe demande que les directions
+        $e_1$ des \textbf{deux} pixels concordent}
+    \end{center}
+
+    \vspace{0.16cm}
+    \begin{center}
+        \resizebox{0.62\linewidth}{!}{\input{figs/frangi_alignement}}
+    \end{center}
+
+    \vspace{0.14cm}
+    \begin{center}
+        \formulebox{\parbox{0.80\textwidth}{\centering\small
+        $\displaystyle S_{\mathrm{align}}=\exp\!\left[-\frac12\left(\frac{\sin\!\left(\theta(x_i)-\theta(x_j)\right)}{s_{\mathrm a}}\right)^{\!2}\right]$\\[3pt]
+        {\footnotesize le sinus, car $\theta$ et $\theta+\pi$ décrivent le même axe} \citb{gretsi25} \citb{euvip26}}}
+    \end{center}
+    \reffoot{gretsi25,euvip26}
+\end{frame}
+
+\begin{frame}[t]{Un fond granulaire : l'ordre 2 coupe les ponts parasites}
+    \vspace{0.10cm}
+    \begin{center}
+        \includegraphics[width=0.94\textwidth]{imgs/VTGraF_granularite.png}\\[3pt]
+        \begin{minipage}{0.94\textwidth}\scriptsize\centering
+            \makebox[0.2439\linewidth]{visible granulaire}\hfill
+            \makebox[0.2439\linewidth]{réponse de \textsc{Frangi} au pixel}\hfill
+            \makebox[0.2439\linewidth]{similarité de \textsc{Frangi}}\hfill
+            \makebox[0.2439\linewidth]{composante retenue en bleu}
+        \end{minipage}
+    \end{center}
+
+    \vspace{0.20cm}
+    \footnotesize
+    \begin{itemize}
+        \setlength{\itemsep}{5pt}
+        \item Chaque caillou porte une réponse : le fond est aussi « crête » que la fissure
+        \item Une \textbf{chaîne d'arêtes} suffit alors à relier les cailloux de proche en proche : le fond percole
+        \item À l'\textbf{ordre 2}, deux arêtes ne se recollent que par un \textbf{triangle} : une chaîne sans
+        triangle ne propage plus la connexité, et la vitesse de percolation croît avec $K$ \citb{ans26} :
+        d'où le choix $K=2$ \citb{euvip26}
+    \end{itemize}
+    \reffoot{ans26,euvip26}
+\end{frame}
+
+\begin{frame}[t]{De la similarité au squelette : la chaîne d'extraction}
+    \begin{center}
+        \begin{tabular}{@{}c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c@{\;}c@{}}
+            \includegraphics[width=0.126\textwidth]{imgs/Int_1FIND.png} & $\rightarrow$ &
+            \includegraphics[width=0.126\textwidth]{imgs/FrangiSim_1FIND.png} & $\rightarrow$ &
+            \includegraphics[width=0.126\textwidth]{imgs/Cluster_1FIND.png} & $\rightarrow$ &
+            \includegraphics[width=0.126\textwidth]{imgs/Betweenness_1FIND.png} & $\rightarrow$ &
+            \includegraphics[width=0.126\textwidth]{imgs/Resultat_1FIND.png} \\[1pt]
+            {\scriptsize \textsc{Frangi} au pixel} & &
+            {\scriptsize similarité d'arête} & &
+            {\scriptsize composante} & &
+            {\scriptsize centralité} & &
+            {\scriptsize squelette} \\
+        \end{tabular}
+    \end{center}
+
+    \vspace{0.12cm}
+    \footnotesize
+    \begin{itemize}
+        \setlength{\itemsep}{3pt}
+        \item \textbf{Seuiller} les arêtes puis les sommets (une seule fraction $\tau$), garder les
+        \textbf{composantes} assez grandes : une seule sur FIND, toutes ailleurs
+        \item \textbf{Arbre couvrant minimal} par composante : la réponse épaisse devient une structure
+        d'axe unique \citb{euvip26}
+        \item \textbf{Centralité pondérée sur l'arbre}, en $\mathcal O(|V|)$ : masses des sous-arbres
+        accumulées, réenracinement au maximum, élagage descendant ; seul l'axe principal reste
+        \item \textbf{La suite, à l'ordre 2} : deux arêtes ne se recollent que par un \textbf{triangle} \citb{ans26} \citb{isprs26}
+    \end{itemize}
+
+    \vspace{0.06cm}
+    \begin{center}
+        {\footnotesize Sur FIND, \textbf{sans apprentissage} : $63\,\%$ de \textsc{Jaccard} en fusionnant
+        les trois modalités ($60\,\%$ à deux) ; CrackSegDiff, supervisé, atteint $87\,\%$ sur données
+        propres, mais s'effondre sous le bruit}
+    \end{center}
+    \reffoot{euvip26,ans26,isprs26}
+\end{frame}
+
+\begin{frame}{VT-GraF : la connexité $K = 2$ sur le terrain}
+    \begin{center}
+        \includegraphics[width=0.94\textwidth]{imgs/Raphael_algo_1.png}
+    \end{center}
+
+    \vspace{0.2cm}
+    \begin{itemize}
+        \item Visible granulaire $+$ thermique : la réponse de Frangi seule est noyée dans les cailloux
+        \item Les composantes triangles-connexes éliminent les artefacts granulaires
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Sans entraînement\ldots\ et robuste}
+    \begin{center}
+        \includegraphics[height=0.47\textheight]{imgs/Test1_512_512_result.png}
+
+        {\scriptsize Vaches Noires : vérité (vert), nous (rouge), U-Net $+$ \emph{transfer learning} (bleu)}
+    \end{center}
+
+    \vspace{0.15cm}
+    \begin{itemize}
+        \setlength{\itemsep}{4pt}
+        \item Compétitif avec un U-Net ayant coûté deux jours d'annotation experte
+        \item CrackSegDiff : $87\,\%$ \emph{vs.} $63\,\%$ de Jaccard sur données propres\ldots\ mais s'effondre hors distribution
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Transferts sans réentraînement}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[height=0.55\textheight]{imgs/PalaisDesPapes_Result.png}
+
+                {\small Palais des Papes : la fracture principale}
+            \end{center}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/CrackForest_algo_001.png}
+
+                {\small CrackForest : Jaccard $78\,\%$, Wasserstein $5$~px}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Sensibilité aux paramètres}
+    \begin{center}
+        \includegraphics[width=0.7\textwidth]{imgs/sensitivity_tau.png}
+
+        \vspace{0.3cm}
+        \small Seuil relatif $\tau$ : optimum net vers $\tau \approx 0{,}2$ (graphe fragmenté \emph{vs.} ponts parasites)
+    \end{center}
+\end{frame}
+
+% ============================================================
+\section{\texorpdfstring{Perspectives : la voie \textcolor{inria-rouge}{hiérarchique}}{Perspectives : la voie hiérarchique}}
+\begin{frame}[label=bk-perspectives]
+    \sectionpage
+\end{frame}
+
+\newcommand{\KleinbergCorps}{%
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.60\textwidth}
+            \small
+            Une fonction de \emph{clustering} $\mathcal C$ associe à un espace métrique fini
+            $(\mathcal X, d)$ une \textbf{partition} de $\mathcal X$
+
+            \vspace{0.20cm}
+            \begin{enumerate}[(i)]
+                \setlength{\itemsep}{5pt}
+                \item \textbf{Invariance d'échelle} : $\mathcal C(\mathcal X, \lambda d) = \mathcal C(\mathcal X, d)$
+                \item \textbf{Richesse} : toute partition est atteinte
+                \item \textbf{Cohérence} : resserrer un amas rendu par $\mathcal C$, ou écarter deux
+                de ces amas, ne change rien
+            \end{enumerate}
+
+            \vspace{0.22cm}
+            \formulebox{\parbox{0.93\textwidth}{\centering\small
+            \textbf{Impossibilité} \citb{kleinberg02} : \emph{aucune} $\mathcal C$ ne satisfait les trois}}
+        \end{column}
+        \begin{column}{0.38\textwidth}
+            \centering
+            \resizebox{0.86\textwidth}{!}{\input{figs/kleinberg_axiomes}}
+        \end{column}
+    \end{columns}}
+
+\begin{frame}[t]{Retour au début : le théorème d'impossibilité de \textsc{Kleinberg}}
+    \KleinbergCorps
+
+    \vspace{0.34cm}
+    \begin{center}
+        \formulebox{\parbox{0.86\textwidth}{\centering\small
+        \textsc{Carlsson} \& \textsc{Mémoli} ont trouvé la solution, et elle est
+        \textbf{hiérarchique} : c'est le \textbf{\emph{Single-Linkage}} \citb{carlsson10}}}
+    \end{center}
+    \reffoot{kleinberg02,carlsson10}
+\end{frame}
+
+\begin{frame}{Une dynamique de clusters \textcolor{inria-rouge}{hiérarchique}}
+    \vspace{0.02cm}
+    \begin{center}
+        \formulebox{\parbox{0.86\textwidth}{\centering\small
+        $\xi_e \sim \mathrm{Exp}\bigl(|W_e|\bigr)$ si $e$ est satisfaite, \quad $\xi_e = +\infty$ sinon ;\\[5pt]
+        $\Pi_\beta \;=\;$ composantes connexes du graphe $\bigl(V, \{e : \xi_e \le \beta\}\bigr)$,
+        \qquad $0 \le \beta \le 1$}}
+    \end{center}
+
+    \vspace{0.06cm}
+    \begin{center}
+        \resizebox{0.54\textwidth}{!}{\input{figs/dendro_horloges}}
+    \end{center}
+
+    \vspace{0.08cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{5pt}
+        \item En coupant aux \textbf{feuilles}, on retrouve \textsc{Glauber} ; en coupant aux
+        \textbf{racines}, \textsc{Swendsen}--\textsc{Wang}
+        \item La coupe la plus prometteuse pour le \textbf{recouvrement faible} :
+        la \textbf{température de percolation} \citb{ii26}
+    \end{itemize}
+    \reffoot{ii26}
+\end{frame}
+
+\begin{frame}[t]{La hiérarchie \textsc{Swendsen}--\textsc{Wang} coupée à $\beta$, vue par \textsc{Edwards}--\textsc{Sokal}}
+    \footnotesize
+    \textsc{Edwards}--\textsc{Sokal} \citb{es88} : tirer le couple $(\sigma, \omega)$ plutôt que $\sigma$ seul,
+    $\omega$ étant l'ensemble des arêtes \textbf{gelées} avant la date $\beta$
+
+    \vspace{0.12cm}
+    \begin{center}
+        \formulebox{\parbox{0.90\textwidth}{\centering
+        $\displaystyle \nu_\beta(\sigma,\omega) \;\propto\;
+        \underbrace{\mu_0(\sigma)\, e^{-(1-\beta)\,U(\sigma)}}_{\text{\emph{a priori} chargé de l'énergie résiduelle}}
+        \;\prod_{e \in \omega} \bigl(1 - e^{-\beta |W_e|}\bigr)\, \ind{e \text{ satisfaite}}
+        \;\prod_{e \notin \omega} e^{-\beta |W_e|}$}}
+    \end{center}
+
+    \vspace{0.08cm}
+    \begin{itemize}
+        \setlength{\itemsep}{3pt}
+        \item \textbf{Marginale en $\sigma$} : sommer sur $\omega$ donne $e^{-\beta U(\sigma)}$ ; le poids $(1-\beta)\,U$
+        mis dans l'\emph{a priori} complète l'exposant : $\mu(\sigma) \propto \mu_0(\sigma)\, e^{-U(\sigma)}$ pour tout $\beta$
+        \item \textbf{Sachant $\sigma$, le gel} : arête satisfaite gelée avec probabilité
+        $1 - e^{-\beta|W_e|} = \mathbb P(\xi_e \le \beta)$ : $\omega = \{\xi_e \le \beta\}$, ses amas sont $\Pi_\beta$,
+        et les mêmes horloges servent à tous les $\beta$ (emboîtement)
+        \item \textbf{Sachant $\omega$, le recoloriage} : chaque amas est retourné en bloc ou non, selon
+        $\mu_0(\sigma)\, e^{-(1-\beta)U(\sigma)}$ : les amas de $\Pi_\beta$ interagissent encore par les arêtes non gelées ;
+        à $\beta = 1$, retournements uniformes et indépendants (\textsc{Swendsen}--\textsc{Wang})
+        \item Au nœud $u$ du dendrogramme, la coupe $E_u$ est vue à sa date de fusion $\beta_u$ : le facteur
+        $e^{(1-\beta_u)\Lambda_u(\sigma)}$ du retournement exact est ce poids résiduel \citb{ii26}
+    \end{itemize}
+    \reffoot{es88,ii26}
+\end{frame}
+
+\begin{frame}[t]{Retourner un amas : la loi exacte}
+    \small
+    Un tirage d'horloges fixe le dendrogramme $D$ ; reste à décider, à chaque fusion, \textbf{quels
+    amas retourner}
+
+    \vspace{0.08cm}
+    \begin{center}
+        \formulebox{\parbox{0.72\textwidth}{\centering
+        $\displaystyle \nu(\sigma \mid D) \;\propto\; \mu_0(\sigma)
+        \prod_u \Lambda_u(\sigma)\; e^{(1-\beta_u)\,\Lambda_u(\sigma)}$}}
+    \end{center}
+
+    \vspace{0.02cm}
+    \begin{center}
+        {\footnotesize $\Lambda_u(\sigma) = \sum_{e \in E_u} |W_e|\, \ind{e \text{ satisfaite}}$
+        \; (poids satisfait de la coupe) \qquad
+        $\beta_u = \min_{e \in E_u,\ e \text{ satisfaite}} \xi_e$ \; (date de la fusion)}
+    \end{center}
+
+    \vspace{0.08cm}
+    Au nœud $u$, où $C = C_1 \sqcup C_2$ : \textbf{un seul tirage à quatre états} $\sigma^{ab}$,
+    et non deux retournements indépendants
+
+    \vspace{0.04cm}
+    \begin{center}
+        \formulebox{\parbox{0.80\textwidth}{\centering
+        $\displaystyle p_u(a,b \mid \sigma, D) = \frac{q_u^{ab}}{\sum_{c,d \,\in\, \{0,1\}} q_u^{cd}}$,
+        \qquad
+        $\displaystyle q_u^{ab} = \mu_0(\sigma^{ab}) \prod_{v \,\succeq\, u}
+        \Lambda_v(\sigma^{ab})\; e^{(1-\beta_v)\,\Lambda_v(\sigma^{ab})}$}}
+    \end{center}
+
+    \vspace{0.02cm}
+    \begin{itemize}
+        \item Seuls $u$ et ses \textbf{ancêtres} se recalculent ; bain thermique exact, donc
+        \textbf{balance détaillée} et $\mu$ invariante \citb{ii26}
+    \end{itemize}
+    \reffoot{ii26}
+\end{frame}
+
+\begin{frame}[t]{Quelle coupe choisir ? Celle où les amas \textcolor{inria-rouge}{percolent}}
+    \vspace{-0.10cm}
+    \begin{center}
+        \resizebox{0.36\textwidth}{!}{\input{figs/coupe_percolation}}
+    \end{center}
+
+    \vspace{0.02cm}
+    \begin{center}
+        \formulebox{\parbox{0.80\textwidth}{\centering\small
+        densité d'arêtes ouvertes avant $\beta$ :
+        $\;q_p(\beta) = p\left(1 - e^{-u_p \beta}\right)$, \; $u_p = \log\tfrac{p}{1-p}$ ;\\[3pt]
+        \textbf{coupe critique} $\beta_c$ : $\;q_p(\beta_c) = q_c$, le seuil de percolation du réseau}}
+    \end{center}
+
+    \vspace{0.02cm}
+    \footnotesize
+    \begin{itemize}
+        \setlength{\itemsep}{2pt}
+        \item Seule une masse \textbf{macroscopique} transporte de l'information : c'est ce que dit
+        la borne de recouvrement de la partie précédente, évaluée à l'horizon $\beta = 1$
+        \item Sur la grille triangulaire, au seuil de percolation de l'\emph{information}, le temps
+        informationnel et $\beta_c$ \textbf{coïncident} \citb{ii26} : le meilleur argument dont nous
+        disposons pour dire que c'est la bonne coupe
+        \item \textbf{Statut : un programme.} Notre meilleure borne rigoureuse vient d'une \emph{autre}
+        source (un canal d'information à plusieurs états sur les triangles) et \emph{pas} de cette dynamique
+    \end{itemize}
+    \reffoot{ii26}
+\end{frame}
+
+\begin{frame}{Calibration exacte sur le SBM}
+    \begin{columns}[c, onlytextwidth]
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                \includegraphics[width=\textwidth]{imgs/Deux_dendrogrammes.png}
+            \end{center}
+        \end{column}
+        \begin{column}{0.46\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{9pt}
+                \item Deux répliques, deux dendrogrammes \textbf{indépendants}, coupés au même $\beta_c$
+                \item Chaque branche transmet exactement $\theta^2$ : la densité d'évolution répliquée
+                redonne $d\theta^2 = 1$\\
+                {\small (le seuil de \textsc{Kesten}--\textsc{Stigum}, identité valable pour
+                \textbf{toute} coupe exactement marginalisée : elle calibre le décompte, elle ne
+                désigne pas $\beta_c$)}
+                \item Quand le signal diverge, $\beta_{c,n} \to 0$ : la coupe s'écrase d'elle-même sur \textsc{Glauber}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{L'adapter sans le réentraîner : \emph{LoRA}}
+    \begin{center}
+        \resizebox{0.58\textwidth}{!}{\input{figs/lora_adaptation}}
+    \end{center}
+
+    \vspace{0.35cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{7pt}
+        \item On \textbf{gèle} le tronc pré-entraîné, on n'apprend qu'une correction de
+        \textbf{petit rang} $W = W_0 + BA$ \citb{hu22}
+        \item \textbf{CrackSAM} \citb{ge24} : $4{,}4$~M de poids appris sur les $637$~M de SAM
+        \item {\color{inria-rouge}SAM a déjà tout vu : lui donner en plus nos descripteurs
+        (hessienne, gradient) ne change \textbf{rien}}
+        \item Et il \textbf{transfère} : des fissures de chantiers jamais vus, sans rien réapprendre
+    \end{itemize}
+    \reffoot{hu22,ge24}
+\end{frame}
+
+\begin{frame}[t]{Comment guider l'attention \emph{via} la hiérarchie ? Une idée à explorer}
+    \vspace{0.02cm}
+    \begin{center}
+        \resizebox{0.64\textwidth}{!}{\input{figs/attention_biais}}
+    \end{center}
+
+    \vspace{0.06cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{3pt}
+        \item L'\textbf{attention} : chaque jeton pose une \textbf{requête}, la compare aux
+        \textbf{clefs} de tous les autres, et repart avec la moyenne de leurs \textbf{valeurs},
+        pondérée par un \textbf{score visuel} que SAM sait déjà calculer
+        \item On y \textbf{ajoute un bonus} avant le \emph{softmax} : un échange \textbf{favorisé},
+        jamais imposé \citb{ying21}
+        \item Le bonus vient de la \textbf{hiérarchie} du graphe de \textsc{Frangi} : plus deux jetons
+        \textbf{fusionnent tôt} dans l'arbre, plus il est fort, même loin dans l'image \citb{euvip26} ;
+        LoRA l'apprend avec un \textbf{seul} coefficient $\beta$ \citb{hu22}
+    \end{itemize}
+
+    \vspace{0.06cm}
+    \begin{center}
+        \formulebox{\parbox{0.80\textwidth}{\centering\small
+        $\mathrm{attention} \;=\; \mathrm{softmax}\bigl(\text{scores visuels} \;+\; \beta\, B_H\bigr)$}}
+    \end{center}
+    \reffoot{ying21,euvip26,hu22}
+\end{frame}
+
+\begin{frame}[t]{SAM gelé, LoRA et la hiérarchie : le montage}
+    \vspace{-0.08cm}
+    \begin{center}
+        \resizebox{0.61\textwidth}{!}{\input{figs/sam_lora_hierarchie}}
+    \end{center}
+
+    \vspace{0.06cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{5pt}
+        \item \textbf{SAM reconnaît} les fissures et le fond : ses poids restent \textbf{gelés} \citb{ravi24}
+        \item \textbf{L'arbre rapproche} deux morceaux d'une même fissure reliés par une chaîne de
+        raccords compatibles, même loin dans l'image : le bonus $B_H$ est d'autant plus fort que leur
+        \textbf{fusion} dans le graphe de \textsc{Frangi} est \textbf{précoce} \citb{euvip26} \citb{turaga09}
+        \item \textbf{LoRA apprend avec ce guidage}, pondéré par un \textbf{seul} coefficient $\beta$,
+        parti de zéro \citb{hu22}
+    \end{itemize}
+
+    \vspace{0.04cm}
+    \begin{center}
+        {\footnotesize Objectif : moins de \textbf{ruptures}, pas plus de \textbf{faux raccords} ---
+        témoin : la simple proximité spatiale. {\color{inria-rouge}Rien n'est encore mesuré}}
+    \end{center}
+    \reffoot{ravi24,euvip26,turaga09,hu22}
+\end{frame}
+
+% ============================================================
+\section{Conclusion}
+\begin{frame}[label=bk-conclusion]
+    \sectionpage
+\end{frame}
+
+\begin{frame}[t]{Deux fils conducteurs, quatre contributions}
+    \vspace{-0.10cm}
+    \begin{beamercolorbox}[rounded=true,sep=3pt]{block body}
+        \centering\small
+        \textbf{1)} Quand les relations binaires sont insuffisantes ou instables,\\ les \textbf{interactions d'ordre supérieur} apportent une cohérence robuste.\\[3pt]
+        \textbf{2)} La \textbf{percolation} est la clef de voûte théorique\\ pour quantifier les performances de ces algorithmes
+    \end{beamercolorbox}
+
+    \vspace{0.06cm}
+    \footnotesize
+    \begin{itemize}
+        \setlength{\itemsep}{3pt}
+        \item Une \textbf{vue unifiée} du \emph{Single-Linkage} : heuristique, géométrique, statistique \citb{ans26} ; LiDAR 3D et 4D sans apprentissage
+        \item \textbf{HGP-Clusterer} : la hiérarchie $K$-NN \emph{exacte}, \emph{via} \v{C}ech, \textsc{Gabriel} et \textsc{Delaunay} d'ordre $K$ \citb{eusipco24} \citb{cn24} \citb{ans26}
+        \item La \textbf{vitesse de percolation} : elle explique l'échec de Robust SL et (H)DBSCAN, et les gains des $K$-polyèdres \citb{src24}
+        \item L'\textbf{export du paradigme} : graphes signés \citb{asilomar25} \citb{ii26} ; imagerie, graphe de \textsc{Frangi} multimodal \citb{gretsi25} \citb{euvip26} \citb{isprs26}
+    \end{itemize}
+    \reffoot{eusipco24,cn24,ans26,src24,asilomar25,ii26,gretsi25,euvip26,isprs26}
+\end{frame}
+
+\begin{frame}{Autres perspectives}
+    \begin{itemize}
+        \setlength{\itemsep}{11pt}
+        \item \textbf{La grande dimension} : une \textbf{réduction de dimension} d'ordre supérieur,
+        là où les méthodes courantes s'appuient sur des graphes de voisinage (UMAP)
+        \item \textbf{Question ouverte} : HGP-Clusterer n'est que \emph{fractionnellement} consistant ;
+        un algorithme consistant en dimension $p \ge 2$ reste à inventer
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Publications}
+    \footnotesize
+    \textbf{Journal}
+    \begin{itemize}
+        \item \citb{ans26} \emph{Generalization of Single-Linkage with higher-order interactions}, \textit{Applied Network Science}, 2026
+    \end{itemize}
+    \textbf{Conférences internationales et nationales}
+    \begin{itemize}
+        \item \citb{cn23} Filaments de galaxies, Complex Networks, Menton, 2023
+        \item \citb{eusipco24} Hypergraphes pour le \emph{clustering} par densité, EUSIPCO, Lyon, 2024
+        \item \citb{cn24} Hypergraphes, percolation et \emph{clustering} hiérarchique, Complex Networks, Istanbul, 2024
+        \item \citb{src24} Mesure théorique de performance, ACM SIGMETRICS SRC, Venise, 2024 (\textbf{2\up{e} prix})
+        \item \citb{asilomar25} Dynamiques d'amas d'ordre supérieur, Asilomar, 2025
+        \item \citb{gretsi25} Généralisation du filtre de Frangi, GRETSI, Strasbourg, 2025
+        \item \citb{euvip26} Extraction multimodale de fissures sans apprentissage, EUVIP, Luxembourg, 2026
+    \end{itemize}
+    \textbf{En cours}
+    \begin{itemize}
+        \item \citb{ii26} Cadre bayésien pour la détection de communautés sur graphes signés (journal)
+        \item \citb{isprs26} Graphe de Frangi généralisé, multimodal et sans apprentissage (journal ISPRS)
+    \end{itemize}
+    \textbf{Logiciels} \emph{Open source} : dépôts GitHub \texttt{Ayana-Inria/HypergraphPercol\_K2}
+    et \texttt{Ayana-Inria/Frangi-EUVIP}
+\end{frame}
+
+\begin{frame}[label=bk-biblio]{Bibliographie (1/4)}
+    \scriptsize
+    \begin{itemize}
+        \setlength{\itemsep}{2.5pt}
+                        \bibligne{cameron44}
+        \bibligne{florek51}
+        \bibligne{schilder66}
+        \bibligne{gowerross69}
+        \bibligne{hartigan81}
+        \bibligne{forina83}
+        \bibligne{sw87}
+        \bibligne{es88}
+        \bibligne{ester96}
+        \bibligne{meesterroy96}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliographie (2/4)}
+    \scriptsize
+    \begin{itemize}
+        \setlength{\itemsep}{2.5pt}
+                        \bibligne{frangi98}
+        \bibligne{kleinberg02}
+        \bibligne{penrose03}
+        \bibligne{berlinet04}
+        \bibligne{ghrist08}
+        \bibligne{turaga09}
+        \bibligne{chaudhuri10}
+        \bibligne{carlsson10}
+        \bibligne{dembozeitouni10}
+        \bibligne{campello13}
+        \bibligne{chazal13}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliographie (3/4)}
+    \scriptsize
+    \begin{itemize}
+        \setlength{\itemsep}{2.5pt}
+                        \bibligne{biau15}
+        \bibligne{boissonnat18}
+        \bibligne{sb18}
+        \bibligne{semantickitti19}
+        \bibligne{brown20}
+        \bibligne{bommasani21}
+        \bibligne{ying21}
+        \bibligne{avrachenkov22}
+        \bibligne{hu22}
+        \bibligne{kirillov23}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bibliographie (4/4)}
+    \scriptsize
+    \begin{itemize}
+        \setlength{\itemsep}{2.5pt}
+                        \bibligne{edelsbrunner23}
+        \bibligne{rolle23}
+        \bibligne{ge24}
+        \bibligne{ravi24}
+        \bibligne{ayana25}
+        \bibligne{sautier25}
+        \bibligne{oh25}
+        \bibligne{sonata25}
+        \bibligne{concerto25}
+        \bibligne{utonia26}
+    \end{itemize}
+\end{frame}
+

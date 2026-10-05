@@ -3,7 +3,7 @@ all: Percolia_Elaia_2026-10-06.pdf
 LATEXCMD=xelatex
 TEXENV=TEXINPUTS=.:theme//:latex-inria-fonts//:
 
-main.pdf: main.tex
+main.pdf: main.tex $(wildcard *.tex figs/*.tex)
 	$(TEXENV) $(LATEXCMD) -file-line-error -halt-on-error main.tex
 	$(TEXENV) $(LATEXCMD) -file-line-error -halt-on-error main.tex
 

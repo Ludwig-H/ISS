@@ -22,6 +22,9 @@
 %                  présentation au comité ISS du 28 juillet 2026.
 % Logo Elaia : imgs/Elaia-logo.svg, logo officiel du site elaia.com (icône et wordmark, couleur
 %              « green-dark » #143334 du site), rendu en imgs/Elaia-logo.png.
+% Fin : slide « Merci » (gabarit du thème) puis annexes, index cliquable et slides de la soutenance de thèse
+%       non redondantes avec le deck (annexes_soutenance.tex, préambule dans preambule_soutenance.tex),
+%       composées en 9 pt comme la soutenance, avec un lien de retour vers l'index en pied de page.
 % Thème : thème Inria du Board meeting #1 (dossier theme/ copié à l'identique).
 % Compilation : make (XeLaTeX, comme le Board meeting #1).
 \documentclass[A4,svgnames,10pt,aspectratio=169,usepdftitle=false]{beamer}
@@ -29,6 +32,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english,french]{babel}
 \usepackage{graphicx}
+\usepackage{amsmath,amssymb,amsfonts,mathtools}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{colortbl}
 
 \title[Percolia]{\huge \textbf{PERCOLIA}}
 \subtitle{\large Structuration automatique de données}
@@ -44,9 +52,86 @@
 
 \usetheme{inria}
 
-\usetikzlibrary{arrows.meta, positioning, calc, decorations.pathreplacing}
+\usetikzlibrary{arrows.meta, positioning, calc, decorations.pathreplacing, shapes, fit, backgrounds, shapes.geometric, babel}
 % Boîte du schéma Milla : \bx[style]{nom}{x}{y}{largeur}{hauteur}{couleur}{texte}
 \newcommand{\bx}[7][mbx]{\node[#1, fill=#7, minimum width=#5*0.9cm, minimum height=#6*0.76cm, text width=#5*0.9cm-2pt, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}] (#2) at (#3,#4)}
+
+% Slide de fin : « Merci » sans point final
+\renewcommand{\thankyou}{Merci}
+
+% Annexes : macros, styles, couleurs et références de la soutenance
+\input{preambule_soutenance}
+
+% Annexes : corps 9 pt de la soutenance (size9.clo), pour garder la mise en page des slides reprises
+\makeatletter
+\newcommand{\corpssoutenance}{%
+  \renewcommand\normalsize{%
+     \@setfontsize\normalsize\@ixpt\@xipt
+     \abovedisplayskip 8\p@ \@plus4\p@ \@minus4\p@
+     \abovedisplayshortskip \z@ \@plus3\p@
+     \belowdisplayshortskip 5\p@ \@plus3\p@ \@minus3\p@
+     \belowdisplayskip \abovedisplayskip
+     \let\@listi\@listI}%
+  \renewcommand\small{%
+     \@setfontsize\small\@viiipt\@ixpt
+     \abovedisplayskip 5\p@ \@plus2\p@ \@minus2\p@
+     \abovedisplayshortskip \z@ \@plus1\p@
+     \belowdisplayshortskip 3\p@ \@plus\p@ \@minus2\p@
+     \def\@listi{\leftmargin\leftmargini
+                 \topsep 3\p@ \@plus\p@ \@minus\p@
+                 \parsep 2\p@ \@plus\p@ \@minus\p@
+                 \itemsep \parsep}%
+     \belowdisplayskip \abovedisplayskip}%
+  \renewcommand\footnotesize{%
+     \@setfontsize\footnotesize\@viipt\@viiipt
+     \abovedisplayskip 4\p@ \@plus2\p@ \@minus2\p@
+     \abovedisplayshortskip \z@ \@plus1\p@
+     \belowdisplayshortskip 2.5\p@ \@plus\p@ \@minus\p@
+     \def\@listi{\leftmargin\leftmargini
+                 \topsep 3\p@ \@plus\p@ \@minus\p@
+                 \parsep 2\p@ \@plus\p@ \@minus\p@
+                 \itemsep \parsep}%
+     \belowdisplayskip \abovedisplayskip}%
+  \renewcommand\scriptsize{\@setfontsize\scriptsize\@vipt\@viipt}%
+  \renewcommand\tiny{\@setfontsize\tiny\@vpt\@vipt}%
+  \renewcommand\large{\@setfontsize\large\@xpt\@xiipt}%
+  \renewcommand\Large{\@setfontsize\Large\@xipt{13}}%
+  \renewcommand\LARGE{\@setfontsize\LARGE\@xiipt{14}}%
+  \renewcommand\huge{\@setfontsize\huge\@xivpt{18}}%
+  \renewcommand\Huge{\@setfontsize\Huge\@xviipt{22}}%
+  \normalsize
+  % Dimensions du thème calculées au chargement avec la police courante (coin du titre en 2ex, filet des
+  % pages de section en 6em, retrait des listes en 1.5em) : ramenées à celles de la soutenance en 9 pt
+  \setlength{\angleheight}{0.9\angleheight}%
+  \setlength{\anglewidth}{0.9\anglewidth}%
+  \pgfdeclareimage[height=\angleheight]{Angle}{\pngangle}%
+  \pgfdeclareimage[width=6em]{Barre}{\pngbarre}%
+  \setlength{\leftmargini}{1.5em}%
+  \setlength{\labelsep}{.5em}%
+  \setlength{\labelwidth}{\leftmargini}\addtolength{\labelwidth}{-\labelsep}}
+
+% Annexes : pied de page du thème, avec au centre un lien de retour vers l'index des annexes
+\newcommand{\piedannexes}{%
+  \setbeamertemplate{footline}{%
+      \leavevmode
+      \hspace*{\hmargin}%
+      \raisebox{0.4\footerheight}{%
+          \parbox{\dimexpr\paperwidth-2\hmargin}{%
+               {%
+                 \textcolor{inria-noir}{%
+                   \beamer@shortdate
+                   \hfill
+                   \hyperlink{annexes}{\textcolor{inria-2024-gris-bleu}{$\hookleftarrow$ Annexes}}%
+                   \hfill
+                   \ifnum\thepage>1\relax
+                      \smash{\raisebox{-0.1\footerheight}{\footerlogo}}
+                   \fi
+                   \kern2em\parbox{1em}{\raggedleft\insertframenumber}
+                 }
+               }
+          }
+       }}}
+\makeatother
 
 % Logos de la page de titre : Inria Startup Studio à droite du bloc-marque RF-Inria, Elaia sur la marge droite
 \newlength{\isslogowidth}
@@ -213,9 +298,9 @@
 \end{frame}
 
 % Slide 7 : Deux voies d'accès au marché
-% D'après « Du benchmark à la licence logicielle » et « Trois voies d'accès au marché » du Board meeting #1,
-% regroupées en deux axes : roadmap produit (benchmark, intégration, licence ou API, puis logiciel des
-% constructeurs LiDAR) et verticale complète.
+% D'après « Du benchmark à la licence logicielle » et « Trois voies d'accès au marché » du Board meeting #1.
+% Roadmap produit détachée des clients potentiels (échange de Louis et Alban du 5 octobre 2026) :
+% audit, puis intégration par API, puis intégration sous licence, pour toutes les applications.
 \begin{frame}{Deux voies d'accès au marché}
     \textbf{\bleu \emph{Roadmap} produit}
 
@@ -223,27 +308,35 @@
     \centering
     \begin{tikzpicture}[x=0.99\textwidth, y=1cm,
         jalon/.style={circle, fill=inria-rouge, inner sep=0pt, minimum size=2.4mm},
-        etape/.style={anchor=south, yshift=2.5mm, text width=0.235\textwidth, align=center, inner sep=0pt,
+        etape/.style={anchor=south, yshift=2.5mm, text width=0.3\textwidth, align=center, inner sep=0pt,
             font=\small\bfseries, text=inria-2024-bleu-azur, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000},
             execute at end node={\strut}},
-        detail/.style={anchor=north, yshift=-3.5mm, text width=0.235\textwidth, align=center, inner sep=0pt,
-            font=\footnotesize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}},
-        accolade/.style={decorate, decoration={brace, mirror, amplitude=4pt}, gray},
-        noms/.style={below=6pt, align=center, font=\small, text=black}]
+        detail/.style={anchor=north, yshift=-3.5mm, text width=0.3\textwidth, align=center, inner sep=0pt,
+            font=\footnotesize, execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
       \draw[-{Latex[length=2.5mm]}, thick, inria-2024-gris-bleu] (0,0) -- (1,0);
-      \foreach \j/\x in {1/0.12, 2/0.37, 3/0.62, 4/0.87} \node[jalon] (j\j) at (\x,0) {};
-      \node[etape] at (j1) {\emph{Benchmark} ou pilote};
-      \node[detail] at (j1) {Sur quelques scans du client};
-      \node[etape] at (j2) {Intégration};
-      \node[detail] at (j2) {Dans le \emph{pipeline} du client};
-      \node[etape] at (j3) {Licence ou API};
-      \node[detail] at (j3) {Revenu logiciel récurrent};
-      \node[etape] at (j4) {Constructeurs LiDAR};
-      \node[detail] at (j4) {Notre moteur dans le logiciel de leurs scanners};
-      \draw[accolade] (0.005,-1.25) -- (0.735,-1.25)
-        node[midway, noms] {\href{https://www.greehill.com/}{Greehill}, \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.milla-group.com/}{Milla}, \href{https://www.hydroquebec.com/}{Hydro-Québec}};
-      \draw[accolade] (0.755,-1.25) -- (0.985,-1.25)
-        node[midway, noms] {\href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}};
+      \foreach \j/\x in {1/0.17, 2/0.5, 3/0.83} \node[jalon] (j\j) at (\x,0) {};
+      \node[etape] at (j1) {Audit};
+      \node[detail] at (j1) {\emph{Benchmark} sur quelques scans du client};
+      \node[etape] at (j2) {Intégration par API};
+      \node[detail] at (j2) {Moteur hébergé, appelé en ligne};
+      \node[etape] at (j3) {Intégration sous licence};
+      \node[detail] at (j3) {Installée chez le client, revenu récurrent};
+    \end{tikzpicture}
+
+    \vfill
+    \raggedright
+    \textbf{\bleu Clients potentiels}
+
+    \vspace{0.15cm}
+    \centering
+    \begin{tikzpicture}[x=0.99\textwidth, y=1cm,
+        segment/.style={draw=gris_fonce_inria, line width=0.8pt, rounded corners=3pt, fill=gray!8,
+            minimum width=0.23\textwidth, text width=0.21\textwidth, minimum height=1.25cm, align=center, font=\small,
+            execute at begin node={\hyphenpenalty=10000\exhyphenpenalty=10000}}]
+      \node[segment] at (0.125,0) {\textbf{Véhicule autonome et robotique}\\ {\footnotesize \href{https://www.milla-group.com/}{Milla}}};
+      \node[segment] at (0.375,0) {\textbf{Jumeaux numériques}\\ {\footnotesize \href{https://www.greehill.com/}{Greehill}}};
+      \node[segment] at (0.625,0) {\textbf{Inspection}\\ {\footnotesize \href{https://www.linkedin.com/company/ai-detech}{AI Detech}, \href{https://www.hydroquebec.com/}{Hydro-Québec}}};
+      \node[segment] at (0.875,0) {\textbf{Constructeurs LiDAR}\\ {\footnotesize \href{https://www.yellowscan.com/}{YellowScan}, \href{https://www.artec3d.com/}{Artec 3D}}};
     \end{tikzpicture}
 
     \vfill
@@ -593,5 +686,42 @@
         \end{column}
     \end{columns}
 \end{frame}
+
+% Slide 18 : Slide de fin (gabarit « merci » du thème Inria, comme à la soutenance)
+\begin{frame}
+    \merci
+\end{frame}
+
+% Slide 19 : Annexes, index cliquable des parties reprises de la soutenance
+\begin{frame}[label=annexes]{Annexes}
+    Slides de la soutenance de thèse du 8 septembre 2026
+
+    \vspace{0.4cm}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{6pt}
+                \item[\textbf{\bleu 01}] \hyperlink{bk-prologue}{Prologue : une ancienne énigme}
+                \item[\textbf{\bleu 02}] \hyperlink{bk-single-linkage}{Du \emph{Single-Linkage} à ses fondements}
+                \item[\textbf{\bleu 03}] \hyperlink{bk-ordre}{Monter à l'ordre supérieur : la hiérarchie $K$-NN exacte}
+                \item[\textbf{\bleu 04}] \hyperlink{bk-percolation}{La percolation comme mesure de performance}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{itemize}
+                \setlength{\itemsep}{6pt}
+                \item[\textbf{\bleu 05}] \hyperlink{bk-lidar}{Applications : LiDAR 3D et 4D, sans apprentissage}
+                \item[\textbf{\bleu 06}] \hyperlink{bk-structure}{Vers des données davantage structurées}
+                \item[\textbf{\bleu 07}] \hyperlink{bk-perspectives}{Perspectives : la voie hiérarchique}
+                \item[\textbf{\bleu 08}] \hyperlink{bk-conclusion}{Conclusion, publications et bibliographie}
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% Annexes : slides de la soutenance, en 9 pt, avec le lien de retour vers l'index en pied de page
+\corpssoutenance
+\piedannexes
+\input{annexes_soutenance}
 
 \end{document}
