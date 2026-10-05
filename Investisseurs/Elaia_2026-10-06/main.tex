@@ -9,6 +9,7 @@
 %           « Exemple 3 : Greehill » (repris de la présentation au comité ISS du 28 juillet 2026) et
 %           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
+%           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
 %                  Josiane Zerubia et Konstantin Avrachenkov : leur page personnelle Inria.
@@ -419,35 +420,7 @@
     {\tiny \textcolor{inria-2024-gris-bleu}{Données SemanticKITTI, HDBSCAN de scikit-learn}\par}
 \end{frame}
 
-% Slide 12 : Du benchmark à la licence logicielle
-\begin{frame}{Du \emph{benchmark} à la licence logicielle}
-    \begin{columns}[T]
-        \begin{column}{0.5\textwidth}
-            \textbf{\bleu 1. \emph{Benchmark} ou pilote}
-            \begin{itemize}
-                \item Le client fournit quelques \emph{scans} représentatifs
-                \item Percolia compare la qualité des groupes et le temps de calcul au \emph{pipeline} existant
-            \end{itemize}
-
-            \vspace{0.25cm}
-            \textbf{\bleu 2. Intégration}
-            \begin{itemize}
-                \item Connexion aux formats du client
-                \item Configuration des contraintes géométriques ou du modèle 3D
-            \end{itemize}
-        \end{column}
-
-        \begin{column}{0.46\textwidth}
-            \textbf{\orange 3. Revenu logiciel récurrent}
-            \begin{itemize}
-                \item Licence annuelle installée chez le client
-                \item API lorsque le \emph{cloud} convient aux données et aux contraintes de sécurité
-            \end{itemize}
-        \end{column}
-    \end{columns}
-\end{frame}
-
-% Slide 13 : Trois voies d'accès au marché
+% Slide 12 : Trois voies d'accès au marché
 \begin{frame}{Trois voies d'accès au marché}
     \begin{columns}[T]
         \begin{column}{0.31\textwidth}
@@ -474,23 +447,6 @@
             \end{itemize}
         \end{column}
     \end{columns}
-\end{frame}
-
-% Slide 14 : Au-delà du LiDAR
-\begin{frame}{Au-delà du LiDAR}
-    \textbf{\bleu Un moteur de \emph{clustering} pour plusieurs familles de données}
-    \begin{itemize}
-        \item Le cœur mathématique travaille sur des données euclidiennes
-        \item Le nuage de points LiDAR constitue le premier produit commercial, avec un besoin industriel concret et observable
-    \end{itemize}
-
-    \vspace{0.25cm}
-    \textbf{\orange Applications possibles}
-    \begin{itemize}
-        \item Nuages de points et autres données euclidiennes
-        \item Vecteurs, \emph{embeddings} et matrices de distances
-        \item Détection de communautés dans des graphes
-    \end{itemize}
 \end{frame}
 
 \end{document}
