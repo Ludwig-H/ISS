@@ -10,8 +10,8 @@
 %           « Exemple 4 : Rétroconception » (source : W. Gao et G. Li, Deep Learning for 3D Point Clouds, p. 277),
 %           puis une slide d'appui pour les vidéos HGP face à HDBSCAN (dépôt E-HGP, dossier Zoltan/, copiées dans videos/).
 %           Slides « Du benchmark à la licence logicielle » et « Au-delà du LiDAR » du Board meeting #1 retirées.
-%           En fin de deck, trois slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
-%           GPT/SAM et figures reprises de la soutenance de thèse (dépôt Manuscrit-de-th-se,
+%           En fin de deck, quatre slides sur le modèle de fondation guidé par la hiérarchie HGP : analogie
+%           GPT/SAM, nuage artefact du capteur et figures reprises de la soutenance (dépôt Manuscrit-de-th-se,
 %           Soutenance/soutenance), projet décrit dans le dépôt E-HGP, dossier Zoltan/ (en conception).
 % Liens LinkedIn : Elaia, ceux de la fiche équipe de chaque participant sur elaia.com ; Alban, son profil
 %                  (IMT Atlantique, HSBC, Société Générale) ; Louis, l'URL qu'il a fournie.
@@ -467,7 +467,25 @@
     \end{itemize}
 \end{frame}
 
-% Slide 14 : Sémantique et instances, inverser l'ordre
+% Slide 14 : Le nuage est un artefact du capteur
+% Reprise de la soutenance de thèse (« La raison de fond : le nuage est un artefact du capteur »),
+% figure figs/verrou_portee.tex.
+\begin{frame}{Le nuage est un \emph{artefact du capteur}}
+    \begin{center}
+        \resizebox{0.72\textwidth}{!}{\input{figs/verrou_portee}}
+    \end{center}
+
+    \vspace{0.15cm}
+    \small
+    \begin{itemize}
+        \setlength{\itemsep}{5pt}
+        \item La \textbf{densité} décroît avec la portée, s'y ajoutent les nappes de balayage et les \textbf{occultations}
+        \item Un modèle point par point apprend donc \emph{en même temps} la géométrie, le capteur, la densité, l'occultation \textbf{et} la sémantique
+        \item \textbf{Hypothèse} C'est \emph{une} raison centrale de la difficulté
+    \end{itemize}
+\end{frame}
+
+% Slide 15 : Sémantique et instances, inverser l'ordre
 % Dans les exemples (Greehill) comme dans l'état de l'art ALPINE (Sautier et al., Valeo AI, 2025, présenté
 % à la soutenance) : sémantique apprise d'abord, puis clustering classe par classe pour les instances.
 \begin{frame}{Sémantique et instances : inverser l'ordre}
@@ -499,7 +517,7 @@
     \textbf{\orange Hypothèse} Le \emph{clustering} hiérarchique HGP est assez bon pour aider la sémantique
 \end{frame}
 
-% Slide 15 : Un modèle de fondation guidé par la hiérarchie HGP
+% Slide 16 : Un modèle de fondation guidé par la hiérarchie HGP
 % Figure figs/hierarchie_surfaces.tex de la soutenance (« Remplacer les points par une hiérarchie de
 % polyèdres ? »). Projet HGP-FM : dépôt E-HGP, dossier Zoltan/, collaboration Inria et université de Szeged
 % (Louis Hauseux, Zoltán Kató, Josiane Zerubia), en conception, aucun résultat revendiqué.
