@@ -225,19 +225,39 @@
 \end{frame}
 
 % Slide 4 : La limite des méthodes actuelles de clustering
+% Illustration : nuage brut et résultat d'HDBSCAN, d'après la slide de soutenance « Le clustering sur données
+% euclidiennes » (imgs/Nuage2D.png, imgs/Nuage2D_HDBSCAN.png), en plus petit et sans le cadre rouge (réservé à Percolia).
 \begin{frame}{La limite des méthodes actuelles de \emph{clustering}}
-    \textbf{\bleu Les standards DBSCAN et HDBSCAN}
-    \begin{itemize}
-        \item Repèrent les zones denses puis relient les points deux à deux
-        \item Rapides, disponibles partout et très utilisés
-    \end{itemize}
+    \begin{columns}[c,onlytextwidth]
+        \begin{column}{0.62\textwidth}
+            \textbf{\bleu Les standards DBSCAN et HDBSCAN}
+            \begin{itemize}
+                \item Repèrent les zones denses puis relient les points deux à deux
+                \item Rapides, disponibles partout et très utilisés
+            \end{itemize}
 
-    \vspace{0.25cm}
-    \textbf{\bleu Le problème dans les scènes LiDAR réelles}
-    \begin{itemize}
-        \item Le bruit crée des ponts entre objets voisins
-        \item Ces objets fusionnent alors (effet de chaînage)
-    \end{itemize}
+            \vspace{0.25cm}
+            \textbf{\bleu Le problème dans les scènes LiDAR réelles}
+            \begin{itemize}
+                \item Le bruit crée des ponts entre objets voisins
+                \item Ces objets fusionnent alors (effet de chaînage)
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.34\textwidth}
+            \centering
+            \begin{tikzpicture}[>={Latex[length=1.8mm]},
+                image/.style={draw=gray!40, line width=0.8pt, inner sep=1pt},
+                legende/.style={font=\scriptsize, align=center}]
+              \node[image] (brut) {\includegraphics[width=0.6\linewidth]{imgs/Nuage2D.png}};
+              \node[legende, below=1pt of brut] (lbrut) {Nuage brut};
+              \node[image, below=1cm of brut] (hdb) {\includegraphics[width=0.6\linewidth]{imgs/Nuage2D_HDBSCAN.png}};
+              \node[legende, below=1pt of hdb] {Amas en couleur, bruit en gris};
+              \draw[->, very thick, gray!55] (lbrut.south) -- (hdb.north)
+                node[midway, right=3pt, font=\scriptsize\bfseries, text=black] {HDBSCAN};
+            \end{tikzpicture}
+        \end{column}
+    \end{columns}
 
     \vspace{0.25cm}
     \textbf{\orange Conséquence} Mauvaise segmentation, anomalies mal isolées, corrections manuelles
