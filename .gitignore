@@ -26,6 +26,7 @@
 
 # But allow PDF figures in image folders
 !**/img/**/*.pdf
+!**/imgs/**/*.pdf
 !**/images/**/*.pdf
 !**/fig/**/*.pdf
 !**/figures/**/*.pdf
